@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Admin Dashboard | Korsat X Parmaga</title>
+    {% block css %}   
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{ asset('css/templatemo-space-dynamic.css') }}">
+{% endblock %}
+
+</head>
+
+<body>
+<div class="container">
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span>
+                   <img src="{{ asset('images/nakratempaa2.png') }}" alt="" height="25"  style="margin-top: 20px">
+
+                        </span>
+                        <span class="title" style="margin-left:20px">NA9RA</span>
+                    </a>
+                </li>
+
+               
+                <li>
+            <a href="{{ path('admin_users') }}">
+                <span class="icon">
+                    <ion-icon name="people-outline"></ion-icon>
+                </span>
+                <span class="title">Users</span>
+            </a>
+        </li>
+
+                <li>
+                    <a href="{{ path('admin_cours') }}">
+                        <span class="icon">
+                            <ion-icon name="library-outline"></ion-icon>
+                        </span>
+                        <span class="title">Cours</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ path('admin_ebook') }}">
+                        <span class="icon">
+                            <ion-icon name="book-outline"></ion-icon>
+                        </span>
+                        <span class="title">EBook</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ path('admin_event') }}">
+                        <span class="icon">
+                            <ion-icon name="calendar-clear-outline"></ion-icon>
+                        </span>
+                        <span class="title">Events</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ path('admin_test') }}">
+                        <span class="icon">
+                            <ion-icon name="reader-outline"></ion-icon>
+                        </span>
+                        <span class="title">Test</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ path('admin_quiz') }}">
+                        <span class="icon">
+                            <ion-icon name="extension-puzzle-outline"></ion-icon>   
+                     </span>
+                        <span class="title">Quiz</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ path('index') }}">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Log Out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+<script src="{{ asset('js/main.js') }}"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>

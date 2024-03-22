@@ -1,0 +1,39 @@
+
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Space Dynamic - SEO HTML5 Template{% endblock %}</title>
+{% block css %}   
+ <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
+   <link href="{{asset('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('css/templatemo-space-dynamic.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/animated.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/owl.css') }}">
+{% endblock %}
+
+</head>
+<body>
+
+{% block body %}
+ {% include 'bases/navigationuser.html.twig' %}
+ {% block content %}{% endblock %}
+
+
+
+{% block js %}
+<script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('js/owl-carousel.js') }}"></script>
+<script src="{{ asset('js/animation.js') }}"></script>
+<script src="{{ asset('js/imagesloaded.js') }}"></script>
+<script src="{{ asset('js/templatemo-custom.js') }}"></script>
+{% endblock %}
+{% endblock %}
+</body>
+</html>
+
+

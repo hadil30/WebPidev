@@ -1,0 +1,51 @@
+index:
+  path: /
+  controller: App\Controller\DefaultController::index
+login:
+    path: '/login'
+    controller: 'App\Controller\LoginController::indexlogin'
+  
+user:
+    path: '/user'
+    controller: 'App\Controller\LoginController::indexUser'
+admin:
+    path: '/admin'
+    controller: 'App\Controller\LoginController::indexadmin'
+
+admin_users:
+    path: /admin/users
+    controller: App\Controller\AdminController::users
+admin_cours:
+    path: /admin/cours
+    controller: App\Controller\AdminController::cours
+
+admin_ebook:
+    path: /admin/ebook
+    controller: App\Controller\AdminController::ebook
+admin_event:
+    path: /admin/event
+    controller: App\Controller\AdminController::event
+admin_test:
+    path: /admin/test
+    controller: App\Controller\AdminController::test
+admin_quiz:
+    path: /admin/quiz
+    controller: App\Controller\AdminController::quiz
+user_profile:
+    path: /user/profile
+    controller: App\Controller\userController::index
+user_cours:
+    path: /user/cours
+    controller: App\Controller\coursController::index
+user_ebooks:
+    path: /user/ebooks
+    controller: App\Controller\ebooksController::index
+user_event:
+    path: /user/event
+    controller: App\Controller\eventController::index
+user_test:
+    path: /user/test
+    controller: App\Controller\testController::index
+user_quiz:
+    path: /user/quiz
+    controller: App\Controller\quizController::index

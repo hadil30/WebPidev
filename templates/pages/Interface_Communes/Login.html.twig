@@ -1,0 +1,128 @@
+{% extends 'default/base.html.twig' %}
+
+{% block html %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block css %}
+        {{ parent() }}
+
+        <style>
+            body {
+                background-image: linear-gradient(22.5deg, rgba(67, 67, 67, 0.02) 0%, rgba(67, 67, 67, 0.02) 29%,rgba(47, 47, 47, 0.02) 29%, rgba(47, 47, 47, 0.02) 37%,rgba(23, 23, 23, 0.02) 37%, rgba(23, 23, 23, 0.02) 55%,rgba(182, 182, 182, 0.02) 55%, rgba(182, 182, 182, 0.02) 69%,rgba(27, 27, 27, 0.02) 69%, rgba(27, 27, 27, 0.02) 71%,rgba(250, 250, 250, 0.02) 71%, rgba(250, 250, 250, 0.02) 100%),linear-gradient(67.5deg, rgba(117, 117, 117, 0.02) 0%, rgba(117, 117, 117, 0.02) 14%,rgba(199, 199, 199, 0.02) 14%, rgba(199, 199, 199, 0.02) 40%,rgba(33, 33, 33, 0.02) 40%, rgba(33, 33, 33, 0.02) 48%,rgba(135, 135, 135, 0.02) 48%, rgba(135, 135, 135, 0.02) 60%,rgba(148, 148, 148, 0.02) 60%, rgba(148, 148, 148, 0.02) 95%,rgba(53, 53, 53, 0.02) 95%, rgba(53, 53, 53, 0.02) 100%),linear-gradient(135deg, rgba(190, 190, 190, 0.02) 0%, rgba(190, 190, 190, 0.02) 6%,rgba(251, 251, 251, 0.02) 6%, rgba(251, 251, 251, 0.02) 18%,rgba(2, 2, 2, 0.02) 18%, rgba(2, 2, 2, 0.02) 27%,rgba(253, 253, 253, 0.02) 27%, rgba(253, 253, 253, 0.02) 49%,rgba(128, 128, 128, 0.02) 49%, rgba(128, 128, 128, 0.02) 76%,rgba(150, 150, 150, 0.02) 76%, rgba(150, 150, 150, 0.02) 100%),linear-gradient(90deg, #ffffff,#ffffff);
+                margin: 0; /* Reset default margin */
+                padding: 0; /* Reset default padding */
+                letter-spacing: 0.25px;
+                text-transform: capitalize;
+                font-size: 15px;
+
+
+            }
+
+            .site-wrap {
+                min-height: 100vh; /* Set minimum height to full viewport height */
+                display: flex;
+                flex-direction: column;
+            }
+
+            .site-footer {
+                margin-top: auto; /* Push footer to the bottom */
+            }
+
+            .center-container {
+                flex: 1; /* Allow the center container to take up remaining space */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .form-container {
+                max-width: 600px;
+                min-height: 400px;
+                width: 100%;
+                padding: 20px;
+                background-color: #ffffff;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .form-group {
+                margin-bottom: 20px; /* Add spacing between form groups */
+            }
+                .btns{ 
+                display: inline-block;
+                background-color:#ffc73e;
+                font-size: 15px;
+                font-weight: 300;
+                color: black;
+                text-transform: capitalize;
+                padding: 12px 25px; 
+                padding-left: 10px;
+                padding-right: 10px;
+                border-radius: 23px;
+                letter-spacing: 0.25px;
+                border-color:transparent;}
+        </style>
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+<div class="site-wrap">
+    {% block nav %}{% include 'bases/header.html.twig' %}{% endblock %}
+
+    {# Form Container #}
+    <div class="center-container">
+        <div class="form-container mt-3 mb-2">
+            <div class="site-section">
+                <div class="container">
+                    <div class="row">
+                        <form class="col-md-12" method="post" novalidate>
+                            <div class="site-blocks-table" style="max-width: 100%; overflow-x: hidden;">
+                                <div class="row">
+                                    <div class="title-section text-center col-12">
+                                        <h2 style="color: #161688;"><strong>Login</strong></h2>
+                                        
+                                    </div>
+                                </div>
+                                {{ form_start(form)}}
+                                <div class="form-group">
+                                    {{ form_label(form.email, "Email") }}
+                                   
+                                    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.email) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_label(form.password, "Mot de passe") }}
+                                    {{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.password) }}
+                                </div>
+                                <div class="container">
+                                    <div class="row mb-2">
+                                     <div class="col-md-4 mb-0 mb-md-0">
+                                            {{ form_widget(form.submit1, {'attr': {'class': 'btns '}}) }}
+                                        </div>
+
+
+                                        <div class="col-md-4 mb-2 mb-md-0">
+                                            {{ form_widget(form.submit2, {'attr': {'class': 'btns '}}) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {{ form_end(form) }}
+                                <br>
+                                <p>Vous n'avez pas de compte ? <a>s'inscrire</a></p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>
+{% endblock %}
+
