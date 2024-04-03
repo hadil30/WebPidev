@@ -4,29 +4,92 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
 #[ORM\Table(name: "cours")]
+#[ORM\Entity]
 class Cours
 {
     #[ORM\Id]
-    #[ORM\Column(type: "integer")]
     #[ORM\GeneratedValue(strategy: "IDENTITY")]
-    private ?int $id = null;
+    #[ORM\Column(name: "id", type: "integer", nullable: false)]
+    private $id;
 
-    #[ORM\Column(type: "string", length: 255)]
-    private string $titre;
+    #[ORM\Column(name: "titre", type: "string", length: 255, nullable: false)]
+    private $titre;
 
-    #[ORM\Column(type: "string", length: 255)]
-    private string $description;
+    #[ORM\Column(name: "description", type: "string", length: 255, nullable: false)]
+    private $description;
 
-    #[ORM\Column(type: "string", length: 255)]
-    private string $niveau;
+    #[ORM\Column(name: "niveau", type: "string", length: 255, nullable: false)]
+    private $niveau;
 
-    #[ORM\Column(type: "string", length: 255, nullable: true)]
-    private ?string $imagepath = null;
+    #[ORM\Column(name: "ImagePath", type: "string", length: 255, nullable: true)]
+    private $imagepath;
 
-    #[ORM\Column(type: "string", length: 255, nullable: true)]
-    private ?string $link = null;
+    #[ORM\Column(name: "link", type: "string", length: 255, nullable: true)]
+    private $link;
 
-    // Getters and setters
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getTitre(): ?string
+    {
+        return $this->titre;
+    }
+
+    public function setTitre(string $titre): static
+    {
+        $this->titre = $titre;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getNiveau(): ?string
+    {
+        return $this->niveau;
+    }
+
+    public function setNiveau(string $niveau): static
+    {
+        $this->niveau = $niveau;
+
+        return $this;
+    }
+
+    public function getImagepath(): ?string
+    {
+        return $this->imagepath;
+    }
+
+    public function setImagepath(?string $imagepath): static
+    {
+        $this->imagepath = $imagepath;
+
+        return $this;
+    }
+
+    public function getLink(): ?string
+    {
+        return $this->link;
+    }
+
+    public function setLink(?string $link): static
+    {
+        $this->link = $link;
+
+        return $this;
+    }
 }
