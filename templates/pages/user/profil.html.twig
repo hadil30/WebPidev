@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon profil</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+ body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: white; /* Changer l'arrière-plan en blanc */
+    font-family: Arial, sans-serif;
+    color: black; /* Changer la couleur du texte en noir */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.9); /* Garder la couleur de fond glass-like */
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Ombre portée */
+    padding: 40px;
+    max-width: 500px;
+    width: 80%; /* Largeur du container ajustée */
+    margin: 50px auto;
+}
+
+.container h2 {
+    text-align: center;
+    color: black; /* Changer la couleur du titre en noir */
+}
+
+.container table {
+    width: 100%; /* Largeur de la table à 100% */
+}
+
+.container th {
+    text-align: left; /* Alignement des cellules d'en-tête à gauche */
+}
+
+.container td {
+    text-align: center; /* Alignement des cellules de données au centre */
+    padding: 10px; /* Espacement intérieur des cellules */
+}
+
+.container tr:nth-child(4) {
+    margin-bottom: 50px; /* Ajouter un espacement entre le rôle et le bouton */
+}
+
+.btn-primary {
+    background-color: #FFC73E; /* Couleur de fond du bouton */
+    border-color: #FFC73E; /* Couleur de la bordure du bouton */
+    color: black; /* Couleur du texte du bouton */
+}
+
+.btn-primary:hover {
+    color: #2a2a2a; /* Changer la couleur du texte lors du survol */
+    background-color: #FFD25C; /* Couleur de fond du bouton lors du survol */
+    border-color: #FFD25C; /* Couleur de la bordure du bouton lors du survol */
+}
+
+.text-center a {
+    background-color: #FFC73E; /* Couleur de fond de "Back to home" */
+    border-color: #FFC73E; /* Couleur de la bordure de "Back to home" */
+    color: black; /* Couleur du texte */
+    padding: 8px 15px; /* Espacement intérieur */
+    border-radius: 5px; /* Rayon de bordure */
+    text-decoration: none; /* Enlever la décoration du texte (soulignement) */
+    font-weight: bold; /* Épaissir la police */
+}
+
+.text-center a:hover {
+    color: #2a2a2a; /* Changer la couleur du texte lors du survol */
+    background-color: #FFD25C; /* Couleur de fond lors du survol */
+    border-color: #FFD25C; /* Couleur de la bordure lors du survol */
+}
+
+
+</style>
+</head>
+<body>
+    <div class="container">
+        <h2>Mon profil</h2>
+    <table>
+        <tbody>
+         <tr>
+                <th>Image</th>
+                {% if user.image %}
+                                    <td><img src="{{ asset('uploads/files/' ~ user.image) }}" style="width:100px;height:100px;"></td>
+                                    {% else %}
+                                    <td>No image available</td>
+                                    {% endif %}
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ user.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prénom</th>
+                <td>{{ user.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Adresse mail</th>
+                <td>{{ user.mail }}</td>
+            </tr>
+            <tr>
+                <th>Rôle</th>
+                <td>
+                    {% if user.role == 0 %}
+                        Etudiant
+                    {% elseif user.role == 1 %}
+                        Prof
+                    {% elseif user.role == 2 %}
+                        Admin
+                    {% endif %}
+                </td>
+           
+        </tbody>
+    </table>
+    
+<div class="text-center">
+    <a class="btn btn-primary mb-2" href="">Modifier mon profil</a>
+</div>
+
+<div class="text-center mb-2">
+    
+</div>
+<div class="text-center">
+    <a href="{{ path('app_home') }}">Back to home</a>
+</div>
+    
+
+
+</form>
+
+</form>
+
+
+    
+    </div>
+</body>
+</html>

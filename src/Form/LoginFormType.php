@@ -26,13 +26,7 @@ class LoginFormType extends AbstractType
                 [
                     'label' => 'Password'
                 ]
-            )
-            ->add('submit1', SubmitType::class, [
-                'label' => 'Login user',
-            ])
-            ->add('submit2', SubmitType::class, [
-                'label' => 'Login admin',
-            ]);
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver): void

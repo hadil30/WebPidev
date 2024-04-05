@@ -1,5 +1,39 @@
 
     <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+    <!-- Inclure Bootstrap CSS -->
+
+
+<style>/* Styles pour le dropdown */
+/* Styles pour le dropdown */
+.dropdown-menu {
+    min-width: 160px;
+    text-align: center !important; /* Aligne le texte au centre */
+}
+
+/* Styles pour les liens dans le dropdown */
+.dropdown-menu a.dropdown-item {
+    display: block;
+    padding: 10px 20px !important; /* Ajoutez du padding pour plus d'espace autour des liens */
+    color: black !important; /* Texte noir par défaut */
+    text-decoration: none !important;
+    text-align: center !important; /* Centre le texte des options */
+    width: 100% !important; /* Pour occuper toute la largeur du dropdown */
+}
+
+/* Uniformité de l'effet de hover */
+.dropdown-menu a.dropdown-item:hover {
+    background-color: #161688 !important; /* Couleur bleue pour l'effet de hover */
+    color: white !important; /* Texte blanc lors du hover */
+}
+
+
+</style>
+<!-- Inclure jQuery (requis pour Bootstrap 5) -->
+
+
+<!-- Inclure Bootstrap JavaScript -->
+
+
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -16,7 +50,18 @@
                         <li class="scroll-to-section"><a href="#portfolio">Courses</a></li>
                         <li class="scroll-to-section"><a href="#blog">Events</a></li> 
                         <li class="scroll-to-section"><a href="#contact">Message Us</a></li> 
-                        <li><div class="main-red-button"><a href="{{path('login')}}">Login</a></div></li> 
+<li class="dropdown">
+    <a href="#" class="nav-link scrollto dropdown-toggle" id="dropdownMenuLink" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+        <img id="profileImage" src="{{ asset('uploads/files/' ~ app.user.image) }}" style="width:35px; height:35px; border-radius:50%;">
+        {{ app.user.nom }}
+        <i class="bi bi-chevron-down"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
+        <li><a href="{{ path('app_user_profil', { 'id': app.user.getUserId() }) }}" class="dropdown-item text-center">Profil</a></li>
+        <li><a href="{{ path('app_logout') }}" class="dropdown-item text-center">Logout</a></li>
+        
+    </ul>
+</li>
                         <li class="scroll-to-section"><img src="{{ asset('images/nakratempaa.png') }}" alt="" height="40px"></li>                        </ul>
                         <a class='menu-trigger'>
                         <span>Menu</span>

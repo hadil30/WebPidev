@@ -40,22 +40,24 @@
 
             .form-container {
                 max-width: 600px;
-                min-height: 400px;
+                min-height: 450px;
                 width: 100%;
                 padding: 20px;
-                background-color: #ffffff;
+                background-color: #0;
                 border-radius: 10px;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             }
-
+            .inscrire{
+                heith: 20px;
+            }
             .form-group {
-                margin-bottom: 20px; /* Add spacing between form groups */
+                margin-bottom: 50px; /* Add spacing between form groups */
             }
                 .btns{ 
                 display: inline-block;
                 background-color:#ffc73e;
                 font-size: 15px;
-                font-weight: 300;
+                font-weight: 200;
                 color: black;
                 text-transform: capitalize;
                 padding: 12px 25px; 
@@ -70,7 +72,7 @@
 <body>
 {% block body %}
 <div class="site-wrap">
-    {% block nav %}{% include 'bases/header.html.twig' %}{% endblock %}
+  <!--  {% block nav %}{% include 'bases/header.html.twig' %}{% endblock %} -->
 
     {# Form Container #}
     <div class="center-container">
@@ -79,6 +81,10 @@
                 <div class="container">
                     <div class="row">
                         <form class="col-md-12" method="post" novalidate>
+                        {% if error is defined %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+
                             <div class="site-blocks-table" style="max-width: 100%; overflow-x: hidden;">
                                 <div class="row">
                                     <div class="title-section text-center col-12">
@@ -98,21 +104,14 @@
                                     {{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
                                     {{ form_errors(form.password) }}
                                 </div>
-                                <div class="container">
-                                    <div class="row mb-2">
-                                     <div class="col-md-4 mb-0 mb-md-0">
-                                            {{ form_widget(form.submit1, {'attr': {'class': 'btns '}}) }}
-                                        </div>
-
-
-                                        <div class="col-md-4 mb-2 mb-md-0">
-                                            {{ form_widget(form.submit2, {'attr': {'class': 'btns '}}) }}
-                                        </div>
-                                    </div>
-                                </div>
                                 {{ form_end(form) }}
                                 <br>
-                                <p>Vous n'avez pas de compte ? <a>s'inscrire</a></p>
+                                <input type="hidden" name="_csrf_token"
+                                    value="{{ csrf_token('authenticate') }}"
+                                >
+
+                                <button class="btn btn-lg btn-primary" type="submit">Login</button>
+                                <p  class="inscrire">Vous n'avez pas de compte ? <a>s'inscrire</a></p>
                             </div>
                         </form>
                     </div>

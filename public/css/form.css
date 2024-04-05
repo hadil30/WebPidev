@@ -1,0 +1,191 @@
+/* test.css - Focused on Form Elements */
+
+/* General Styles for Form Labels */
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+/* Styles for Form Controls (Input, TextArea) */
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    margin-bottom: 20px; /* Spacing between each form-group */
+}
+
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+/* Question List Styles */
+.question-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.question-list > li {
+    margin-bottom: 30px; /* Spacing between each question */
+}
+
+/* Response List Styles to be visually under each question */
+.response-list {
+    list-style-type: none;
+    margin-top: 10px;
+    padding-left: 20px; /* Indent responses to visually group under the question */
+}
+
+.response-list > li {
+    margin-bottom: 10px; /* Spacing between each response */
+}
+
+/* Button Styles */
+.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    line-height: 1.5;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+/* Hide any mistakenly exposed prototype labels */
+.response-list .__reponse_prototype__label__ {
+    display: none;
+}
+/* Styles for Form Controls (Input, TextArea) */
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    margin-bottom: 20px; /* Spacing between each form-group */
+}
+
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+/* styles.css */
+.form-question {
+    margin-bottom: 20px;
+}
+
+.response-list {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.response-list .form-group {
+    margin-bottom: 15px;
+}
+
+.response-list input[type="text"] {
+   
+
+
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    margin-bottom: 20px; /* Spacing between each form-group */
+}
+.response-list input[type="text"]:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+
+/* styles.css */
+.add-question-btn, .add-response-btn ,.btn{
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #d5d7e08f; /* Button background color */
+    color: #000000; /* Button text color */
+    text-decoration: none;
+    border: none;
+    border-radius: 20px; /* Rounded corners */
+    cursor: pointer;
+  }
+  
+  .add-question-btn:hover, .add-response-btn:hover, .btn:hover {
+    background-color: #5fa4ff;
+    color:white;
+  }
+  
+.question-list input[type="text"] {
+
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    margin-bottom: 20px; /* Spacing between each form-group */
+}
+.question-list input[type="text"]:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+
+.delete-response-btn {
+    background-color: #dc3545;
+}
+
+.add-response-btn:hover, .delete-response-btn:hover {
+    opacity: 0.8;
+}

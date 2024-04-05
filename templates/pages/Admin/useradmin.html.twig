@@ -1,8 +1,12 @@
-{# templates/courses.html.twig #}
 {% extends 'pages/Admin/admindashboard.html.twig' %}
 
 {% block title %}users - Responsive Admin Dashboard{% endblock %}
 {% block content %}
+<style>
+.recentOrders{width: 1100px;text-align: center;padding-left: 40px;}
+
+
+</style>
    <div class="main">
             <div class="topbar">
                 <div class="toggle">
@@ -10,13 +14,34 @@
                 </div>
 
                 <div class="search">
-                    <label>
-                        <input type="text" placeholder="Search here">
+                    <label for="search-input">
+                        <input type="text" id="search" placeholder="Search here">
                         <ion-icon name="search-outline"></ion-icon>
                     </label>
                 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#search').keyup(function() {
+            var query = $(this).val();
+            $.ajax({
+                url: "{{ path('app_user_search') }}",
+                type: "POST",
+                data: {query: query},
+                success: function(data) {
+                    $('#results').html(data);
+                    $('#results').css('width', '100%');
+                    $('#results').css('position', 'static');
+                }
+            });
+        });
+    });
+</script>
+                
 
+ 
                 <div class="user">
+                
                     <img src="/images/customer01.jpg" alt="">
                 </div>
             </div>
@@ -25,7 +50,7 @@
             <div class="cardBox">
                 <div class="card">
                     <div>
-                        <div class="numbers">1,504</div>
+                   <div class="numbers">1533</div>
                         <div class="cardName">Daily Views</div>
                     </div>
 
@@ -76,157 +101,61 @@
                         <a href="#" class="btn">View All</a>
                     </div>
 
-                    <table>
+                    <table id="results" class ="tablview">
                         <thead>
                             <tr>
-                                <td>Name</td>
-                                <td>Price</td>
-                                <td>Payment</td>
-                                <td>Status</td>
+                                <td>nom</td>
+                                <td>pernom</td>
+                                <td>email</td>
+                                <td>role</td>
+                                <td>image</td>
+                                <td >actif</td>
                             </tr>
                         </thead>
 
                         <tbody>
-                            <tr>
-                                <td>Star Refrigerator</td>
-                                <td>$1200</td>
-                                <td>Paid</td>
-                                <td><span class="status delivered">Delivered</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Dell Laptop</td>
-                                <td>$110</td>
-                                <td>Due</td>
-                                <td><span class="status pending">Pending</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Apple Watch</td>
-                                <td>$1200</td>
-                                <td>Paid</td>
-                                <td><span class="status return">Return</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Addidas Shoes</td>
-                                <td>$620</td>
-                                <td>Due</td>
-                                <td><span class="status inProgress">In Progress</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Star Refrigerator</td>
-                                <td>$1200</td>
-                                <td>Paid</td>
-                                <td><span class="status delivered">Delivered</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Dell Laptop</td>
-                                <td>$110</td>
-                                <td>Due</td>
-                                <td><span class="status pending">Pending</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Apple Watch</td>
-                                <td>$1200</td>
-                                <td>Paid</td>
-                                <td><span class="status return">Return</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Addidas Shoes</td>
-                                <td>$620</td>
-                                <td>Due</td>
-                                <td><span class="status inProgress">In Progress</span></td>
-                            </tr>
+                        {%for U in users %} 
+                        <tr>
+        
+        <td>{{ U.nom}}</td>   
+        <td>{{ U.prenom }}</td>
+        <td>{{ U.mail}}</td>
+        <td> {% if U.role == 0 %}
+                Etudiant
+            {% elseif U.role == 1 %}
+                Prof
+            {% elseif U.role == 2 %}
+                Admin
+            {% endif %}
+            </td>
+            {% if U.image %}
+            <td><img src="{{ asset('uploads/files/' ~ U.image) }}" style="width:50px;height:50px;"></td>
+            {% else %}
+            <td>Aucune image sélectionnée</td>
+            {% endif %}
+        <td>    {% if U.actif == 0 %}
+                
+                  <img  src="/images/verifier.png" alt="Utilisateur Activer" style="position: relative; width: 25px; height: 25px; border-radius: 50px; overflow: hidden;">
+                
+            {% elseif U.actif == 1 %}
+                <img  src="/images/desactiver.png" alt="Utilisateur désactivé" style="position: relative; width: 25px; height: 25px; border-radius: 50px; overflow: hidden;">
+                
+            {% endif %}</td>
+             <td><a href="{{ path('app_user_edit', {'id': U.userId}) }}">edit</a></td>
+             <td><a href="{{ path('app_user_delete', {'id': U.userId}) }}">delete</a></td>
+       
+        {% endfor %}
+        
+    </tr>
+                          
                         </tbody>
                     </table>
                 </div>
 
                 <!-- ================= New Customers ================ -->
-                <div class="recentCustomers">
-                    <div class="cardHeader">
-                        <h2>Recent Customers</h2>
-                    </div>
-
-                    <table>
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="/images/customer02.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>David <br> <span>Italy</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="/images/customer01.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>Amit <br> <span>India</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="/images/customer02.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>David <br> <span>Italy</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="/images/customer01.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>Amit <br> <span>India</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="/images/customer02.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>David <br> <span>Italy</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="/images/customer01.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>Amit <br> <span>India</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="/images/customer01.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>David <br> <span>Italy</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="/images/customer02.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>Amit <br> <span>India</span></h4>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                
             </div>
         </div>
     </div>
+
 {% endblock %}

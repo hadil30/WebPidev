@@ -1,0 +1,52 @@
+{% block content %}
+
+                    <table id="results" class ="tablview">
+                        <thead>
+                            <tr>
+                                <td>nom</td>
+                                <td>pernom</td>
+                                <td>email</td>
+                                <td>role</td>
+                                <td>image</td>
+                                <td >actif</td>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                        {%for U in users %} 
+                        <tr>
+        
+        <td>{{ U.nom}}</td>   
+        <td>{{ U.prenom }}</td>
+        <td>{{ U.mail}}</td>
+        <td> {% if U.role == 0 %}
+                Etudiant
+            {% elseif U.role == 1 %}
+                Prof
+            {% elseif U.role == 2 %}
+                Admin
+            {% endif %}
+            </td>
+            {% if U.image %}
+            <td><img src="{{ asset('uploads/files/' ~ U.image) }}" style="width:50px;height:50px;"></td>
+            {% else %}
+            <td>Aucune image sélectionnée</td>
+            {% endif %}
+        <td>    {% if U.actif == 0 %}
+                
+                  <img  src="/images/verifier.png" alt="Utilisateur Activer" style="position: relative; width: 25px; height: 25px; border-radius: 50px; overflow: hidden;">
+                
+            {% elseif U.actif == 1 %}
+                <img  src="/images/desactiver.png" alt="Utilisateur désactivé" style="position: relative; width: 25px; height: 25px; border-radius: 50px; overflow: hidden;">
+                
+            {% endif %}</td>
+             <td><a href="{{ path('app_user_edit', {'id': U.userId}) }}">edit</a></td>
+             <td><a href="{{ path('app_user_delete', {'id': U.userId}) }}">delete</a></td>
+       
+        {% endfor %}
+        
+    </tr>
+                          
+                        </tbody>
+                    </table>
+    {% endblock %}

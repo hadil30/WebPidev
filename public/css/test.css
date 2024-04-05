@@ -1,0 +1,75 @@
+/* Flex container for the menu, with padding */
+.content-header__menu {
+    padding: 20px; /* Add padding around the navigation */
+    display: flex;
+    justify-content: start; /* Align items horizontally to the start */
+}
+.content-header__menu ul li.selected a{background-color:#d5d7e0;color:#fff}
+
+.content-header__menu ul {
+    display: flex;
+    justify-content: start; /* Align items horizontally to the start of the container */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Style for the list items as buttons */
+.appointment,
+.prescription,
+.reports {
+    margin-right: 10px; /* Spacing between buttons */
+}
+
+.appointment a,
+.prescription a,
+.reports a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #d5d7e08f; /* Button background color */
+    color: #000000; /* Button text color */
+    text-decoration: none;
+    border: none;
+    border-radius: 20px; /* Rounded corners */
+    cursor: pointer;
+}
+
+/* Hover effect for buttons */
+.appointment:hover a,
+.prescription:hover a,
+.reports:hover a {
+    background-color: #0056b3; 
+    color:white;/* Darker shade on hover */
+}
+
+/* Flex container for the user avatar and name, aligning to the right with padding */
+.content-header__user-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: end; /* Aligns items to the end of the container */
+    position: absolute; /* Positioning it absolutely to place it at the end of the page */
+    right: 20px; /* Right padding */
+    top: 20px; /* Top padding */
+    padding: 10px; /* Padding inside the container */
+}
+
+.content-header__user-name {
+    margin-right: 10px; /* Spacing between the name and the avatar */
+}
+
+/* Media query for screens smaller than 768px */
+@media (max-width: 768px) {
+    /* Hide the user's name text and avatar */
+    .content-header__user-name,
+    .content-header__user-thumb {
+        display: none;
+    }
+}
+
+
+/* Style for the avatar image */
+.content-header__user-thumb img {
+    width: 40px; /* Adjust the size of the avatar */
+    height: 40px;
+    border-radius: 50%; /* Make the image round */
+}

@@ -1,13 +1,107 @@
 {% extends 'pages/Admin/admindashboard.html.twig' %}
 
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/test.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">  
+{% endblock %}
+
 {% block content %}
-<div class="main">
- <div class="cardBox">
-                <div class="card">
+    <div class="main">
+        <nav class="content-header__menu">       
+            <ul>
+                <li class="appointment modal-toggle"><a href="#">Add Test</a></li>
+                <li class="prescription modal-toggle" data-openpopup="prescription"><a href="#">Update Test</a></li>
+            </ul>
+        </nav>
+                                
+        <div class="content-header__user-avatar content-header__dropdown-activate" data-dropdown="userdropdown">
+            <span class="content-header__user-name">Nathalie Roberts</span>
+            <div class="content-header__user-thumb">
+                <img src="{{ asset('images/customer01.jpg') }}" alt="" title="">
+            </div>
+        </div>
+
+        <div class="maincontent">
+            <div class="cardBoxmain">
+                <div class="cardmain">
                     <div>
-                        <div class="numbers">4</div>
-                        <div class="cardName">test</div>
+         {{ form_start(form, {'attr': {'class': 'form'}}) }}
+
+<div class="form-group">
+    {{ form_label(form.nom, 'Nom') }}
+    {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.description, 'Description') }}
+    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+</div>
+
+
+<div class="form-group">
+    {{ form_label(form.questions, 'Questions') }}
+    <ul class="question-list" data-prototype="{{ form_widget(form.questions.vars.prototype)|e('html_attr') }}">
+         {% for questionForm in form.questions %}
+        <li>
+            {{ form_widget(questionForm.text) }}
+            {% if questionForm.vars.data.reponses is defined %}
+               
+                <ul class="response-list">
+                        {% for responseForm in questionForm.vars.value.reponses %}
+                            <li>
+                                {{ form_widget(responseForm.reponse) }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="form-group">
+    <button type="submit" class="btn btn-primary">Submit</button>
+</div>
+
+{{ form_end(form) }}
+
+
+{#<form method="post">
+    {{ form_start(form) }}
+    {{ form_row(form.nom) }}
+    {{ form_row(form.description) }}
+   <ul class="question-list" data-prototype="{{ form_widget(form.questions.vars.prototype)|e('html_attr') }}">
+    {% for questionForm in form.questions %}
+        <li>
+            {{ form_row(questionForm.text) }}
+            <ul class="response-list" >
+                {% for reponseForm in questionForm.reponses %}
+                    <li>
+                        {{ form_row(reponseForm.reponse) }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+</ul>
+
+          
+    <button type="submit">Envoyer</button>
+    {{ form_end(form) }}
+
+#}
                     </div>
-                    </div></div>
-                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script src="{{ asset('js/formulaireDynamique.js') }}"></script>
+ 
 {% endblock %}

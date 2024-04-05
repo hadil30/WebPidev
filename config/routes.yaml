@@ -1,6 +1,6 @@
 index:
   path: /
-  controller: App\Controller\DefaultController::index
+  controller: App\Controller\CustomSecurityController::loginn
 login:
     path: '/login'
     controller: 'App\Controller\LoginController::indexlogin'
@@ -27,7 +27,8 @@ admin_event:
     controller: App\Controller\AdminController::event
 admin_test:
     path: /admin/test
-    controller: App\Controller\AdminController::test
+    controller: App\Controller\AdminController::newtest
+    methods: [POST,GET]
 admin_quiz:
     path: /admin/quiz
     controller: App\Controller\AdminController::quiz
@@ -49,3 +50,37 @@ user_test:
 user_quiz:
     path: /user/quiz
     controller: App\Controller\quizController::index
+
+app_user_view:
+    path: /user/view
+    controller: App\Controller\userController::view
+app_user_delete:
+    path: /user/delete/{id}
+    controller: App\Controller\userController::delete
+app_user_count:
+    path: /user/count
+    controller: App\Controller\userController::nombreUtilisateurs
+app_user_addd:
+    path: /user/addd
+    controller: App\Controller\userController::Add
+app_user_edit:
+    path: /user/edit/{id}
+    controller: App\Controller\userController::edit
+app_login:
+    path: /login
+    controller: App\Controller\CustomSecurityController::login
+app_loginn:
+    path: /loginn
+    controller: App\Controller\CustomSecurityController::loginn
+app_home:
+    path: /home
+    controller: App\Controller\CustomSecurityController::home
+app_logout:
+    path: /logout
+    controller: App\Controller\CustomSecurityController::logout
+app_user_profil:
+    path: /user/editprofil/{id}
+    controller: App\Controller\userController::editprofil
+app_user_search:
+    path: /user/search
+    controller: App\Controller\userController::searchUser
