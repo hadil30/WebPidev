@@ -1,13 +1,190 @@
 {% extends 'pages/Admin/admindashboard.html.twig' %}
 
+{% block css %}
+    {{ parent() }}
+    <style>
+        /* Votre style personnalisé ici */
+        .table-container {
+            margin-top: 20px;
+            overflow-x: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ajout d'une ombre légère */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+            padding: 12px; /* Ajout de padding */
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #666;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .action-buttons {
+            white-space: nowrap;
+        }
+
+        .btn {
+            padding: 10px;
+            border: none;
+            border-radius: 50%;
+            color: #ffffff;
+            font-size: 16px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            margin-right: 5px;
+            display: inline-block; /* Ajout pour que les boutons d'action s'affichent */
+        }
+
+        .btn-add-course {
+            background-color: #6c757d; /* Couleur de fond pour le bouton "Add Course" */
+        }
+
+        .btn-apply {
+            background-color: #28a745; /* Couleur de fond pour le bouton "Apply" */
+        }
+
+        .btn-update,
+        .btn-delete {
+            display: inline-block; /* Assurez-vous que les boutons Update et Delete sont affichés */
+        }
+
+        .btn-update {
+            background-color: green;
+            box-shadow: 0 0 10px 0 rgba(0, 255, 0, 0.5);
+        }
+
+        .btn-delete {
+            background-color: #f00020;
+        }
+
+        .custom-image {
+            max-width: 80px;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .video-link {
+            color: black;
+            text-decoration: underline;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .video-link:hover {
+            color: #0056b3;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-icon {
+            margin-right: 10px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .sort-select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 150px;
+            margin-right: 10px;
+        }
+
+        .add-btn {
+            margin-right: 10px;
+        }
+
+        .success-message {
+            color: green;
+            margin-top: 10px;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+
+        .btn-add-course:hover,
+        .btn-apply:hover,
+        .btn-update:hover,
+        .btn-delete:hover {
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5); /* Ombre lors du survol */
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
 <div class="main">
- <div class="cardBox">
-                <div class="card">
-                    <div>
-                        <div class="numbers">1</div>
-                        <div class="cardName">cours</div>
-                    </div>
-                    </div></div>
-                    </div>
-                    {% endblock %}
+    <div class="maincontent">
+        <div class="search-container">
+            <a class="btn btn-primary add-btn btn-add-course" href="{{ path('admin_coursadd') }}"><strong>+</strong></a>
+            <span class="search-icon">&#128269;</span>
+            <input type="text" class="search-input" placeholder="Search...">
+            <span class="sort-icon">&#x2191;&#x2193;</span>
+            <select class="sort-select">
+                <option value="title">Sort by Title</option>
+                <option value="level">Sort by Level</option>
+            </select>
+            <button class="btn btn-primary btn-apply"><strong>Apply</strong></button>
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Level</th>
+                        <th>Image</th>
+                        <th>Link</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for course in l %}
+                    <tr>
+                        <td>{{ course.titre }}</td>
+                        <td>{{ course.description }}</td>
+                        <td>{{ course.niveau }}</td>
+                        <td><img src="{{ asset('assets/' ~ course.ImagePath) }}" alt="Cover" class="custom-image"></td>
+                        <td>{% if course.link %}<a class="video-link" href="{{ course.link }}" target="_blank"><strong>Watch Video</strong></a>{% else %}<span class="no-video">No Video Available</span>{% endif %}</td>
+                        <td class="action-buttons">
+                            <a class="btn btn-update" href="{{ path('cours_detail', {'id': course.id}) }}">✎</a>
+                            <a class="btn btn-delete delete-btn" href="{{ path('cours_delete', {id: course.id}) }}" onclick="return confirm('Are you sure you want to delete this course?')"><strong>&#x1F5D1;</strong></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
