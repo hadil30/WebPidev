@@ -1,4 +1,4 @@
- {% extends 'pages/Interface_Communes/userinterface.html.twig' %}
+{% extends 'pages/Interface_Communes/userinterface.html.twig' %}
 {% block stylesheets %}
     {{ parent() }}
 {% endblock %}
@@ -9,7 +9,7 @@
 <main class="mai">
    
 
- {{ form_start(form, {'attr': {'class': 'forum', 'id': 'myForma', 'enctype': 'multipart/form-data'}}) }}
+{{ form_start(form, {'attr': {'class': 'forum', 'id': 'myForma', 'enctype': 'multipart/form-data', 'novalidate': 'novalidate'}}) }}
         <h2>Add New Quiz</h2>
         <div class="form-group">
             {{ form_label(form.titre) }}
@@ -42,7 +42,11 @@
             <div id="drop-zone">Drop a .docx file here</div>
             <img id="image-preview">
         </div>
-        <button type="submit" name="submit">Submit</button>
+<button id="mainSubmitButton" type="submit" name="submit">Submit</button>
     {{ form_end(form) }}
+
     </main>
+    
+
+   
 {% endblock %}

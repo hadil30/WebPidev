@@ -63,6 +63,8 @@
 
     // Add an event listener to the search input field to trigger the search on input change
     document.getElementById('search-field').addEventListener('input', function() {
+                console.log(this.value); // Log the value of this.value
+
         searchQuiz(this.value);
     });
 </script>

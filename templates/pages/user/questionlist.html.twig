@@ -1,0 +1,47 @@
+{% extends 'pages/Interface_Communes/userinterface.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+     <link href="{{ asset('css/styleAhmed.css') }}" rel="stylesheet" type="text/css"/>
+
+<main class="mainnnn">
+<div class="recent-articles">
+   <table class="table">
+    <thead>
+        <tr>
+            <th>Question</th>
+            <th>Answer 1</th>
+            <th>Answer 2</th>
+            <th>Answer 3</th>
+            <th>Answer 4</th>
+          
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for question in questions %}
+        <tr>
+            <td>{{ question.quest }}</td>
+            <td>{{ question.rep1 }}</td>
+            <td>{{ question.rep2 }}</td>
+            <td>{{ question.rep3 }}</td>
+            <td>{{ question.rep4 }}</td>
+            <td>
+                <a href="{{ path('question_data_del',{'quiz':quiz,'id':question.idQuest}) }}"><i class="fas fa-trash"></i></a>
+                <a href="{{ path('question_data_mod',{'quiz':quiz,'id':question.idQuest}) }}"><i class="fas fa-edit"></i></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</div>
+    </main>
+    
+
+   
+
+   
+{% endblock %}

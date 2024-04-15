@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class QuizType extends AbstractType
 {
@@ -18,34 +19,52 @@ class QuizType extends AbstractType
         $builder
             ->add('titre', TextType::class, [
                 'label' => 'Title',
-                'required' => true,
+                'constraints' => [
+                    new Assert\NotBlank(),
+                ],
             ])
             ->add('decrp', TextType::class, [
                 'label' => 'Description',
-                'required' => false,
+                'constraints' => [
+                    new Assert\NotBlank(),
+                ],
             ])
             ->add('nbQuest', IntegerType::class, [
                 'label' => 'Number of Questions',
-                'required' => false,
+                'constraints' => [
+                    new Assert\NotBlank(),
+                ],
             ])
             ->add('categorie', TextType::class, [
                 'label' => 'Category',
-                'required' => false,
+                'constraints' => [
+                    new Assert\NotBlank(),
+                ],
             ])
-            
             ->add('imageUrl', FileType::class, [
                 'label' => 'Image',
-                'required' => false,
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\File([
+                        'maxSize' => '5M',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            // Add more allowed image MIME types if needed
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid image file (JPEG, PNG).',
+                    ]),
+                ],
                 'attr' => [
                     'accept' => 'image/*', // Restrict to image files
                 ],
                 'data_class' => null, // Set data_class to null to handle file uploads
             ])
-            
             ->add('userId', HiddenType::class, [
                 'mapped' => false, // Set mapped to false for non-entity fields
                 'data' => $options['user_id'], // Set the default value to the user ID
             ]);
+            
     }
 
     public function configureOptions(OptionsResolver $resolver): void

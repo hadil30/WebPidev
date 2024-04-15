@@ -296,3 +296,139 @@ color: #666;
   outline: none;
   box-shadow: 0px 0px 10px #b8b8b8;
 }
+/* Style for the pop-up container */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top of everything */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Enable scrolling if needed */
+  background-color: rgba(0, 0, 0, 0.6); /* Black background with transparency */
+}
+
+/* Style for the pop-up content */
+.modal-content {
+  background-color: #fff; /* White background */
+  margin: 15% auto; /* Center the pop-up vertically and horizontally */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Adjust the width as needed */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Shadow effect */
+}
+
+/* Style for the next and submit buttons */
+.modal-content button {
+  margin-top: 10px;
+}
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}/* Custom styles for the pop-up modal */
+#popupModal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Style for the pop-up content */
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+}
+
+/* Style for the next and submit buttons */
+.modal-content button {
+    margin-top: 10px;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Style for the question and answer fields */
+.question-field {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.answer-group {
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column;
+}
+
+.answer-field {
+  width: calc(25% - 8px); /* 25% width for each answer field with smaller spacing */
+  margin-right: 8px;
+}
+
+/* Custom styles for the pop-up modal */
+#popupModal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Style for the pop-up content */
+.modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+}
+
+/* Style for the next and submit buttons */
+.modal-content button {
+  margin-top: 10px;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Style for the question and answer fields */
+.question-field {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.answer-field {
+  width: calc(25% - 10px); /* Adjusted width for smaller spacing */
+  margin-right: 8px;
+  margin-bottom: 8px;
+  display: inline-block; /* Display in the same line */
+}

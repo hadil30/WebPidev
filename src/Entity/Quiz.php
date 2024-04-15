@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\AttributeOverrides;
 
 #[ORM\Table(name: "quiz")]
 #[ORM\Entity]
@@ -11,7 +12,7 @@ class Quiz
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: "IDENTITY")]
     #[ORM\Column(name: "quiz_id", type: "integer", nullable: false)]
-    private $quizId;
+    public $quizId;
 
     #[ORM\Column(name: "decrp", type: "string", length: 255, nullable: true)]
     private $decrp;
@@ -106,5 +107,9 @@ class Quiz
         $this->imageUrl = $imageUrl;
 
         return $this;
+    }
+    public function __toString()
+    {
+        return $this->quizId;
     }
 }
