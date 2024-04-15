@@ -29,5 +29,60 @@ class Panier
     #[ORM\JoinColumn(name: "id_liv", referencedColumnName: "id_liv")]
     private ?Books $idLiv = null;
 
+
     // Getters and setters
+    public function getIdPanier(): ?int
+    {
+        return $this->idPanier;
+    }
+
+    public function getTotalPrice(): string
+    {
+        return $this->totalPrice;
+    }
+
+    public function setTotalPrice(string $totalPrice): void
+    {
+        $this->totalPrice = $totalPrice;
+    }
+
+    public function getNomLiv(): ?string
+    {
+        return $this->nomLiv;
+    }
+
+    public function setNomLiv(?string $nomLiv): void
+    {
+        $this->nomLiv = $nomLiv;
+    }
+
+    public function getImagePath(): ?string
+    {
+        return $this->imagePath;
+    }
+
+    public function setImagePath(?string $imagePath): void
+    {
+        $this->imagePath = $imagePath;
+    }
+
+    public function getPdfPath()
+    {
+        return $this->pdfPath;
+    }
+
+    public function setPdfPath($pdfPath): void
+    {
+        $this->pdfPath = $pdfPath;
+    }
+
+    public function getIdLiv(): ?Liv
+    {
+        return $this->idLiv;
+    }
+
+    public function setIdLiv(?Liv $idLiv): void
+    {
+        $this->idLiv = $idLiv;
+    }
 }

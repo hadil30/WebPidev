@@ -1,0 +1,41 @@
+{% extends 'pages/Admin/admindashboard.html.twig' %}
+
+{% block content %}
+    <div class="main">
+        <div class="maincontent">
+            <div class="cardBoxmain">
+                <div class="cardmain">
+                    {% block contentupdatewithid %} 
+                        <div class="form-group">
+                            {{ form_start(form) }}
+                            {{ form_label(form.nomLiv, 'Book Title', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.nomLiv, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.categorieLiv, 'Category', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.categorieLiv, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+
+                        {% if book.imagePath is not null %}
+                            <div class="form-group">
+                                <label>Current Cover</label>
+                                <img src="{{ asset('assets/' ~ book.imagePath) }}" alt="Current Cover" class="current-cover" style="max-width: 150px; max-height: 200px;">
+                            </div>
+                        {% endif %}
+
+                        <div class="form-group">
+                            {{ form_label(form.imagePath, 'Cover', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.imagePath, {'attr': {'class': 'form-control-file'}}) }}
+                        </div>
+
+                        <div class="form-group button-group">
+                            <button type="submit" class="btn-update">Update</button>
+                        </div>
+                        {{ form_end(form) }}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
