@@ -1,0 +1,100 @@
+    {% extends 'pages/Admin/eventadmin.html.twig' %}
+{% block contentupdate %} 
+    {% block css %}
+    <style>
+    .cardmaintest-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .cardmaintest {
+        background: var(--white);
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+        margin-bottom: 20px;
+        width: calc(50% - 20px); /* Adjust width based on the number of items you want in a row */
+    }
+
+    .cardmaintest li {
+        margin: 10px;
+        list-style: none; /* Remove bullet points */
+    }
+
+    .delete-icon {
+        margin-top: 10px; /* Adjust margin as needed */
+    }
+    a {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Use the default text color */
+}
+i{color:red;}
+    </style>
+    {{ parent() }}
+    {% endblock %}
+
+    <div class="cardmaintest-container">
+        {% for event in event %}
+            
+            <div class="cardmaintest">
+    <div>
+        <a href="{{ path('event_detail', {'EVENT_ID': event.getEventId()}) }}" class="event-detail-link">
+            <ul>
+    <li><strong>Nom:</strong> {{ event.nom }}</li>
+    <li><strong>Description:</strong> {{ event.DESCRIPTION }}</li>
+    <li><strong>Date:</strong> {{ event.DATEe|date('Y-m-d') }}</li>
+    <li><strong>Status:</strong> {{ event.STATUS }}</li>
+    <li><strong>Type:</strong> {{ event.Typee }}</li>
+    {% if event.getImageUrl() %}
+        <li>
+            <strong>Image:</strong>
+            <img src="{{ event.getImageUrl() }}" alt="Event Image" style="display: block onload="console.log('Image URL:', this.src);">
+        </li>
+    {% endif %}
+</ul>
+            
+        </a>
+    </div>
+    <a href="{{ path('event_delete', {'EVENT_ID': event.getEventId()}) }}" class="delete-icon" onclick="return confirm('Are you sure?');">
+       
+        <div style="display: flex; justify-content: center; align-items: center;">
+        <i class="fas fa-trash-alt"></i>
+    </div>
+    </a>
+</div>
+
+
+          
+        {% endfor %}
+    </div>
+
+
+        
+
+
+    {% block js %} 
+        {{ parent() }}
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('.description').forEach(description => {
+                    let text = description.textContent;
+                    if (text.length > 15) {
+                        description.textContent = text.substr(0, 15) + '...';
+                    }
+                });
+            });
+            function loadeventDetails(event, url) {
+                    event.preventDefault(); 
+                    fetch(url)
+                        .then(response => response.text())
+                        .then(data => {
+                            document.getElementById('eventDetails').innerHTML = data;
+                        })
+                        .catch(error => console.error('Error fetching event details:', error));
+                }
+        </script>
+    {% endblock %}
+
+
+    {% endblock %}

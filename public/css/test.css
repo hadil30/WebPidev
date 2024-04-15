@@ -1,0 +1,193 @@
+/* Flex container for the menu, with padding */
+.content-header__menu {
+    padding: 20px; /* Add padding around the navigation */
+    display: flex;
+    justify-content: start; /* Align items horizontally to the start */
+}
+.content-header__menu ul li.selected a{background-color:#d5d7e0;color:#fff}
+
+.content-header__menu ul {
+    display: flex;
+    justify-content: start; /* Align items horizontally to the start of the container */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Style for the list items as buttons */
+.appointment,
+.prescription,
+.reports {
+    margin-right: 10px; /* Spacing between buttons */
+}
+
+.appointment a,
+.prescription a,
+.reports a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #d5d7e08f; /* Button background color */
+    color: #000000; /* Button text color */
+    text-decoration: none;
+    border: none;
+    border-radius: 20px; /* Rounded corners */
+    cursor: pointer;
+}
+
+/* Hover effect for buttons */
+.appointment:hover a,
+.prescription:hover a,
+.reports:hover a {
+    background-color: #0056b3; 
+    color:white;/* Darker shade on hover */
+}
+
+/* Flex container for the user avatar and name, aligning to the right with padding */
+.content-header__user-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: end; /* Aligns items to the end of the container */
+    position: absolute; /* Positioning it absolutely to place it at the end of the page */
+    right: 20px; /* Right padding */
+    top: 20px; /* Top padding */
+    padding: 10px; /* Padding inside the container */
+}
+
+.content-header__user-name {
+    margin-right: 10px; /* Spacing between the name and the avatar */
+}
+
+/* Media query for screens smaller than 768px */
+@media (max-width: 768px) {
+    /* Hide the user's name text and avatar */
+    .content-header__user-name,
+    .content-header__user-thumb {
+        display: none;
+    }
+}
+
+
+/* Style for the avatar image */
+.content-header__user-thumb img {
+    width: 40px; /* Adjust the size of the avatar */
+    height: 40px;
+    border-radius: 50%; /* Make the image round */
+}
+/* Assuming your form fields are wrapped in a div with a "form-row" class */
+button {
+    font-family: inherit;
+    font-size: 20px;
+    background: #212121;
+    color: white;
+    fill: rgb(155, 153, 153);
+    padding: 0.7em 1em;
+    padding-left: 0.9em;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    border-radius: 15px;
+    font-weight: 1000;
+  }
+  
+  button span {
+    display: block;
+    margin-left: 0.3em;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  button svg {
+    display: block;
+    transform-origin: center center;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  button:hover {
+    background: #000;
+  }
+  
+  button:hover .svg-wrapper {
+    transform: scale(1.25);
+    transition: 0.5s linear;
+  }
+  
+  button:hover svg {
+    transform: translateX(1.2em) scale(1.1);
+    fill: #fff;
+  }
+  
+  button:hover span {
+    opacity: 0;
+    transition: 0.5s linear;
+  }
+  
+  button:active {
+    transform: scale(0.95);
+  }
+  .c-button {
+    color: #000;
+    font-weight: 700;
+    font-size: 16px;
+    text-decoration: none;
+    padding: 0.9em 1.6em;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .c-button--gooey {
+    color: #06c8d9;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border: 4px solid #06c8d9;
+    border-radius: 0;
+    position: relative;
+    transition: all 700ms ease;
+  }
+  
+  .c-button--gooey .c-button__blobs {
+    height: 100%;
+    filter: url(#goo);
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: -3px;
+    right: -1px;
+    z-index: -1;
+  }
+  
+  .c-button--gooey .c-button__blobs div {
+    background-color: #06c8d9;
+    width: 34%;
+    height: 100%;
+    border-radius: 100%;
+    position: absolute;
+    transform: scale(1.4) translateY(125%) translateZ(0);
+    transition: all 700ms ease;
+  }
+  
+  .c-button--gooey .c-button__blobs div:nth-child(1) {
+    left: -5%;
+  }
+  
+  .c-button--gooey .c-button__blobs div:nth-child(2) {
+    left: 30%;
+    transition-delay: 60ms;
+  }
+  
+  .c-button--gooey .c-button__blobs div:nth-child(3) {
+    left: 66%;
+    transition-delay: 25ms;
+  }
+  
+  .c-button--gooey:hover {
+    color: #fff;
+  }
+  
+  .c-button--gooey:hover .c-button__blobs div {
+    transform: scale(1.4) translateY(0) translateZ(0);
+  }
+  

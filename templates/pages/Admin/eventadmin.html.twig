@@ -1,0 +1,72 @@
+{% extends 'pages/Admin/admindashboard.html.twig' %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/test.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+    <style>
+        .reponse {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between; /* Or use 'flex-start' for buttons to be left-aligned */
+            align-items: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="main">
+        <nav class="content-header__menu">       
+            <ul>
+                <li class="appointment modal-toggle" onclick="toggleAdd()"><a  href="{{ path('admin_eventadd') }}">Add event</a></li>
+                <li class="prescription modal-toggle" onclick="toggleUpdate()"><a href="{{ path('admin_eventupdate') }}">Update event</a></li>
+                 <div class="typewriter">
+    <div class="slide"><i></i></div>
+    <div class="paper"></div>
+    <div class="keyboard"></div>
+</div>
+            </ul>
+        </nav>
+                                
+        <div class="content-header__user-avatar content-header__dropdown-activate" data-dropdown="userdropdown">
+            <span class="content-header__user-name"> Anas naser khoija</span>
+            <div class="content-header__user-thumb">
+                <img src="{{ asset('images/customer01.jpg') }}" alt="" title="">
+            </div>
+        </div>
+
+        <div class="maincontent">
+            <div class="cardBoxmain">
+                <div class="cardmain">
+                    <div id="add" >
+                        {% block contentadd %}{% endblock %}
+                    </div>
+                    <div id="update">
+                        {% block contentupdate %}{% endblock %}
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script src="{{ asset('js/formulaireDynamique.js') }}"></script>
+
+
+    
+{% endblock %}

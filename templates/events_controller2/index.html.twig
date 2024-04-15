@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<title>Events index</title>
+
+{% block body %}
+    <h1>Events index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>EventId</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Typee</th>
+                <th>Datee</th>
+                <th>Status</th>
+                <th>ImageUrl</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for event in events %}
+            <tr>
+                <td>{{ event.eventId }}</td>
+                <td>{{ event.nom }}</td>
+                <td>{{ event.description }}</td>
+                <td>{{ event.typee }}</td>
+                <td>{{ event.datee ? event.datee|date('Y-m-d') : '' }}</td>
+                <td>{{ event.status }}</td>
+                <td>{{ event.imageUrl }}</td>
+                <td>
+                    <a href="{{ path('app_events_controller2_show', {'eventId': event.eventId}) }}">show</a>
+                    <a href="{{ path('app_events_controller2_edit', {'eventId': event.eventId}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_events_controller2_new') }}">Create new</a>
+{% endblock %}

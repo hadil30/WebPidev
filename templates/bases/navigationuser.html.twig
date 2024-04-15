@@ -1,0 +1,28 @@
+
+    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        {% block logo %}
+                            <a href="{{ path('index') }}" class="logo">
+                                <h4>Na<span>9ra</span></h4>
+                            </a>
+                        {% endblock %}
+                        <ul class="nav">
+                        <li class="scroll-to-section"><a href="{{ path('user_cours') }}">cours</a></li>
+                        <li class="scroll-to-section"><a href="{{ path('user_ebooks') }}">Ebooks</a></li>
+                        <li class="scroll-to-section"><a href="{{ path('user_event') }}">Event</a></li>
+                        <li class="scroll-to-section"><a href="{{ path('user_test') }}">Test</a></li>
+                        <li class="scroll-to-section"><a href="{{ path('user_quiz') }}">Quiz</a></li> 
+                        <li class="scroll-to-section"><a href="{{ path('user_profile') }}">Profile</a></li> 
+                        <li class="scroll-to-section"><img src="{{ asset('images/nakratempaa.png') }}" alt="" height="40px"></li>                        </ul>
+                        <a class='menu-trigger'>
+                        <span>Menu</span>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+

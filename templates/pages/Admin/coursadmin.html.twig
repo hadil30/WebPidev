@@ -1,0 +1,66 @@
+{% extends 'pages/Admin/admindashboard.html.twig' %}
+
+{% block content %}
+<div class="main">
+    <div class="cardBox">
+        <div class="card">
+
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+
+            <div class="form-group">
+                {{ form_row(form.text) }}
+            </div>
+
+            <div id="reponses-collection" class="form-group" data-prototype="{{ form_widget(form.reponses.vars.prototype)|e('html_attr') }}">
+                <h2>Responses</h2>
+                <div class="reponses">
+                    {% for reponseForm in form.reponses %}
+                        <div class="reponse">
+                            {{ form_row(reponseForm.reponse) }}
+                            <button type="button" class="btn btn-danger btn-sm remove-reponse">Remove Response</button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-success btn-sm add-reponse">Add Response</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const responsesContainer = document.getElementById('reponses-collection');
+            const addButton = document.querySelector('.add-reponse');
+
+            addButton.addEventListener('click', function () {
+                addReponseForm(responsesContainer);
+            });
+
+            responsesContainer.addEventListener('click', function (e) {
+                if (e.target.classList.contains('remove-reponse')) {
+                    e.target.closest('.reponse').remove();
+                }
+            });
+        });
+
+        function addReponseForm(container) {
+            const prototype = container.getAttribute('data-prototype');
+            const index = container.querySelectorAll('.reponse').length;
+
+            const newForm = prototype.replace(/__name__/g, index);
+            const responseDiv = document.createElement('div');
+            responseDiv.className = 'reponse';
+            responseDiv.innerHTML = newForm;
+
+            container.appendChild(responseDiv);
+        }
+    </script>
+{% endblock %}

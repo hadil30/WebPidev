@@ -1,0 +1,89 @@
+    {% extends 'pages/Admin/testadmin.html.twig' %}
+{% block contentupdate %} 
+    {% block css %}
+    <style>
+    .cardmaintest-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .cardmaintest {
+        background: var(--white);
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+        margin-bottom: 20px;
+        width: calc(50% - 20px); /* Adjust width based on the number of items you want in a row */
+    }
+
+    .cardmaintest li {
+        margin: 10px;
+        list-style: none; /* Remove bullet points */
+    }
+
+    .delete-icon {
+        margin-top: 10px; /* Adjust margin as needed */
+    }
+    a {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Use the default text color */
+}
+i{color:red;}
+    </style>
+    {{ parent() }}
+    {% endblock %}
+
+    <div class="cardmaintest-container">
+        {% for test in test %}
+            
+            <div class="cardmaintest">
+    <div>
+        <a href="{{ path('test_detail', {'id': test.id}) }}" class="test-detail-link">
+            <ul>
+                <li><strong>Nom:</strong> {{ test.nom }}</li>
+                <li><strong>Categorie:</strong> {{ test.categorie }}</li>
+                <li><strong>Status:</strong> {{ test.status }}</li>
+                <li><strong>Description:</strong> {{ test.description }}</li>
+            </ul>
+        </a>
+    </div>
+    <a href="{{ path('test_delete', {'id': test.id}) }}" class="delete-icon" onclick="return confirm('Are you sure?');">
+        <i class="fas fa-trash-alt" ></i>
+    </a>
+</div>
+
+
+          
+        {% endfor %}
+    </div>
+
+
+        
+
+
+    {% block js %} 
+        {{ parent() }}
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('.description').forEach(description => {
+                    let text = description.textContent;
+                    if (text.length > 15) {
+                        description.textContent = text.substr(0, 15) + '...';
+                    }
+                });
+            });
+            function loadTestDetails(event, url) {
+                    event.preventDefault(); 
+                    fetch(url)
+                        .then(response => response.text())
+                        .then(data => {
+                            document.getElementById('testDetails').innerHTML = data;
+                        })
+                        .catch(error => console.error('Error fetching test details:', error));
+                }
+        </script>
+    {% endblock %}
+
+
+    {% endblock %}

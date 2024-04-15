@@ -1,0 +1,99 @@
+{% extends 'pages/Admin/eventadmin.html.twig' %}
+
+{% block contentadd %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block css %}
+        {{ parent() }}
+    {% endblock %}
+</head>
+<body>
+    <div class="container">
+        <h1>Add Event</h1>
+        {{ form_start(form) }}
+
+        <div class="form-group">
+            {{ form_label(form.nom, 'Event Name') }}
+            {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+            
+            
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.DESCRIPTION, 'DESCRIPTION') }}
+            {{ form_widget(form.DESCRIPTION, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.DATEe, 'Date') }}
+            {{ form_widget(form.DATEe, {'attr': {'class': 'form-control'}}) }}
+            
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.Typee, 'Typee') }}
+            {{ form_widget(form.Typee, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.STATUS, 'STATUS') }}
+            {{ form_widget(form.STATUS, {'attr': {'class': 'form-control'}}) }}
+        </div>
+      <div class="form-group">
+    {{ form_label(form.imageUrl, 'Image URL') }}
+{{ form_widget(form.imageUrl, {'attr': {'class': 'form-control', 'id':"imageInput",'placeholder': 'Image URL', 'readonly': 'readonly'}}) }}
+<input type="file" id="imageInput" style="display: none;">
+<button type="button" onclick="selectImage()" class="btn btn-primary">Select Image</button>
+<br>
+<img id="imageView" src="#" alt="Selected Image" style="display: none; max-width: 300px; max-height: 300px;">
+<script>
+    function selectImage() {
+        var input = document.getElementById('imageInput');
+        input.click();
+
+        input.addEventListener('change', function() {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    // Set the value of the imageUrl field
+                    var imageUrlField = document.getElementById('{{ form.imageUrl.vars.id }}');
+                    imageUrlField.value = e.target.result;
+                    
+                    // Display the selected image
+                    var imageView = document.getElementById('imageView');
+                    imageView.src = e.target.result;
+                    imageView.style.display = 'block';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+    }
+</script>
+</div>
+        <div class="form-group">
+            {{ form_label(form.user_id, 'user_id') }}
+            {{ form_widget(form.user_id, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        
+        
+        
+
+
+        <div class="form-group button-group text-right"">
+        
+<button type="submit" class="btn btn-primary"  >Submit</button>
+           
+            
+
+        </div>
+       
+        
+ 
+        {{ form_end(form) }}
+        
+    </div>
+</body>
+</html>
+{% endblock %}

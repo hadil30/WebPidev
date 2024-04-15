@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+
+<title>Edit Events</title>
+
+{% block body %}
+    <h1>Edit Events</h1>
+
+    {{ include('events_controller2/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_events_controller2_index') }}">back to list</a>
+
+    {{ include('events_controller2/_delete_form.html.twig') }}
+{% endblock %}

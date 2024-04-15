@@ -1,0 +1,60 @@
+ 
+ {% extends 'pages/Admin/testadmin.html.twig' %}
+
+{% block contentadd %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block css %}
+        {{ parent() }}
+        {% endblock %}
+        {{ form_start(form) }}
+
+                            <div class="form-group">
+                                {{ form_label(form.nom, 'Nom') }}
+                                {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_label(form.description, 'Description') }}
+                                {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                              <div class="form-group">
+                                {{ form_label(form.categorie, 'Categorie') }}
+                                {{ form_widget(form.categorie, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_label(form.questions, 'Questions') }}
+                                <ul class="question-list" data-prototype="{{ form_widget(form.questions.vars.prototype)|e('html_attr') }}">
+                                    {% for questionForm in form.questions %}
+                                        <li>
+                                            {{ form_row(questionForm.text) }}
+                                            
+                                            {% if questionForm.vars.data.reponses is defined %}
+                                                <div class="reponse-list" data-prototype="{{ form_widget(questionForm.reponses.vars.prototype)|e('html_attr') }}"> <!-- Include data-prototype for responses -->
+                                                    <h2>Responses</h2>
+                                                    <div>
+                                                              {% for responseForm in questionForm.reponses %}
+                                                                <div class="form-row">
+                                                                     {{ form_widget(responseForm.isCorrect) }}
+                                                                    {{ form_widget(responseForm.reponse) }}
+
+           
+                                                               </div>
+                                                          {% endfor %}
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+
+                            <div class="form-group button-group">
+    <button type="submit" class="btn btn-primary">submit</button>
+</div>
+                            {{ form_end(form) }}
+                            {% endblock %}

@@ -1,0 +1,121 @@
+
+{% extends 'pages/Admin/admindashboard.html.twig' %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/test.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">  
+    <style>
+        .reponse {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between; /* Or use 'flex-start' for buttons to be left-aligned */
+            align-items: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="main">
+        <nav class="content-header__menu">       
+            <ul>
+                <li class="appointment modal-toggle" onclick="toggleAdd()"><a  href="{{ path('admin_eventadd') }}">Add event</a></li>
+                <li class="prescription modal-toggle" onclick="toggleUpdate()"><a href="{{ path('admin_eventupdate') }}">Update event</a></li>
+            </ul>
+        </nav>
+                                
+        <div class="content-header__user-avatar content-header__dropdown-activate" data-dropdown="userdropdown">
+            <span class="content-header__user-name">Anas Naser Khouaja </span>
+            <div class="content-header__user-thumb">
+                <img src="{{ asset('images/customer01.jpg') }}" alt="" title="">
+            </div>
+        </div>
+
+        <div class="maincontent">
+            <div class="cardBoxmain">
+                <div class="cardmain">
+                    
+{% block contentupdatewithid %} 
+       <link rel="stylesheet" href="{{ asset('css/test.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+    <div class="form-group">{{ form_start(form) }}
+                                {{ form_label(form.nom, 'Nom') }}
+                                {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_label(form.DESCRIPTION, 'Description') }}
+                                {{ form_widget(form.DESCRIPTION, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                              <div class="form-group">
+                                {{ form_label(form.STATUS, 'STATUS') }}
+                                {{ form_widget(form.STATUS, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            <div class="form-group">
+            {{ form_label(form.DATEe, 'Date') }}
+            {{ form_widget(form.DATEe, {'attr': {'class': 'form-control'}}) }}
+        </div>
+                            <div class="form-group">
+                                {{ form_label(form.Typee, 'Typee') }}
+                                {{ form_widget(form.Typee, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            <div class="form-group">
+ {{ form_label(form.imageUrl, 'Image URL') }}
+{{ form_widget(form.imageUrl, {'attr': {'class': 'form-control', 'id':"imageInput",'placeholder': 'Image URL', 'readonly': 'readonly'}}) }}
+<input type="file" id="imageInput" style="display: none;">
+<button type="button" onclick="selectImage()" class="btn btn-primary">Select Image</button>
+<br>
+<img id="imageView" src="#" alt="Selected Image" style="display: none; max-width: 300px; max-height: 300px;">
+<script>
+    function selectImage() {
+        var input = document.getElementById('imageInput');
+        input.click();
+
+        input.addEventListener('change', function() {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    // Set the value of the imageUrl field
+                    var imageUrlField = document.getElementById('{{ form.imageUrl.vars.id }}');
+                    imageUrlField.value = e.target.result;
+                    
+                    // Display the selected image
+                    var imageView = document.getElementById('imageView');
+                    imageView.src = e.target.result;
+                    imageView.style.display = 'block';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+    }
+</script></div>
+<div class="form-group">
+                                {{ form_label(form.user_id, 'User_ID') }}
+                                {{ form_widget(form.user_id, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            <div class="form-group button-group">
+<button type="submit" class="btn btn-primary">submit</button>
+                    </div>
+                {{ form_end(form) }}
+
+
+{% endblock %}
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
