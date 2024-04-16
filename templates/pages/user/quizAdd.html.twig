@@ -14,23 +14,24 @@
         <div class="form-group">
             {{ form_label(form.titre) }}
             {{ form_widget(form.titre, {'attr': {'class': 'form-control'}}) }}
-            <span id="titreerror"></span>
+             <span class="form-error">{{ form_errors(form.titre, {'attr': {'class': 'form-error'}}) }}</span>
         </div>
         <div class="form-group">
             {{ form_label(form.decrp) }}
             {{ form_widget(form.decrp, {'attr': {'class': 'form-control', 'rows': 15}}) }}
-            <span id="contenterror"></span>
+             <span class="form-error">{{ form_errors(form.decrp, {'attr': {'class': 'form-error'}}) }}</span>
         </div>
         <div class="form-group">
             {{ form_label(form.nbQuest) }}
             {{ form_widget(form.nbQuest, {'attr': {'class': 'form-control'}}) }}
-            <span id="contenterror"></span>
+            <span class="form-error">{{ form_errors(form.nbQuest, {'attr': {'class': 'form-error'}}) }}</span>
+
         </div>
         
         <div class="form-group">
             {{ form_label(form.categorie) }}
             {{ form_widget(form.categorie, {'attr': {'class': 'form-control'}}) }}
-            <span id="contenterror"></span>
+            <span class="form-error">{{ form_errors(form.categorie, {'attr': {'class': 'form-error'}}) }}</span>
         </div>
         <div class="form-group">
         {{ form_label(form.imageUrl) }}

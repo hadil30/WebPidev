@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
 #[ORM\Table(name: "question", indexes: [new ORM\Index(name: "fk_quiz_id", columns: ["quiz_id"])])]
@@ -13,18 +14,33 @@ class Question
     #[ORM\GeneratedValue(strategy: "IDENTITY")]
     public ?int $idQuest = null;
 
+    #[Assert\NotBlank(message:"Your quiz must have a question")]
+    #[Assert\Length(min: 10, minMessage:"The question must be at least 10 characters long")]
     #[ORM\Column(name: "quest", type: "string", length: 255, nullable: true)]
     public ?string $quest = null;
 
+    #[Assert\NotBlank(message:"Choice 1 is required")]
+    #[Assert\NotEqualTo(propertyPath: "rep4", message: "Each choice must be different.")]
+    #[Assert\NotEqualTo(propertyPath: "rep2", message: "Each choice must be different.")]
+    #[Assert\NotEqualTo(propertyPath: "rep3", message: "Each choice must be different.")]
     #[ORM\Column(name: "rep1", type: "string", length: 255)]
     public string $rep1;
-
+    #[Assert\NotBlank(message:"Choice 2 is required")]
+    #[Assert\NotEqualTo(propertyPath: "rep4", message: "Each choice must be different.")]
+    #[Assert\NotEqualTo(propertyPath: "rep1", message: "Each choice must be different.")]
+    #[Assert\NotEqualTo(propertyPath: "rep3", message: "Each choice must be different.")]
     #[ORM\Column(name: "rep2", type: "string", length: 255)]
     public string $rep2;
-
+    #[Assert\NotBlank(message:"Choice 3 is required")]
+    #[Assert\NotEqualTo(propertyPath: "rep4", message: "Each choice must be different.")]
+    #[Assert\NotEqualTo(propertyPath: "rep2", message: "Each choice must be different.")]
+    #[Assert\NotEqualTo(propertyPath: "rep1", message: "Each choice must be different.")]
     #[ORM\Column(name: "rep3", type: "string", length: 255)]
     public string $rep3;
-
+    #[Assert\NotBlank(message:"Choice 4 is required")]
+    #[Assert\NotEqualTo(propertyPath: "rep3", message: "Each choice must be different.")]
+    #[Assert\NotEqualTo(propertyPath: "rep2", message: "Each choice must be different.")]
+    #[Assert\NotEqualTo(propertyPath: "rep1", message: "Each choice must be different.")]
     #[ORM\Column(name: "rep4", type: "string", length: 255)]
     public string $rep4;
 

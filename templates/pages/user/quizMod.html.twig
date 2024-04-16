@@ -5,6 +5,7 @@
 
 {% block content %}
      <link href="{{ asset('css/styleAhmed.css') }}" rel="stylesheet" type="text/css"/>
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
 
 <main class="mai">
    
@@ -45,7 +46,10 @@
         </div>
         <button type="submit" name="submit">Submit</button>
     {{ form_end(form) }}
-                        <a href="{{path('app_question_show',{'quiz':quiz})}}"><i class="fas fa-trash"></i></a>
+<a href="{{ path('app_question_show', {'quiz': quiz}) }}" class="btnn">
+    <i class="fas fa-edit"></i> Consulter Questions
+</a>
+
 
     </main>
 {% endblock %}

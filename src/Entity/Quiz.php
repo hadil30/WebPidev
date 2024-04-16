@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\AttributeOverrides;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: "quiz")]
 #[ORM\Entity]
@@ -13,16 +14,22 @@ class Quiz
     #[ORM\GeneratedValue(strategy: "IDENTITY")]
     #[ORM\Column(name: "quiz_id", type: "integer", nullable: false)]
     public $quizId;
-
+ 
+    #[Assert\NotBlank(message:"Your quiz must have a description")]
+    #[Assert\Length(min: 10, minMessage:"The description must be at least 10 characters long")]
     #[ORM\Column(name: "decrp", type: "string", length: 255, nullable: true)]
     private $decrp;
 
+    #[Assert\NotBlank(message:"Your quiz must have a title")]
+    #[Assert\Length(min: 10, minMessage:"The question must be at least 10 characters long")]
     #[ORM\Column(name: "titre", type: "string", length: 255, nullable: true)]
     private $titre;
 
     #[ORM\Column(name: "nb_quest", type: "integer", nullable: true)]
     private $nbQuest;
 
+    #[Assert\NotBlank(message:"Your quiz must have a categorie")]
+    #[Assert\Length(min: 10, minMessage:"The question must be at least 10 characters long")]
     #[ORM\Column(name: "categorie", type: "string", length: 255, nullable: true)]
     private $categorie;
 

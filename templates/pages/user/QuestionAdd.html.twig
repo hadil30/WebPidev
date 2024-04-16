@@ -13,21 +13,28 @@
     <div class="form-group">
         {{ form_label(form.quest, 'Write the question', {'label_attr': {'class': 'question-field'}}) }}
         {{ form_widget(form.quest, {'attr': {'class': 'form-control', 'placeholder': 'Write the question'}, 'required': true}) }}
+        <span class="form-error">{{ form_errors(form.quest, {'attr': {'class': 'form-error'}}) }}</span>
+
     </div>
 
     <!-- Answer fields -->
     <div class="answer-group">
         {{ form_label(form.rep1, 'Answer 1', {'label_attr': {'class': 'answer-label'}}) }}
         {{ form_widget(form.rep1, {'attr': {'class': 'answer-field', 'placeholder': 'Write answer'}, 'required': true}) }}
+                                                    <span class="form-error">{{ form_errors(form.rep1, {'attr': {'class': 'form-error'}}) }}</span>
 
         {{ form_label(form.rep2, 'Answer 2', {'label_attr': {'class': 'answer-label'}}) }}
         {{ form_widget(form.rep2, {'attr': {'class': 'answer-field', 'placeholder': 'Write answer'}, 'required': true}) }}
+                                                    <span class="form-error">{{ form_errors(form.rep2, {'attr': {'class': 'form-error'}}) }}</span>
 
         {{ form_label(form.rep3, 'Answer 3', {'label_attr': {'class': 'answer-label'}}) }}
         {{ form_widget(form.rep3, {'attr': {'class': 'answer-field', 'placeholder': 'Write answer'}, 'required': true}) }}
+                                                    <span class="form-error">{{ form_errors(form.rep3, {'attr': {'class': 'form-error'}}) }}</span>
 
         {{ form_label(form.rep4, 'Answer 4', {'label_attr': {'class': 'answer-label'}}) }}
         {{ form_widget(form.rep4, {'attr': {'class': 'answer-field', 'placeholder': 'Write answer'}, 'required': true}) }}
+                                                            <span class="form-error">{{ form_errors(form.rep4, {'attr': {'class': 'form-error'}}) }}</span>
+
     </div>
 
     <!-- Hidden input for quizId -->
