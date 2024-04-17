@@ -1,0 +1,132 @@
+{% extends 'pages/Admin/admindashboard.html.twig' %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/test.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">  
+    <style>
+        .reponse {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: flex-end; /* Bouton aligné à droite */
+            align-items: center;
+            margin-top: 20px; /* Espacement au-dessus du bouton */
+        }
+
+        /* CSS pour le bouton de soumission */
+        .btn-update {
+            padding: 12px 24px; /* Augmentation de la taille du bouton */
+            border: 2px solid transparent; /* Bordure transparente */
+            border-radius: 5px;
+            background-color: transparent; /* Couleur de fond transparente */
+            color: #0F056B; /* Couleur de texte bleue */
+            font-size: 1.1rem; /* Taille de police légèrement plus grande */
+            text-decoration: none;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-update:hover {
+            background-color: #0F056B; /* Couleur de fond bleue au survol */
+            color: #ffffff; /* Couleur de texte blanche au survol */
+            border-color: #0F056B; /* Bordure bleue au survol */
+        }
+
+        /* CSS pour les champs de formulaire */
+        .form-group {
+            margin-bottom: 30px; /* Espacement supplémentaire entre les groupes de champs */
+        }
+
+        .form-group label {
+            font-weight: bold; /* Mettre en gras */
+            color: #0F056B; /* Couleur de texte bleue */
+            font-size: 1.1rem; /* Taille de police légèrement plus grande */
+            margin-bottom: 10px; /* Espacement entre l'étiquette et le champ */
+        }
+
+        .form-control {
+            width: 100%; /* Largeur maximale pour remplir l'espace disponible */
+            padding: 12px; /* Espacement à l'intérieur du champ */
+            font-size: 1rem; /* Taille de la police */
+            border-radius: 5px; /* Coins arrondis */
+            border: 1px solid #ddd; /* Bordure grise */
+            background-color: #f9f9f9; /* Couleur de fond légère */
+        }
+
+        .form-control-file {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9; /* Couleur de fond légère */
+        }
+
+        /* Ajout d'une bordure autour du formulaire */
+        .cardmain {
+            border: 1px solid #ddd; /* Bordure grise autour du formulaire */
+            border-radius: 5px; /* Coins arrondis */
+            padding: 20px; /* Espacement intérieur du formulaire */
+            background-color: #ffffff; /* Couleur de fond blanche */
+            font-family: 'Roboto', sans-serif; /* Police Roboto pour une meilleure lisibilité */
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="main">
+        <div class="maincontent">
+            <div class="cardBoxmain">
+                <div class="cardmain">
+                    
+                    {% block contentupdatewithid %} 
+                        <div class="form-group">
+                            {{ form_start(form) }}
+                            {{ form_label(form.titre, 'Title', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.titre, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.niveau, 'Level', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.niveau, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+
+                         {% if l.ImagePath is not null %}
+                            <div class="form-group">
+                                <label>Current Image</label>
+                                <img src="{{ asset('assets/' ~ l.ImagePath) }}" alt="Current Image" class="current-cover" style="max-width: 150px; max-height: 200px;">
+                            </div>
+                        {% endif %}
+
+                        <div class="form-group">
+                            {{ form_label(form.ImagePath, 'Course Image', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.ImagePath, {'attr': {'class': 'form-control-file'}}) }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.link, 'Link', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.link, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+
+                        <div class="form-group button-group">
+                            <button type="submit" class="btn-update">Update</button>
+                        </div>
+                        {{ form_end(form) }}
+                    {% endblock %}
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

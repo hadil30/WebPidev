@@ -14,11 +14,29 @@ admin:
 
 admin_users:
     path: /admin/users
-    controller: App\Controller\AdminController::users
+    controller: 'App\Controller\AdminController::users'
 admin_cours:
     path: /admin/cours
-    controller: App\Controller\AdminController::newQuestion
+    controller: 'App\Controller\AdminController::cours'
+    methods: ['GET']
 
+admin_coursadd:
+    path: /admin/cours/add
+    controller: 'App\Controller\AdminController::newcours'
+    methods: [POST,GET]
+
+admin_coursupdate:
+    path: /admin/cours/update
+    controller: 'App\Controller\AdminController::updatecours'
+    methods: [POST,GET]
+cours_detail:
+    path: /admin/cours/update/{id}
+    controller: App\Controller\AdminController::coursDetail
+    methods: [POST,GET]
+cours_delete:
+    path: /admin/cours/delete/{id}
+    controller: App\Controller\AdminController::deleteCours
+    methods: [POST,GET,DELETE]
 admin_ebook:
     path: /admin/ebook
     controller: App\Controller\AdminController::ebook
@@ -49,7 +67,20 @@ user_profile:
     controller: App\Controller\userController::index
 user_cours:
     path: /user/cours
-    controller: App\Controller\coursController::index
+    controller: App\Controller\userController::cours
+    methods: ['GET']
+detaile_cours:
+    path: /cours/{id}
+    controller: 'App\Controller\userController::detaileCours'
+    methods: ['GET']
+    requirements:
+        id: '\d+'
+ajouter_commentaire:
+    path: /cours/{id}/commentaire/ajouter
+    controller: 'App\Controller\userController::ajouterCommentaire'
+    methods: ['POST']
+    requirements:
+        id: '\d+'
 user_ebooks:
     path: /user/ebooks
     controller: App\Controller\ebooksController::index
