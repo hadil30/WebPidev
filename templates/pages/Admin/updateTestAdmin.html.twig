@@ -1,0 +1,110 @@
+
+{% extends 'pages/Admin/admindashboard.html.twig' %}
+
+{% block content %}
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/test.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">  
+    <style>
+        .reponse {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between; /* Or use 'flex-start' for buttons to be left-aligned */
+            align-items: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+        .rep{font-size: 16px;
+    font-weight: 500;
+    color: #333;}
+    </style>
+{% endblock %}
+
+    <div class="main">
+      
+                                
+        
+        <div class="maincontent">
+            <div class="cardBoxmain">
+                <div class="cardmain">
+                    
+       <link rel="stylesheet" href="{{ asset('css/test.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+    <div class="form-group">
+     
+
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                                {{ form_label(form.nom, 'Nom') }}
+                                {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}                         
+                                {{ form_errors(form.nom) }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_label(form.description, 'Description') }}
+                                {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                                 {% if form_errors(form.description) %}
+                                {{ form_errors(form.description) }}
+                                  {% endif %}
+                            </div>
+                              <div class="form-group">
+                                {{ form_label(form.categorie, 'Categorie') }}
+                                {{ form_widget(form.categorie, {'attr': {'class': 'form-control'}}) }}
+                                {% if form_errors(form.categorie) %}
+                                {{ form_errors(form.categorie) }}
+                        {% endif %}
+                            </div>
+
+                           <div class="form-group">
+                                {{ form_label(form.questions, 'Questions') }}
+                                <ul class="question-list" data-prototype="{{ form_widget(form.questions.vars.prototype)|e('html_attr') }}">
+                                    {% for questionForm in form.questions %}
+                                        <li>
+                                            {{ form_row(questionForm.text) }}
+                                            {{ form_errors(questionForm.text) }}
+                                            
+                                            {% if questionForm.vars.data.reponses is defined %}
+                                                <div class="reponse-list" data-prototype="{{ form_widget(questionForm.reponses.vars.prototype)|e('html_attr') }}"> <!-- Include data-prototype for responses -->
+                                                    <p class="rep">Responses</p>
+                                                    <div>
+                                                       {% for responseForm in questionForm.reponses %}
+                                                                <div class="form-row">
+                                                                     {{ form_widget(responseForm.isCorrect) }}
+                                                                    {{ form_widget(responseForm.reponse) }}
+                                                              {{ form_errors(responseForm.reponse) }}                                 
+
+           
+                                                               </div>
+                                                          {% endfor %}
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+
+                <div class="form-group button-group">
+                 <button type="submit" class="btn btn-primary">Edit</button>
+                    </div>
+                {{ form_end(form) }}
+
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\QuestiontRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity]
+
 #[ORM\Table(name: "questiont")]
 #[ORM\Entity(repositoryClass: QuestiontRepository::class)]
-
 class Questiont
 {
     #[ORM\Id]
@@ -17,7 +19,77 @@ class Questiont
     private ?int $idQuestiont = null;
 
     #[ORM\Column(name: "text", type: "text", nullable: true)]
+    #[Assert\NotBlank(message: "The text cannot be blank")]
+
     private ?string $text = null;
 
-    // Getters and setters
+    public function getIdQuestiont(): ?int
+    {
+        return $this->idQuestiont;
+    }
+
+    public function setIdQuestiont(?int $idQuestiont): self
+    {
+        $this->idQuestiont = $idQuestiont;
+        return $this;
+    }
+
+    public function getText(): ?string
+    {
+        return $this->text;
+    }
+
+    public function setText(?string $text): self
+    {
+        $this->text = $text;
+        return $this;
+    }
+
+    #[ORM\ManyToMany(targetEntity: Reponse::class, cascade: ['persist'])]
+    #[ORM\JoinTable(
+        name: "question_reponse",
+        joinColumns: [
+            new ORM\JoinColumn(name: "id_Questiont", referencedColumnName: "id_Questiont")
+        ],
+        inverseJoinColumns: [
+            new ORM\JoinColumn(name: "id_Reponse", referencedColumnName: "id_Reponse")
+        ]
+    )]
+    #[Assert\Count(
+        min: 2,
+        minMessage: "The test must have at least two answers"
+    )]
+    #[Assert\NotBlank(message: "The text cannot be blank")]
+
+    private Collection $reponses;
+
+    public function __construct()
+    {
+        $this->reponses = new ArrayCollection();
+    }
+
+    public function getReponses(): Collection
+    {
+
+        return $this->reponses;
+    }
+
+    public function addReponse(Reponse $reponse): self
+    {
+        // dump('hello add response');
+        //die();
+
+        if (!$this->reponses->contains($reponse)) {
+            $this->reponses[] = $reponse;
+        }
+
+        return $this;
+    }
+
+    public function removeReponse(Reponse $reponse): self
+    {
+        $this->reponses->removeElement($reponse);
+
+        return $this;
+    }
 }

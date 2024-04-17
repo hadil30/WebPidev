@@ -2,26 +2,40 @@
 
 namespace App\Controller;
 
+use App\Entity\Questiont;
+use App\Entity\Test;
+use App\Repository\TestRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\CoursRepository;
-use App\Entity\Cours;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use App\Form\CoursType;
 use App\Form;
+use App\Form\QuestiontType;
+use App\Form\SimpleQuestionFormType;
+use TestType;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+
+
 class AdminController extends AbstractController
 {
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
 
     #[Route('/admin/users', name: 'admin_users')]
     public function users(): Response
     {
         return $this->render('pages/Admin/useradmin.html.twig');
     }
-   
+    #[Route('/admin/cours', name: 'admin_cours')]
+    public function cours(): Response
+    {
+        return $this->render('pages/Admin/coursadmin.html.twig');
+    }
     #[Route('/admin/ebook', name: 'admin_ebook')]
     public function ebook(): Response
     {
@@ -32,11 +46,7 @@ class AdminController extends AbstractController
     {
         return $this->render('pages/Admin/eventadmin.html.twig');
     }
-    #[Route('/admin/test', name: 'admin_test')]
-    public function test(): Response
-    {
-        return $this->render('pages/Admin/testadmin.html.twig');
-    }
+
     #[Route('/admin/quiz', name: 'admin_quiz')]
     public function quiz(): Response
     {
@@ -44,203 +54,160 @@ class AdminController extends AbstractController
     }
 
 
-    #[Route('/admin/cours', name: 'admin_cours',methods: ['GET'])]
-    public function cours(CoursRepository $coursRepository): Response
-    {
-        $cours = $coursRepository->findAll();
-       
-        return $this->render('pages/Admin/coursadmin.html.twig', [
-            'l' => $cours,
-        ]); 
-    }
-    
-   
-   /*#[Route('/admin/cours/add', name: 'admin_coursadd')]
-public function newcours(Request $request, EntityManagerInterface $entityManager, SerializerInterface $serializer): Response
-{
-    dump('La méthode newcours() est appelée.');
 
-    $cours = new Cours();
-    $form = $this->createForm(CoursType::class, $cours);
-    $form->handleRequest($request);
+    #[Route('/admin/test/add', name: 'admin_testadd')]
+    public function newtest(Request $request, EntityManagerInterface $entityManager, SerializerInterface $serializer): Response
+    { {
+            $test = new Test();
+            $form = $this->createForm(TestType::class, $test);
+            $form->handleRequest($request);
+            $errors = $form->getErrors(true);
 
-    if ($form->isSubmitted() && $form->isValid()) {
-        $entityManager->persist($cours);
-        $entityManager->flush();
 
-        $this->addFlash('success', 'Cours created successfully.');
-
-        return $this->redirectToRoute('admin_cours');
-    }
-
-    return $this->render('pages/Admin/addCoursadmin.html.twig', [
-        'form' => $form->createView(),
-        'l' => $this->getDoctrine()->getRepository(Cours::class)->findAll(), // Ajout de la variable 'l'
-    ]);
-}*/
-/*#[Route('/admin/cours/add', name: 'admin_coursadd')]
-public function newcours(Request $request, EntityManagerInterface $entityManager, SerializerInterface $serializer): Response
-{
-        $cours = new Cours();
-        $form = $this ->createForm(CoursType::class,$cours);
-        $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
-            $ImagePath = $form->get('ImagePath')->getData(); 
-
-            if ($ImagePath instanceof UploadedFile) {
-                $newFilename = uniqid().'.'.$ImagePath->guessExtension();
-                $ImagePath->move(
-                    $this->getParameter('kernel.project_dir').'/public/assets/',
-                    $newFilename
-                );
-                $cours->setImagePath($newFilename);
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $entityManager->persist($test);
+                    $entityManager->flush();
+                    $this->addFlash('success', 'Test created successfully.');
+                    return $this->redirectToRoute('admin_test');
+                } else {
+                    foreach ($form->getErrors(true) as $error) {
+                        // echo $error->getMessage();
+                    }
+                }
             }
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($cours);
-            $em->flush();
-            return $this->redirectToRoute('admin_cours');
+            return $this->render('pages/Admin/addTestadmin.html.twig', [
+                'form' => $form->createView(),
+                'errors' => $form->getErrors(true, true),
+            ]);
         }
-        return $this->render('pages/Admin/addCoursadmin.html.twig', ['l' => $form->createView()]);
-
-}*/
-#[Route('/admin/cours/add', name: 'admin_coursadd')]
-public function newcours(Request $request, EntityManagerInterface $entityManager, SerializerInterface $serializer): Response
-{
-   $cours = new Cours();
-   $form = $this ->createForm(CoursType::class,$cours);
-   $form->handleRequest($request);
-   if($form->isSubmitted() && $form->isValid()){
-       $ImagePath = $form->get('ImagePath')->getData(); 
-
-       if ($ImagePath instanceof UploadedFile) {
-           $newFilename = uniqid().'.'.$ImagePath->guessExtension();
-           $ImagePath->move(
-               $this->getParameter('kernel.project_dir').'/public/assets/',
-               $newFilename
-           );
-           $cours->setImagePath($newFilename);
-       }
-       $em = $this->getDoctrine()->getManager();
-       $em->persist($cours);
-       $em->flush();
-       return $this->redirectToRoute('admin_cours');
-   }
-   return $this->render('pages/Admin/addCoursadmin.html.twig', ['l' => $form->createView()]);
-
-}  
+    }
 
 
 
 
+    #[Route('/admin/test', name: 'admin_test')]
 
-
-    #[Route('/admin/cours/update', name: 'admin_coursupdate')]
-
-    public function updatecours(CoursRepository $coursRepository): Response
+    public function test(TestRepository $testRepository): Response
     {
-        $cours = $coursRepository->findAll();
+        $test = $testRepository->findAll();
 
 
-        return $this->render('pages/Admin/updateCoursAdmin.html.twig', [
-            'l' => $cours,
+        return $this->render('pages/Admin/testadmin.html.twig', [
+            'test' => $test,
         ]);
     }
 
-    
-
-    /*#[Route('/admin/cours/update/{id}', name: 'cours_detail')]
-    public function coursDetail(Request $request, $id, EntityManagerInterface $entityManager,): Response
+    #[Route('/admin/test/update/{id}', name: 'admin_testupdate')]
+    public function testUpdate(Request $request, $id, EntityManagerInterface $entityManager): Response
     {
-        $cours = $this->getDoctrine()->getRepository(Cours::class)->find($id);
+        $test = $this->getDoctrine()->getRepository(Test::class)->find($id);
 
-        if (!$cours) {
-            throw $this->createNotFoundException('The course does not exist');
+        if (!$test) {
+            throw $this->createNotFoundException('The test does not exist');
         }
 
-        $form = $this->createForm(CoursType::class, $cours);
+        $form = $this->createForm(TestType::class, $test);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($cours);
+            $entityManager->persist($test);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Cours updated successfully.');
+            $this->addFlash('success', 'Test updated successfully.');
 
-            return $this->redirectToRoute('admin_cours');
+            return $this->redirectToRoute('admin_test');
+        } else {
+            foreach ($form->getErrors(true) as $error) {
+                // echo $error->getMessage();
+            }
         }
 
-        return $this->render('pages/Admin/detailcours.html.twig', [
+        return $this->render('pages/Admin/updateTestAdmin.html.twig', [
             'form' => $form->createView(),
-            'l' => $cours,
+            'test' => $test,
+            'errors' => $form->getErrors(true, true),
+
+        ]);
+    }
+
+
+    #[Route('/admin/test/delete/{id}', name: 'test_delete')]
+
+    public function deleteTest(Request $request, EntityManagerInterface $entityManager, $id): Response
+    {
+        $test = $entityManager->getRepository(Test::class)->find($id);
+
+        if (!$test) {
+            throw $this->createNotFoundException('No test found for id ' . $id);
+        }
+
+        $entityManager->remove($test);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Test successfully deleted.');
+
+        return $this->redirectToRoute('admin_test'); // Redirect to the route where you list the tests
+    }
+
+
+    #[Route('/admin/cours', name: 'admin_cours')]
+
+    public function newQuestion(Request $request, EntityManagerInterface $entityManager, SerializerInterface $serializer): Response
+    {
+        $question = new Questiont();
+        $form = $this->createForm(QuestiontType::class, $question);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($question);
+            $entityManager->flush();
+        }
+        $formDataJson = $serializer->serialize($form->getData(), 'json');
+
+        return $this->render('pages/Admin/coursadmin.html.twig', [
+            'form' => $form->createView(),
+            'formdata' => $formDataJson, // Pass the serialized data
+
+        ]);
+    }
+
+    /*  #[Route('/admin/test', name: 'admin_test', methods: ['POST'])]
+    public function newTest(Request $request): Response
+    {
+        $test = new Test();
+        $form = $this->createForm(TestType::class, $test);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            dump($form->getData());
+
+            // Iterate through associated Questiont entities to persist them
+            foreach ($test->getQuestions() as $question) {
+                if (!$this->entityManager->contains($question)) {
+                    $this->entityManager->persist($question);
+
+                    foreach ($question->getReponses() as $reponse) {
+                        if (!$this->entityManager->contains($reponse)) {
+                            $this->entityManager->persist($reponse);
+                        }
+                    }
+                }
+            }
+
+            $this->entityManager->persist($test);
+            $this->entityManager->flush();
+
+            $this->addFlash('success', 'Test created successfully.');
+
+
+
+            // return $this->redirectToRoute('admin_test');
+        }
+
+        return $this->render('pages/Admin/testadmin.html.twig', [
+            'form' => $form->createView(),
         ]);
     }*/
-
-    #[Route('/admin/cours/update/{id}', name: 'cours_detail')]
-    public function coursDetail(Request $request, $id, EntityManagerInterface $entityManager): Response
-{
-    $cours = $this->getDoctrine()->getRepository(Cours::class)->find($id);
-
-    if (!$cours) {
-        throw $this->createNotFoundException('The course does not exist');
-    }
-
-    $form = $this->createForm(CoursType::class, $cours);
-
-    $form->handleRequest($request);
-    if ($form->isSubmitted() && $form->isValid()) {
-        // Récupérer la nouvelle image
-        $imageFile = $form->get('ImagePath')->getData();
-        
-        if ($imageFile) {
-            // Gérer le téléchargement de la nouvelle image
-            $newFilename = uniqid().'.'.$imageFile->guessExtension();
-            
-            // Déplacez le fichier dans le répertoire où sont stockées les images des livres
-            $imageFile->move(
-                $this->getParameter('cours_images_directory'),
-                $newFilename
-            );
-
-            // Mettre à jour l'attribut imagePath du livre avec le nouveau nom de fichier
-            $cours->setImagePath($newFilename);
-        }
-
-        // Enregistrer les modifications dans la base de données
-        $entityManager->flush();
-
-        $this->addFlash('success', 'Course updated successfully.');
-
-        return $this->redirectToRoute('admin_cours');
-    }
-
-    return $this->render('pages/Admin/detailcours.html.twig', [
-        'form' => $form->createView(),
-        'l' => $cours,
-    ]);
-}
-
-
-    #[Route('/admin/cours/delete/{id}', name: 'cours_delete')]
-
-    public function deleteCours(Request $request, EntityManagerInterface $entityManager, $id): Response
-    {
-        $cours = $entityManager->getRepository(Cours::class)->find($id);
-
-        if (!$cours) {
-            throw $this->createNotFoundException('No cours found for id ' . $id);
-        }
-
-        $entityManager->remove($cours);
-        $entityManager->flush();
-
-        $this->addFlash('success', 'Cours successfully deleted.');
-
-        return $this->redirectToRoute('admin_cours'); // Redirect to the route where you list the cours
-    }
-
-
-
-   
-
 }

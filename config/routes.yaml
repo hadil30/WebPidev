@@ -20,7 +20,6 @@ admin_cours:
     controller: 'App\Controller\AdminController::cours'
     methods: ['GET']
 
-
 admin_coursadd:
     path: /admin/cours/add
     controller: 'App\Controller\AdminController::newcours'
@@ -44,9 +43,22 @@ admin_ebook:
 admin_event:
     path: /admin/event
     controller: App\Controller\AdminController::event
+admin_testadd:
+    path: /admin/test/add
+    controller: App\Controller\AdminController::newtest
+    methods: [POST,GET]
 admin_test:
     path: /admin/test
     controller: App\Controller\AdminController::test
+
+admin_testupdate:
+    path: /admin/test/update/{id}
+    controller: App\Controller\AdminController::testUpdate
+    methods: [POST,GET]
+test_delete:
+    path: /admin/test/delete/{id}
+    controller: App\Controller\AdminController::deleteTest
+    methods: [POST,GET,DELETE]
 admin_quiz:
     path: /admin/quiz
     controller: App\Controller\AdminController::quiz
