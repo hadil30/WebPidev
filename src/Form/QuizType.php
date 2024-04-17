@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Form;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 use App\Entity\Quiz;
 use Symfony\Component\Form\AbstractType;
@@ -35,8 +36,14 @@ class QuizType extends AbstractType
                     new Assert\NotBlank(),
                 ],
             ])
-            ->add('categorie', TextType::class, [
+            ->add('categorie', ChoiceType::class, [
                 'label' => 'Category',
+                'choices' => [
+                    'Maths' => 'maths',
+                    'Physics' => 'physics',
+                    'Entertainment' => 'entertainment',
+                ],
+                'placeholder' => 'Choose an option', // Optional placeholder text
                 'constraints' => [
                     new Assert\NotBlank(),
                 ],

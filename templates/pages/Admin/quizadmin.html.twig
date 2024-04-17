@@ -1,13 +1,69 @@
 {% extends 'pages/Admin/admindashboard.html.twig' %}
 
 {% block content %}
-<div class="main">
- <div class="cardBox">
-                <div class="card">
-                    <div>
-                        <div class="numbers">5</div>
-                        <div class="cardName">quiz</div>
+
+   <link href="{{ asset('css/styleAhmed.css') }}" rel="stylesheet" type="text/css"/>
+
+
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+ 
+
+<main class="mai">
+   
+
+    <section class="recent-articles">
+    <div  class="quiz-header" >
+        <h2>Recent Quizes</h2>
+        <a href="{{ path('app_quizadmin_add') }}" class="btn btn-primary">Add Quiz</a>
+        </div>
+        <div class="article-search">
+<input type="text" id="search-field" placeholder="Search..." name="search" oninput="searchQuiz(this.value)">
+            <select id="sort-select">
+                <option value="title">Title</option>
+                <option value="date">Date</option>
+            </select>
+    
+        </div>
+        <ul class="article-list">
+            {% for quiz in quizs %}
+            <li>
+                <div class="article-info">
+                    <h3>{{ quiz.titre }}</h3>
+                    <div class="actions">
+                        <a href="{{path('quiz_admin_data_del',{'id':quiz.getQuizId()})}}"><i class="fas fa-trash"></i></a>
+                        <a href="{{path('quiz_admin_data_mod',{'id':quiz.getQuizId()})}}"><i class="fas fa-edit"></i></a>
+                        <a id="btn" class="export-btn" data-title="{{ quiz.titre }}" data-content=""><i class="fas fa-download"></i></a>
                     </div>
-                    </div></div>
-                    </div>
+                    <span class="article-date">{{ quiz.nbQuest }}</span>
+                </div>
+                <div class="article-image">
+<img src="{{ asset('images/' ~ quiz.getImageUrl()) }}">
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+</main>
+<script>
+    function searchQuiz(value) {
+        // Make the fetch request with the searchValue included in the URL
+        fetch('{{ path('app_quiz_search', {'value': 'SEARCH_VALUE'})|replace({'SEARCH_VALUE': '__value__'}) }}'.replace('__value__', value))
+            .then(response => response.json())
+            .then(data => {
+                // Handle the search results, such as updating the displayed content
+                console.log(data); // Example: log data to the console
+                // Update the UI with the search results, e.g., render search results dynamically
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    // Add an event listener to the search input field to trigger the search on input change
+    document.getElementById('search-field').addEventListener('input', function() {
+                console.log(this.value); // Log the value of this.value
+
+        searchQuiz(this.value);
+    });
+</script>
 {% endblock %}

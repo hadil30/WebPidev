@@ -24,18 +24,19 @@ class Quiz
     #[Assert\Length(min: 10, minMessage:"The question must be at least 10 characters long")]
     #[ORM\Column(name: "titre", type: "string", length: 255, nullable: true)]
     private $titre;
+    #[Assert\Type(type: "integer", message: "The number of questions must be a valid number")]
 
     #[ORM\Column(name: "nb_quest", type: "integer", nullable: true)]
     private $nbQuest;
 
     #[Assert\NotBlank(message:"Your quiz must have a categorie")]
-    #[Assert\Length(min: 10, minMessage:"The question must be at least 10 characters long")]
     #[ORM\Column(name: "categorie", type: "string", length: 255, nullable: true)]
     private $categorie;
 
     #[ORM\Column(name: "user_id", type: "integer", nullable: true)]
     private $userId;
 
+    #[Assert\NotBlank(message: "Please upload an image for your quiz")]
     #[ORM\Column(name: "image_url", type: "string", length: 255, nullable: true)]
     public $imageUrl;
 

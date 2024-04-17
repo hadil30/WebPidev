@@ -12,6 +12,9 @@ height: calc(100vh - 100px)}
 main::-webkit-scrollbar {
 display: none;
 }
+.form-error{
+  color: red !important;
+}
 .btnn {
   display: inline-block;
   padding: 6px 12px;

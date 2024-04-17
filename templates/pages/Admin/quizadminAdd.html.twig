@@ -1,14 +1,13 @@
- {% extends 'pages/Interface_Communes/userinterface.html.twig' %}
-{% block stylesheets %}
+{% extends 'pages/Admin/admindashboard.html.twig' %}{% block stylesheets %}
     {{ parent() }}
 {% endblock %}
 
 {% block content %}
      <link href="{{ asset('css/styleAhmed.css') }}" rel="stylesheet" type="text/css"/>
-   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
 
 <main class="mai">
    
+
 {{ form_start(form, {'attr': {'class': 'forum', 'id': 'myForma', 'enctype': 'multipart/form-data', 'novalidate': 'novalidate'}}) }}
         <h2>Add New Quiz</h2>
         <div class="form-group">
@@ -46,10 +45,8 @@
 <button id="mainSubmitButton" type="submit" name="submit">Submit</button>
     {{ form_end(form) }}
 
-<a href="{{ path('app_question_show', {'quiz': quiz}) }}" class="btnn">
-    <i class="fas fa-edit"></i> Consulter Questions
-</a>
-
-
     </main>
+    
+
+   
 {% endblock %}

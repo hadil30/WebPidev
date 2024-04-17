@@ -1,5 +1,4 @@
- {% extends 'pages/Interface_Communes/userinterface.html.twig' %}
-{% block stylesheets %}
+{% extends 'pages/Admin/admindashboard.html.twig' %}{% block stylesheets %}
     {{ parent() }}
 {% endblock %}
 
@@ -9,8 +8,9 @@
 
 <main class="mai">
    
-{{ form_start(form, {'attr': {'class': 'forum', 'id': 'myForma', 'enctype': 'multipart/form-data', 'novalidate': 'novalidate'}}) }}
-        <h2>Add New Quiz</h2>
+
+       {{ form_start(form, {'attr': {'class': 'forum', 'id': 'myForma', 'enctype': 'multipart/form-data', 'novalidate': 'novalidate'}}) }}
+        <h2>Modifier Quiz</h2>
         <div class="form-group">
             {{ form_label(form.titre) }}
             {{ form_widget(form.titre, {'attr': {'class': 'form-control'}}) }}
@@ -46,7 +46,7 @@
 <button id="mainSubmitButton" type="submit" name="submit">Submit</button>
     {{ form_end(form) }}
 
-<a href="{{ path('app_question_show', {'quiz': quiz}) }}" class="btnn">
+<a href="{{ path('app_admin_question_show', {'quiz': quiz}) }}" class="btnn">
     <i class="fas fa-edit"></i> Consulter Questions
 </a>
 
