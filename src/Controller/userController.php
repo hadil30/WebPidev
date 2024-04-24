@@ -10,6 +10,7 @@ use App\Entity\Cours;
 use App\Entity\Discussion;
 use Symfony\Component\HttpFoundation\Request; // Import de la classe Request
 use App\Repository\DiscussionRepository;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class userController extends AbstractController
 {
@@ -60,11 +61,11 @@ class userController extends AbstractController
             throw $this->createNotFoundException('Le cours demandé n\'existe pas.');
         }
 
-        $user = $this->getUser();
+       
         $nouveauCommentaire = $request->request->get('commentaire');
 
         $discussion = new Discussion();
-        $discussion->setUser($user);
+        
         $discussion->setMessage($nouveauCommentaire);
         $discussion->setIdCours($cours);
 
@@ -73,4 +74,37 @@ class userController extends AbstractController
 
         return $this->redirectToRoute('detaile_cours', ['id' => $id]);
     }
+
+    /*#[Route('/commentaire/{id}/modifier', name: 'modify_comment')]
+    public function modifierCommentaire(int $id, DiscussionRepository $discussionRepository): Response
+    {
+        // Récupérer le commentaire
+        $commentaire = $discussionRepository->find($id);
+
+        if (!$commentaire) {
+            throw $this->createNotFoundException('Le commentaire demandé n\'existe pas.');
+        }
+
+        // Votre logique de modification du commentaire
+
+        return $this->redirectToRoute('detaile_cours', ['id' => $commentaire->getIdCours()->getId()]);
+    }
+
+    #[Route('/commentaire/{id}/supprimer', name: 'delete_comment')]
+    public function supprimerCommentaire(int $id, DiscussionRepository $discussionRepository): Response
+    {
+        // Récupérer le commentaire
+        $commentaire = $discussionRepository->find($id);
+
+        if (!$commentaire) {
+            throw $this->createNotFoundException('Le commentaire demandé n\'existe pas.');
+        }
+
+        // Supprimer le commentaire
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($commentaire);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('detaile_cours', ['id' => $commentaire->getIdCours()->getId()]);
+    }*/
 }

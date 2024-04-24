@@ -10,14 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Vich\UploaderBundle\Form\Type\VichFileType;
-use Symfony\Component\Form\Exception\TransformationFailedException;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 class CoursType extends AbstractType
 {
@@ -27,10 +20,12 @@ class CoursType extends AbstractType
             ->add('titre', TextType::class, [
                 'label' => 'Titre',
                 'attr' => ['class' => 'form-control', 'placeholder' => 'Entrez un titre'],
+                'required' => false,
             ])
             ->add('description', TextType::class, [
                 'label' => 'Description',
                 'attr' => ['class' => 'form-control', 'placeholder' => 'Entrez une description'],
+                'required' => false,
             ])
             ->add('niveau', ChoiceType::class, [
                 'label' => 'Niveau',
@@ -41,19 +36,22 @@ class CoursType extends AbstractType
                     'Advanced' => 'Advanced',
                 ],
                 'attr' => ['class' => 'form-control'],
+                'required' => false,
             ])
             ->add('ImagePath', FileType::class, [
                 'label' => 'Course Image (PNG or JPEG file)',
                 'mapped' => false,
-                'required' => false
+                'required' => false,
             ])
-
             ->add('link', UrlType::class, [
                 'label' => 'Lien de la vidéo',
                 'attr' => ['class' => 'form-control', 'placeholder' => 'Entrez le lien de la vidéo'],
+                'required' => false,
+                'constraints' => [
+                    new Assert\Url(message: "Le lien de la vidéo doit être une URL valide"),
+                ],
             ]);
-            
-        }
+    }
 
     public function configureOptions(OptionsResolver $resolver)
     {

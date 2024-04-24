@@ -51,6 +51,7 @@ class AdminController extends AbstractController
        
         return $this->render('pages/Admin/coursadmin.html.twig', [
             'l' => $cours,
+            
         ]); 
     }
     
@@ -107,9 +108,10 @@ public function newcours(Request $request, EntityManagerInterface $entityManager
 public function newcours(Request $request, EntityManagerInterface $entityManager, SerializerInterface $serializer): Response
 {
    $cours = new Cours();
-   $form = $this ->createForm(CoursType::class,$cours);
+   $form = $this->createForm(CoursType::class, $cours);
    $form->handleRequest($request);
-   if($form->isSubmitted() && $form->isValid()){
+   
+   if ($form->isSubmitted() && $form->isValid()) {
        $ImagePath = $form->get('ImagePath')->getData(); 
 
        if ($ImagePath instanceof UploadedFile) {
@@ -120,14 +122,22 @@ public function newcours(Request $request, EntityManagerInterface $entityManager
            );
            $cours->setImagePath($newFilename);
        }
+
        $em = $this->getDoctrine()->getManager();
        $em->persist($cours);
        $em->flush();
+       
        return $this->redirectToRoute('admin_cours');
    }
-   return $this->render('pages/Admin/addCoursadmin.html.twig', ['l' => $form->createView()]);
+   
+   $errors = $form->getErrors(true); // Récupération des erreurs du formulaire
+   
+   return $this->render('pages/Admin/addCoursadmin.html.twig', [
+       'l' => $form->createView(),
+       'errors' => $errors // Passage des erreurs au template Twig
+   ]);
+}
 
-}  
 
 
 

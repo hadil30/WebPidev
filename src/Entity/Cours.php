@@ -4,9 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CoursRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\Collection;
 
 #[ORM\Table(name: "cours")]
 #[ORM\Entity(repositoryClass: CoursRepository::class)]
@@ -19,19 +17,17 @@ class Cours
 
     #[ORM\Column(type: "string", length: 255)]
     #[Assert\NotBlank(message: "Le titre ne peut pas être vide")]
-    #[Assert\Length(max: 255, maxMessage: "Le titre ne peut pas dépasser {{ limit }} caractères")]
     private string $titre;
 
     #[ORM\Column(type: "string", length: 255)]
     #[Assert\NotBlank(message: "La description ne peut pas être vide")]
-    #[Assert\Length(max: 255, maxMessage: "La description ne peut pas dépasser {{ limit }} caractères")]
     private string $description;
 
     #[ORM\Column(type: "string", length: 255)]
     #[Assert\NotBlank(message: "Le niveau ne peut pas être vide")]
     private string $niveau;
 
-       /**
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\File(
      *     maxSize="5M",
@@ -40,12 +36,11 @@ class Cours
      *     uploadErrorMessage="Une erreur s'est produite lors du téléchargement de l'image"
      * )
      */
-    #[ORM\Column(name: "ImagePath", type: "string", length: 255, nullable: true)]
+    #[ORM\Column(name: "ImagePath", type: "string", length: 255)]
     private ?string $ImagePath = null;
 
-    #[ORM\Column(type: "string", length: 255, nullable: true)]
+    #[ORM\Column(type: "string", length: 255)]
     #[Assert\Url(message: "Le lien de la vidéo doit être une URL valide")]
-    #[Assert\Length(max: 255, maxMessage: "Le lien de la vidéo ne peut pas dépasser {{ limit }} caractères")]
     private ?string $link = null;
 
     // Getters and setters
@@ -97,7 +92,7 @@ class Cours
 
     public function setImagePath(?string $ImagePath): self
     {
-        $this->	ImagePath = $ImagePath;
+        $this->ImagePath = $ImagePath;
 
         return $this;
     }
