@@ -15,7 +15,8 @@ class BookRepository extends ServiceEntityRepository
     }
 
     //    /**
-    //     * @return BookRepository[] Returns an array of BookRepository objects
+
+    //     * @return CoursRepository[] Returns an array of CoursRepository objects
     //     */
     //    public function findByExampleField($value): array
     //    {

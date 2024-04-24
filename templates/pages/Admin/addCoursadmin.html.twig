@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Ajouter un cours</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('css/fontawesome.min.css') }}">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Couleur de fond */
+        }
+        .container {
+            margin-top: 50px; /* Espacement du haut */
+        }
+        .form-group {
+            margin-bottom: 20px; /* Espacement entre les groupes de champs */
+        }
+        h1 {
+            text-align: center; /* Centrer le titre */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Police de caractères */
+            font-size: 2.5rem; /* Taille du texte */
+            color: #0F056B; /* Couleur du texte */
+            margin-bottom: 30px; /* Espacement en dessous du titre */
+            text-shadow: 2px 2px 4px rgba(15, 5, 107, 0.2); /* Ombre portée pour un effet de profondeur */
+        }
+        /* CSS pour le bouton "Envoyer" */
+        .btn-submit {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ffffff; /* Couleur blanche */
+            color: #0F056B; /* Couleur de texte bleue */
+            font-weight: bold; /* Texte en gras */
+            font-size: 1rem; /* Taille de la police */
+            text-transform: uppercase; /* Convertir en majuscules */
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .btn-submit:hover {
+            background-color: #0F056B; /* Couleur bleue plus foncée au survol */
+            color: #ffffff; /* Couleur de texte blanche au survol */
+        }
+        /* CSS pour les titres des champs */
+        .form-group label {
+            font-weight: bold; /* Texte en gras */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5 mb-4">Création d'un nouveau cours</h1>
+        <form method="post" enctype="multipart/form-data">
+             {{ form_start(l, {'attr': {'class': 'form-horizontal'}}) }}
+
+            <div class="form-group">
+                {{ form_label(l.titre, 'Course Title') }}
+                {{ form_widget(l.titre, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le titre du cours'}}) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(l.description, 'Course Description') }}
+                {{ form_widget(l.description, {'attr': {'class': 'form-control', 'placeholder': 'Entrez la description du cours'}}) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(l.niveau, 'Course Level') }}
+                {{ form_widget(l.niveau, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+             <div class="form-group">
+                        <label class="col-lg-4 col-form-label" for="val-username">Course Image<span class="text-danger">*</span>
+                        </label>
+                        <div class="col-lg-8">
+ {{ form_label(l.ImagePath) }}
+                            {% if l.ImagePath.vars.value %}
+                                <img src="{{ asset('/public/assets/' ~ l.ImagePath.vars.value) }}" alt="Image du produit" class="img-thumbnail">
+                            {% endif %}
+                            {{ form_widget(l.ImagePath, {'attr': {'class': 'form-control'}}) }} {# Utilisez imagePath au lieu de ImagePath #}
+
+                             {{ form_errors(l.ImagePath, {'attr': {'class': 'text-danger'}}) }}                        </div>
+                    </div>
+
+            <div class="form-group">
+                {{ form_label(l.link, 'Course Link') }}
+                {{ form_widget(l.link, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le lien de la vidéo'}}) }}
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn-submit btn-block">Envoyer</button>
+            </div>
+
+            {{ form_end(l) }}
+        </form>
+    </div>
+</body>
+</html>
