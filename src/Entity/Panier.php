@@ -30,4 +30,59 @@ class Panier
     private ?Books $idLiv = null;
 
     // Getters and setters
+
+    public function getIdPanier(): ?int
+    {
+        return $this->idPanier;
+    }
+
+    public function getTotalPrice(): string
+    {
+        return $this->totalPrice;
+    }
+
+    public function setTotalPrice(string $totalPrice): void
+    {
+        $this->totalPrice = $totalPrice;
+    }
+
+    public function getNomLiv(): ?string
+    {
+        return $this->nomLiv;
+    }
+
+    public function setNomLiv(?string $nomLiv): void
+    {
+        $this->nomLiv = $nomLiv;
+    }
+
+    public function getImagepath(): ?string
+    {
+        return $this->imagepath;
+    }
+
+    public function setImagepath(?string $imagepath): void
+    {
+        $this->imagepath = $imagepath;
+    }
+
+    public function getPdfpath()
+    {
+        return $this->pdfpath;
+    }
+
+    public function setPdfpath($pdfpath): void
+    {
+        $this->pdfpath = $pdfpath;
+    }
+
+    public function getIdLiv(): ?Books
+    {
+        return $this->idLiv;
+    }
+
+    public function setIdLiv(?Books $idLiv): void
+    {
+        $this->idLiv = $idLiv;
+    }
 }

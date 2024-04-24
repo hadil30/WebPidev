@@ -2,15 +2,15 @@ index:
   path: /
   controller: App\Controller\DefaultController::index
 login:
-    path: '/login'
-    controller: 'App\Controller\LoginController::indexlogin'
-  
+  path: "/login"
+  controller: 'App\Controller\LoginController::indexlogin'
+
 user:
-    path: '/user'
-    controller: 'App\Controller\LoginController::indexUser'
+  path: "/user"
+  controller: 'App\Controller\LoginController::indexUser'
 admin:
-    path: '/admin'
-    controller: 'App\Controller\LoginController::indexadmin'
+  path: "/admin"
+  controller: 'App\Controller\LoginController::indexadmin'
 
 admin_users:
     path: /admin/users
@@ -38,9 +38,31 @@ cours_delete:
     controller: App\Controller\AdminController::deleteCours
     methods: [POST,GET,DELETE]
 admin_ebook:
-    path: /admin/ebook
-    controller: App\Controller\AdminController::ebook
+  path: /admin/ebook
+  controller: App\Controller\AdminController::ebook
+  methods: ["GET"]
+
+admin_ebookadd:
+  path: /admin/ebook/add
+  controller: 'App\Controller\AdminController::newbook'
+  methods: [POST, GET]
+
+user_ebook:
+  path: /user/ebooks
+  controller: 'App\Controller\userController::ebookdisplay'
+  methods: ["GET"]
+
+books_detail:
+  path: /admin/books/update/{id}
+  controller: App\Controller\AdminController::booksDetail
+  methods: [POST, GET]
+books_delete:
+  path: /admin/book/delete/{id}
+  controller: App\Controller\AdminController::deleteBooks
+  methods: [POST, GET, DELETE]
+
 admin_event:
+
     path: /admin/event
     controller: App\Controller\AdminController::event
 admin_testadd:
@@ -60,12 +82,13 @@ test_delete:
     controller: App\Controller\AdminController::deleteTest
     methods: [POST,GET,DELETE]
 admin_quiz:
-    path: /admin/quiz
-    controller: App\Controller\AdminController::quiz
+  path: /admin/quiz
+  controller: App\Controller\AdminController::quiz
 user_profile:
-    path: /user/profile
-    controller: App\Controller\userController::index
+  path: /user/profile
+  controller: App\Controller\userController::index
 user_cours:
+
     path: /user/cours
     controller: App\Controller\userController::cours
     methods: ['GET']
@@ -82,14 +105,19 @@ ajouter_commentaire:
     requirements:
         id: '\d+'
 user_ebooks:
-    path: /user/ebooks
-    controller: App\Controller\ebooksController::index
+  path: /user/ebooks
+  controller: App\Controller\ebooksController::index
 user_event:
-    path: /user/event
-    controller: App\Controller\eventController::index
+  path: /user/event
+  controller: App\Controller\eventController::index
 user_test:
-    path: /user/test
-    controller: App\Controller\testController::index
+  path: /user/test
+  controller: App\Controller\testController::index
 user_quiz:
-    path: /user/quiz
-    controller: App\Controller\quizController::index
+  path: /user/quiz
+  controller: App\Controller\quizController::index
+add_to_cart:
+  path: /add-to-cart/{id}
+  controller: 'App\Controller\userController::addToCart'
+  methods: ["POST"]
+
