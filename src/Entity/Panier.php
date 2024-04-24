@@ -29,8 +29,8 @@ class Panier
     #[ORM\JoinColumn(name: "id_liv", referencedColumnName: "id_liv")]
     private ?Books $idLiv = null;
 
-
     // Getters and setters
+
     public function getIdPanier(): ?int
     {
         return $this->idPanier;
@@ -56,32 +56,32 @@ class Panier
         $this->nomLiv = $nomLiv;
     }
 
-    public function getImagePath(): ?string
+    public function getImagepath(): ?string
     {
-        return $this->imagePath;
+        return $this->imagepath;
     }
 
-    public function setImagePath(?string $imagePath): void
+    public function setImagepath(?string $imagepath): void
     {
-        $this->imagePath = $imagePath;
+        $this->imagepath = $imagepath;
     }
 
-    public function getPdfPath()
+    public function getPdfpath()
     {
-        return $this->pdfPath;
+        return $this->pdfpath;
     }
 
-    public function setPdfPath($pdfPath): void
+    public function setPdfpath($pdfpath): void
     {
-        $this->pdfPath = $pdfPath;
+        $this->pdfpath = $pdfpath;
     }
 
-    public function getIdLiv(): ?Liv
+    public function getIdLiv(): ?Books
     {
         return $this->idLiv;
     }
 
-    public function setIdLiv(?Liv $idLiv): void
+    public function setIdLiv(?Books $idLiv): void
     {
         $this->idLiv = $idLiv;
     }

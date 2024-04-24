@@ -1,12 +1,3 @@
-// to get current year
-function getYear() {
-    var currentDate = new Date();
-    var currentYear = currentDate.getFullYear();
-    document.querySelector("#displayYear").innerHTML = currentYear;
-}
-
-getYear();
-
 
 // client section owl carousel
 $(".client_owl-carousel").owlCarousel({
@@ -34,7 +25,37 @@ $(".client_owl-carousel").owlCarousel({
     }
 });
 
+// custom.js
+$(document).ready(function() {
+    $('.option1').click(function(event) {
+        event.preventDefault(); // Empêche le comportement par défaut du lien
 
+        var bookId = $(this).data('book-id');
+        var bookTitle = $(this).data('title');
+        var bookImage = $(this).data('image');
+        var bookPrice = $(this).data('price');
+        var bookPdfPath = $(this).data('pdf-path');
+
+        $.ajax({
+            url: '/add-to-cart/' + bookId,
+            type: 'POST',
+            data: {
+                title: bookTitle,
+                image: bookImage,
+                price: bookPrice,
+                pdfPath: bookPdfPath
+            },
+            success: function(response) {
+                // Gérer la réponse en cas de succès, par exemple afficher un message à l'utilisateur
+                alert('Livre ajouté au panier!');
+            },
+            error: function(xhr, status, error) {
+                // Gérer les erreurs, par exemple afficher un message d'erreur à l'utilisateur
+                alert('Une erreur est survenue lors de l\'ajout du livre au panier.');
+            }
+        });
+    });
+});
 
 /** google_map js **/
 function myMap() {

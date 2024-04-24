@@ -16,23 +16,27 @@
     <div class="container">
         <h1 class="mt-5 mb-4">Add book</h1>
         <form method="post" enctype="multipart/form-data">
-             {{ form_start(l, {'attr': {'class': 'form-horizontal'}}) }}
+             {{ form_start(l, {'attr': {'novalidate': 'novalidate'}}) }}
 
             <div class="form-group">
                 {{ form_label(l.nomLiv, 'Titre') }}
                 {{ form_widget(l.nomLiv, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le titre du book'}}) }}
+                 {{ form_errors(l.nomLiv, {'attr': {'class': 'text-danger'}}) }} 
             </div>
             <div class="form-group">
                 {{ form_label(l.disponibiliteLiv, 'disponibilite') }}
                 {{ form_widget(l.disponibiliteLiv, {'attr': {'class': 'form-control'}}) }}
+                 {{ form_errors(l.disponibiliteLiv, {'attr': {'class': 'text-danger'}}) }} 
             </div>
             <div class="form-group">
                 {{ form_label(l.categorieLiv, 'Catégorie du livre') }}
                 {{ form_widget(l.categorieLiv, {'attr': {'class': 'form-control'}}) }}
+                 {{ form_errors(l.categorieLiv, {'attr': {'class': 'text-danger'}}) }} 
             </div>
                <div class="form-group">
                 {{ form_label(l.prixLiv, 'Prix du livre') }}
                 {{ form_widget(l.prixLiv, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le prix du book'}}) }}
+                 {{ form_errors(l.prixLiv, {'attr': {'class': 'text-danger'}}) }} 
             </div>
 
  <div class="form-group">

@@ -1,17 +1,19 @@
 {% extends 'pages/Interface_Communes/userinterface.html.twig' %}
+
 {% block css %}   
     {{ parent() }}
     <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="">
-      <title>Famms - Fashion HTML Template</title>
-      <!-- bootstrap core css -->
-      <link rel="stylesheet" type="text/css" href="{{ asset('cssbooks/bootstrap.css') }}" />
-      <!-- font awesome style -->
-      <link href="{{ asset('cssbooks/font-awesome.min.css') }}" rel="stylesheet" />
-      <!-- Custom styles for this template -->
-      <link href="{{ asset('cssbooks/style.css') }}" rel="stylesheet" />
-      <!-- responsive style -->
-      <link href="{{ asset('cssbooks/responsive.css') }}" rel="stylesheet" />
+    <title>Famms - Fashion HTML Template</title>
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('cssbooks/bootstrap.css') }}" />
+    <!-- font awesome style -->
+    <link href="{{ asset('cssbooks/font-awesome.min.css') }}" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="{{ asset('cssbooks/style.css') }}" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="{{ asset('cssbooks/responsive.css') }}" rel="stylesheet" />
 {% endblock %}
+
 {% block content %}
 <body class="sub_page">
     
@@ -35,11 +37,16 @@
                   <div class="box">
                      <div class="option_container">
                         <div class="options">
-                           <a class="option1">
-                           Add To Collection
+                           <a class="option1" 
+                              data-book-id="{{ book.idLiv }}" 
+                              data-pdf-path="{{ book.pdfPath }}"
+                              data-title="{{ book.nomLiv }}"
+                              data-image="{{ asset('assets/' ~ book.imagePath) }}"
+                              data-price="{{ book.prixLiv }}">
+                              Add To Collection
                            </a>
                            <a class="option2">
-                           Buy Now
+                              Buy Now
                            </a>
                         </div>
                      </div>
@@ -60,7 +67,7 @@
             </div>
             <div class="btn-box">
                <a href="">
-               View All products
+               My Collection
                </a>
             </div>
          </div>
@@ -81,6 +88,37 @@
       <script src="{{ asset('jsbooks/bootstrap.js') }}"></script>
       <!-- custom js -->
       <script src="{{ asset('jsbooks/custom.js') }}"></script>
+      <script>
+        $(document).ready(function() {
+            $('.option1').click(function(event) {
+                event.preventDefault(); // Empêche le comportement par défaut du lien
+
+                var bookId = $(this).data('book-id');
+                var bookTitle = $(this).data('title');
+                var bookImage = $(this).data('image');
+                var bookPrice = $(this).data('price');
+                var bookPdfPath = $(this).data('pdf-path');
+
+                $.ajax({
+                    url: '/add-to-cart/' + bookId,
+                    type: 'POST',
+                    data: {
+                        NomLiv: bookTitle,
+                        ImagePath: bookImage,
+                        PrixLiv: bookPrice,
+                        PdfPath: bookPdfPath
+                    },
+                    success: function(response) {
+                        // Gérer la réponse en cas de succès, par exemple afficher un message à l'utilisateur
+                        alert('Livre ajouté au panier!');
+                    },
+                    error: function(xhr, status, error) {
+                        // Gérer les erreurs, par exemple afficher un message d'erreur à l'utilisateur
+                        alert('Une erreur est survenue lors de l\'ajout du livre au panier.');
+                    }
+                });
+            });
+        });
+    </script>
    </body>
 {% endblock %}
-

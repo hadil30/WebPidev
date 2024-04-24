@@ -70,3 +70,7 @@ user_test:
 user_quiz:
   path: /user/quiz
   controller: App\Controller\quizController::index
+add_to_cart:
+  path: /add-to-cart/{id}
+  controller: 'App\Controller\userController::addToCart'
+  methods: ["POST"]

@@ -48,30 +48,30 @@ class AdminController extends AbstractController
     {
         $this->entityManager = $entityManager;
     }
-   
 
-    #[Route('/admin/ebook', name: 'admin_ebook',methods: ['GET'])]
+
+    #[Route('/admin/ebook', name: 'admin_ebook', methods: ['GET'])]
     public function ebook(BookRepository $bookRepository): Response
     {
-        $books =$bookRepository->findAll();
+        $books = $bookRepository->findAll();
         return $this->render('pages/Admin/ebookadmin.html.twig', [
             'l' => $books,
-        ]); 
+        ]);
     }
 
     #[Route('/admin/ebook/add', name: 'admin_ebookadd')]
-     public function newbook(Request $request, EntityManagerInterface $entityManager, SerializerInterface $serializer): Response
+    public function newbook(Request $request, EntityManagerInterface $entityManager, SerializerInterface $serializer): Response
     {
         $books = new Books();
-        $form = $this ->createForm(BookType::class,$books);
+        $form = $this->createForm(BookType::class, $books);
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $imagePath = $form->get('imagePath')->getData(); // Utilisez imagePath au lieu de ImagePath
 
             if ($imagePath instanceof UploadedFile) {
-                $newFilename = uniqid().'.'.$imagePath->guessExtension();
+                $newFilename = uniqid() . '.' . $imagePath->guessExtension();
                 $imagePath->move(
-                    $this->getParameter('kernel.project_dir').'/public/assets/',
+                    $this->getParameter('kernel.project_dir') . '/public/assets/',
                     $newFilename
                 );
                 $books->setImagePath($newFilename);
@@ -81,43 +81,48 @@ class AdminController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('admin_ebook');
         }
-        return $this->render('pages/Admin/addbook.html.twig', ['l' => $form->createView()]);
-
-    }  
-
-
-
-
-
-   /* #[Route('/admin/cours/update', name: 'admin_coursupdate')]
-
-    public function updatecours(CoursRepository $coursRepository): Response
-    {
-        $cours = $coursRepository->findAll();
-
-
-        return $this->render('pages/Admin/updateCoursAdmin.html.twig', [
-            'l' => $cours,
+        $errors = $form->getErrors(true);
+        return $this->render('pages/Admin/addbook.html.twig', [
+            'l' => $form->createView(),
+            'errors' => $errors
         ]);
-    }*/
 
-    
+    }
 
-    /*#[Route('/admin/books/update/{id}', name: 'books_detail')]
-    public function booksDetail(Request $request, $id, EntityManagerInterface $entityManager,): Response
+
+
+
+    #[Route('/admin/books/update/{id}', name: 'books_detail')]
+    public function booksDetail(Request $request, $id, EntityManagerInterface $entityManager): Response
     {
-        $books = $this->getDoctrine()->getRepository(Books::class)->find($id);
+        $book = $this->getDoctrine()->getRepository(Books::class)->find($id);
 
-        if (!$books) {
+        if (!$book) {
             throw $this->createNotFoundException('The book does not exist');
         }
 
-        $form = $this->createForm(BookType::class, $books);
+        $form = $this->createForm(BookType::class, $book);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($books);
+            // Récupérer la nouvelle image
+            $imageFile = $form->get('imagePath')->getData();
+
+            if ($imageFile) {
+                // Gérer le téléchargement de la nouvelle image
+                $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+
+                // Déplacez le fichier dans le répertoire où sont stockées les images des livres
+                $imageFile->move(
+                    $this->getParameter('books_images_directory'),
+                    $newFilename
+                );
+
+                // Mettre à jour l'attribut imagePath du livre avec le nouveau nom de fichier
+                $book->setImagePath($newFilename);
+            }
+
+            // Enregistrer les modifications dans la base de données
             $entityManager->flush();
 
             $this->addFlash('success', 'Book updated successfully.');
@@ -127,53 +132,9 @@ class AdminController extends AbstractController
 
         return $this->render('pages/Admin/detailbooks.html.twig', [
             'form' => $form->createView(),
-            'l' => $books,
+            'book' => $book,
         ]);
-    }*/
-
-    #[Route('/admin/books/update/{id}', name: 'books_detail')]
-    public function booksDetail(Request $request, $id, EntityManagerInterface $entityManager): Response
-{
-    $book = $this->getDoctrine()->getRepository(Books::class)->find($id);
-
-    if (!$book) {
-        throw $this->createNotFoundException('The book does not exist');
     }
-
-    $form = $this->createForm(BookType::class, $book);
-
-    $form->handleRequest($request);
-    if ($form->isSubmitted() && $form->isValid()) {
-        // Récupérer la nouvelle image
-        $imageFile = $form->get('imagePath')->getData();
-        
-        if ($imageFile) {
-            // Gérer le téléchargement de la nouvelle image
-            $newFilename = uniqid().'.'.$imageFile->guessExtension();
-            
-            // Déplacez le fichier dans le répertoire où sont stockées les images des livres
-            $imageFile->move(
-                $this->getParameter('books_images_directory'),
-                $newFilename
-            );
-
-            // Mettre à jour l'attribut imagePath du livre avec le nouveau nom de fichier
-            $book->setImagePath($newFilename);
-        }
-
-        // Enregistrer les modifications dans la base de données
-        $entityManager->flush();
-
-        $this->addFlash('success', 'Book updated successfully.');
-
-        return $this->redirectToRoute('admin_ebook');
-    }
-
-    return $this->render('pages/Admin/detailbooks.html.twig', [
-        'form' => $form->createView(),
-        'book' => $book,
-    ]);
-}
 
 
     #[Route('/admin/book/delete/{id}', name: 'books_delete')]
