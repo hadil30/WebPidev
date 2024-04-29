@@ -1,0 +1,18 @@
+.container2 {
+    display: flex;
+    justify-content: space-between;
+}
+.left-side, .right-side {
+    flex: 1;  /* Adaptez cette valeur pour changer la proportion */
+    padding: 20px;
+}
+.left-side {
+}
+.right-side {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Align items vertically in the center */
+    flex-wrap: wrap; /* Allows items to wrap onto the next line */
+    padding: 10px; /* Optional: Adds some padding inside the container */
+    justify-content: center;
+}

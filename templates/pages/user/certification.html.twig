@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate of Achievement</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .certificate {
+            width: 90%; /* Adjusted for horizontal layout */
+            height: 60%; /* Adjusted for horizontal layout */
+            padding: 40px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .certificate-logo {
+            max-width: 150px; /* Adjusted for better visibility */
+            margin-bottom: 20px;
+        }
+        .certificate-title {
+            margin-bottom: 15px;
+            font-size: 32px; /* Adjusted for emphasis */
+        }
+        .recipient, .test-name, .event, .score {
+            margin-bottom: 12px; /* Reduced spacing */
+        }
+        .signature, .date {
+            align-self: flex-end; /* Align to the right */
+            margin-right: 40px; /* Adjusted spacing */
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="certificate">
+    <img src="https://raw.githubusercontent.com/AhmeedGhoul/Na9ra-23-24-Pidev-/hadil/src/main/resources/gui/resources/logo.png" alt="Website Logo" class="certificate-logo"/>
+    <div class="certificate-title">Certificate of Achievement</div>
+    <div class="recipient">This certificate is awarded to {{RecipientName}}</div>
+    <div class="test-name">For excellent performance in {{TestName}}</div>
+    <div class="event">For achieving a score of:</div>
+    <div class="score">{{Score}}</div>
+    <div class="signature">Signature: NA9RA PLATFORM</div>
+</div>
+</body>
+</html>

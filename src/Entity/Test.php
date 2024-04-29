@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
+use App\Repository\TestRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
 #[ORM\Table(name: "test")]
+#[ORM\Entity(repositoryClass: TestRepository::class)]
+
 class Test
 {
     #[ORM\Id]
@@ -38,10 +40,6 @@ class Test
     )]
     private ?string $categorie;
 
-
-
-
-    // Getters and Setters
     public function getId(): ?int
     {
         return $this->id;

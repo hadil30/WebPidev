@@ -59,6 +59,20 @@ user_event:
 user_test:
     path: /user/test
     controller: App\Controller\testController::index
+test_exec:
+    path: /user/test/exectest/{id}
+    controller: App\Controller\testController::testexec
+    methods: [POST,GET]
 user_quiz:
     path: /user/quiz
     controller: App\Controller\quizController::index
+
+generate_certification:
+    path: /user/test/generate_certification/{id}
+    controller: App\Controller\testController::generateCertification
+    methods: [POST]
+    
+app_mailer:
+    path: /mailer
+    controller: App\Controller\MailerController::sendCertificationEmail
+    methods: [POST]

@@ -19,22 +19,25 @@ class QuestiontType extends AbstractType
         $builder
             ->add('text', TextType::class, [
                 'label' => false,
-                'attr' => ['class' => 'form-control', 'placeholder' => 'Enter a question'],               'required' => true,
+                'attr' => ['class' => 'form-control', 'placeholder' => 'Enter a question'],
+                'required' => true,
             ])
+
+
+
 
             ->add('reponses', CollectionType::class, [
                 'entry_type' => ReponseType::class,
+                'entry_options' => ['label' => false],
+                'attr' => ['class' => 'form-control', 'placeholder' => 'Enter a response'],
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
                 'prototype' => true,
-                'required' => true,
+                'attr' => ['class' => 'reponse-container',],
                 'prototype_name' => '__reponse_prototype__',
                 'error_bubbling' => false,
                 'by_reference' => false,
-                'attr' => [
-                    'class' => 'reponse-container',
-                ],
                 'label' => false,
 
             ]);
@@ -44,6 +47,8 @@ class QuestiontType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Questiont::class,
+            'cascade_validation' => true,
+
         ]);
     }
 }

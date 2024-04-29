@@ -1,0 +1,73 @@
+.cardmaintest {
+    background: var(--white);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 150%;    
+}
+
+.cardmaintest ul {
+    text-align: center;
+    padding: 0;
+}
+
+.cardmaintest li {
+    margin: 10px 0;
+    list-style: none;
+}
+
+.cardmaintest img {
+    width: 55px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.cardmaintest-container {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between; /* Evenly distributes spacing between items */
+}
+
+.category {
+    color: black;
+}
+
+.search-container {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#searchInput {
+    padding: 10px;
+    width: 50%;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding-right: 30px; /* Padding adjusted for inner content spacing */
+}
+
+.category-filter {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.category-filter a {
+    padding: 5px 10px;
+    margin: 5px;
+    background-color: #ffc73e;
+    color: #fff;
+    border-radius: 15px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.category-filter a:hover {
+    background-color: #e6b800; /* Changes background color on hover for better visibility */
+    color: #fff; /* Keeps text color consistent */
+}
