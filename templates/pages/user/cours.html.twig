@@ -1,9 +1,34 @@
 {% extends 'pages/Interface_Communes/userinterface.html.twig' %}
 
-{% block content %}
-<div style="padding: 226px 0px 120px 0px;
-            position: relative;
-            overflow: hidden;">
-    <h1>cours</h1>
-</div>
+{% block title %}Découvrez nos cours passionnants{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .card {
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1 class="text-center my-5">Liste des cours</h1>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for cours in cours %}
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{{ asset('assets/' ~ cours.ImagePath) }}" class="card-img-top" alt="{{ cours.titre }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ cours.titre }}</h5>
+                        <p class="card-text">{{ cours.description }}</p>
+                        <a href="{{ path('detaile_cours', {'id': cours.id}) }}" class="btn btn-outline-primary">Détails</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

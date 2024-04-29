@@ -3,7 +3,6 @@
 
 /* =============== Globals ============== */
 * {
-  font-family: "Ubuntu", sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -18,8 +17,10 @@
 }
 
 body {
+  font-family: 'Poppins', sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
+  font-size: 15px;
 }
 
 .container {
@@ -230,6 +231,26 @@ body {
   cursor: pointer;
   box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
 }
+.cardBoxmain {
+  width: 90%;
+  height: 800px; /* Set height to a fixed value */
+  padding: 30px;
+  
+  
+}
+
+.cardBoxmain .cardmain {
+  background: var(--white);
+  padding: 30px;
+  border-radius: 20px;
+  justify-content: space-between;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+}
+
+.maincontent{display: grid;
+  place-items: center; /* This centers the child element */
+}
+
 
 .cardBox .card .numbers {
   position: relative;
