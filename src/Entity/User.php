@@ -21,6 +21,7 @@ class User
     #[ORM\Column(name: "user_id", type: "integer", nullable: false)]
     private int $user_id;
 
+
     #[ORM\Column(name: "nom", type: "string", length: 50, nullable: false)]
     #[Assert\NotBlank(message: "Veuillez remplir ce champ.")]
 
@@ -60,11 +61,99 @@ class User
     private string $image;
 
     #[ORM\Column(name: "actif", type: "integer", nullable: true)]
-    private ?int $actif = 0;
 
+    private ?int $actif;
+// Getters and setters
+public function getId(): ?int
+{
+    return $this->userId;
+}
 
-    public function getUserId(): int
-    {
-        return $this->user_id;
-    }
+public function getNom(): ?string
+{
+    return $this->nom;
+}
+
+public function setNom(string $nom): self
+{
+    $this->nom = $nom;
+    return $this;
+}
+
+public function getPrenom(): ?string
+{
+    return $this->prenom;
+}
+
+public function setPrenom(string $prenom): self
+{
+    $this->prenom = $prenom;
+    return $this;
+}
+
+public function getDatenes(): ?\DateTime
+{
+    return $this->datenes;
+}
+
+public function setDatenes(\DateTime $datenes): self
+{
+    $this->datenes = $datenes;
+    return $this;
+}
+
+public function getMail(): ?string
+{
+    return $this->mail;
+}
+
+public function setMail(string $mail): self
+{
+    $this->mail = $mail;
+    return $this;
+}
+
+public function getPswd(): ?string
+{
+    return $this->pswd;
+}
+
+public function setPswd(string $pswd): self
+{
+    $this->pswd = $pswd;
+    return $this;
+}
+
+public function getRole(): ?int
+{
+    return $this->role;
+}
+
+public function setRole(int $role): self
+{
+    $this->role = $role;
+    return $this;
+}
+
+public function getImage(): ?string
+{
+    return $this->image;
+}
+
+public function setImage(string $image): self
+{
+    $this->image = $image;
+    return $this;
+}
+
+public function getActif(): ?int
+{
+    return $this->actif;
+}
+
+public function setActif(?int $actif): self
+{
+    $this->actif = $actif;
+    return $this;
+}
 }

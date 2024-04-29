@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
+
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 class coursController extends AbstractController
 {
@@ -13,4 +17,11 @@ class coursController extends AbstractController
     {
         return $this->render('pages/user/cours.html.twig');
     }
+
+  
+
+   
+
+    
+   
 }
