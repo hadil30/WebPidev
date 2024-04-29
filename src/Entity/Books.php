@@ -37,24 +37,14 @@ class Books
 
 
     #[ORM\Column(type: "string", length: 255, nullable: true)]
-    /* #[Assert\File(
-         maxSize: "5M",
-         mimeTypes: {"image/jpeg", "image/png", "image/gif"},
-         mimeTypesMessage: "Veuillez télécharger une image valide (jpeg, png, gif)",
-         uploadErrorMessage: "Une erreur s'est produite lors du téléchargement de l'image"
-     )]*/
+    // #[Assert\NotBlank(message: "L'image du livre ne peut pas être vide")]
     private ?string $imagePath = null;
 
 
 
-    #[ORM\Column(type: "blob", nullable: true)]
-    /* #[Assert\File(
-         maxSize: "10M",
-         mimeTypes: {"application/pdf"},
-         mimeTypesMessage: "Veuillez télécharger un fichier PDF valide",
-         uploadErrorMessage: "Une erreur s'est produite lors du téléchargement du fichier PDF"
-     )]*/
-    private $pdfPath;
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
+    // #[Assert\NotBlank(message: "Le PDF du livre ne peut pas être vide")]
+    private ?string $pdfPath = null;
 
     public function getIdLiv(): ?int
     {
@@ -121,7 +111,7 @@ class Books
         return $this;
     }
 
-    public function getPdfPath()
+    public function getPdfPath(): ?string
     {
         return $this->pdfPath;
     }

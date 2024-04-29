@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Knp\Component\Pager\PaginatorInterface;
 use App\Entity\Books;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -50,11 +51,34 @@ class AdminController extends AbstractController
     }
 
 
+    // #[Route('/admin/ebook', name: 'admin_ebook', methods: ['GET'])]
+    // public function ebook(BookRepository $bookRepository): Response
+    // {
+    //     $books = $bookRepository->findAll();
+    //     return $this->render('pages/Admin/ebookadmin.html.twig', ['l' => $books,]);
+    // }
     #[Route('/admin/ebook', name: 'admin_ebook', methods: ['GET'])]
-    public function ebook(BookRepository $bookRepository): Response
+    public function ebook(Request $request, BookRepository $bookRepository, PaginatorInterface $paginator): Response
     {
         $books = $bookRepository->findAll();
+
+        // Query to fetch all books
+        $query = $bookRepository->createQueryBuilder('b')
+            ->getQuery();
+        if ($request->query->getInt('page', 1) === 1) {
+            $query->setMaxResults(3);
+        }
+
+        // Paginate the query
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1), // Get the page number from the request, default to 1 if not set
+            3 // Number of items per page
+        );
+
+        // Render the template with pagination data
         return $this->render('pages/Admin/ebookadmin.html.twig', [
+            'pagination' => $pagination,
             'l' => $books,
         ]);
     }
@@ -67,6 +91,7 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $imagePath = $form->get('imagePath')->getData(); // Utilisez imagePath au lieu de ImagePath
+            $pdfPath = $form->get('pdfPath')->getData(); // Utilisez imagePath au lieu de ImagePath
 
             if ($imagePath instanceof UploadedFile) {
                 $newFilename = uniqid() . '.' . $imagePath->guessExtension();
@@ -75,6 +100,14 @@ class AdminController extends AbstractController
                     $newFilename
                 );
                 $books->setImagePath($newFilename);
+            }
+            if ($pdfPath instanceof UploadedFile) {
+                $newFilename2 = uniqid() . '.' . $pdfPath->guessExtension();
+                $pdfPath->move(
+                    $this->getParameter('kernel.project_dir') . '/public/assets/',
+                    $newFilename2
+                );
+                $books->setPdfPath($newFilename2);
             }
             $em = $this->getDoctrine()->getManager();
             $em->persist($books);
@@ -118,25 +151,50 @@ class AdminController extends AbstractController
                     $newFilename
                 );
 
-                // Mettre à jour l'attribut imagePath du livre avec le nouveau nom de fichier
-                $book->setImagePath($newFilename);
+
+
+
+
+
+
+
+
+                $pdfFile = $form->get('pdfPath')->getData();
+
+                if ($pdfFile) {
+                    // Gérer le téléchargement de la nouvelle image
+                    $newFilename2 = uniqid() . '.' . $pdfFile->guessExtension();
+
+                    // Déplacez le fichier dans le répertoire où sont stockées les images des livres
+                    $imageFile->move(
+                        $this->getParameter('books_images_directory'),
+                        $newFilename2
+                    );
+
+
+
+
+                    // Mettre à jour l'attribut imagePath du livre avec le nouveau nom de fichier
+                    $book->setImagePath($newFilename);
+                    $book->setImagePath($newFilename2);
+
+                }
+
+                // Enregistrer les modifications dans la base de données
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Book updated successfully.');
+
+                return $this->redirectToRoute('admin_ebook');
             }
 
-            // Enregistrer les modifications dans la base de données
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Book updated successfully.');
-
-            return $this->redirectToRoute('admin_ebook');
+            return $this->render('pages/Admin/detailbooks.html.twig', [
+                'form' => $form->createView(),
+                'book' => $book,
+            ]);
         }
 
-        return $this->render('pages/Admin/detailbooks.html.twig', [
-            'form' => $form->createView(),
-            'book' => $book,
-        ]);
     }
-
-
     #[Route('/admin/book/delete/{id}', name: 'books_delete')]
 
     public function deleteBooks(Request $request, EntityManagerInterface $entityManager, $id): Response

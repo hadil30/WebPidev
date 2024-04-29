@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\Entity\Panier;
 use App\Entity\Books;
 use App\Repository\BookRepository;
+use App\Repository\CollectionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
 
 
 
@@ -42,7 +44,8 @@ class userController extends AbstractController
         $panier = new Panier();
         $panier->setNomLiv($bookTitle);
         $panier->setImagepath($bookImage);
-        $panier->setTotalPrice($bookPrice); // Utiliser setPrixLiv() pour définir le prix du livre
+        $panier->setTotalPrice($bookPrice);
+        // Utiliser setPrixLiv() pour définir le prix du livre
         $panier->setPdfPath($bookPdfPath);
 
         // Obtenez le livre à partir de son ID et définissez-le dans le panier
@@ -59,5 +62,32 @@ class userController extends AbstractController
 
         return new JsonResponse(['message' => 'Livre ajouté au panier'], Response::HTTP_OK);
     }
+    #[Route('/user/collection', name: 'user_collection', methods: ['GET'])]
+    public function collectiondisplay(CollectionRepository $CollectionRepository): Response
+    {
+        $panier = $CollectionRepository->findAll();
+        return $this->render('pages/user/collection.html.twig', [
+            'p' => $panier,
+        ]);
+    }
+    #[Route('/user/collection/delete/{id}', name: 'collection_delete')]
+
+    public function deletecollection(Request $request, EntityManagerInterface $entityManager, $id): Response
+    {
+        $collection = $entityManager->getRepository(Panier::class)->find($id);
+
+        if (!$collection) {
+            throw $this->createNotFoundException('No Book found for id ' . $id);
+        }
+
+        $entityManager->remove($collection);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Book successfully deleted.');
+
+        return $this->redirectToRoute('user_collection'); // Redirect to the route where you list the cours
+    }
+
+
 
 }

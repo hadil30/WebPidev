@@ -34,6 +34,11 @@ user_ebook:
   controller: 'App\Controller\userController::ebookdisplay'
   methods: ["GET"]
 
+user_collection:
+  path: /user/collection
+  controller: 'App\Controller\userController::collectiondisplay'
+  methods: ["GET"]
+
 books_detail:
   path: /admin/books/update/{id}
   controller: App\Controller\AdminController::booksDetail
@@ -42,7 +47,10 @@ books_delete:
   path: /admin/book/delete/{id}
   controller: App\Controller\AdminController::deleteBooks
   methods: [POST, GET, DELETE]
-
+collection_delete:
+  path: /user/collection/delete/{id}
+  controller: App\Controller\userController::deletecollection
+  methods: [GET, DELETE]
 admin_event:
   path: /admin/event
   controller: App\Controller\AdminController::event

@@ -10,40 +10,42 @@
 {% endblock %}
 
 {% block content %}
+    <head></head>
+
 <div class="main">
-            <div >
-<body>
-    <div class="container">
-        <h1 class="mt-5 mb-4">Add book</h1>
-        <form method="post" enctype="multipart/form-data">
+            <div class="card" >
+              <body>
+              <div class="container">
+              <h1 class="mt-5 mb-4">Add book</h1>
+              <form method="post" enctype="multipart/form-data">
              {{ form_start(l, {'attr': {'novalidate': 'novalidate'}}) }}
 
-            <div class="form-group">
-                {{ form_label(l.nomLiv, 'Titre') }}
+             <div class="form-group">
+                 {{ form_label(l.nomLiv, 'Titre') }}
                 {{ form_widget(l.nomLiv, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le titre du book'}}) }}
                  {{ form_errors(l.nomLiv, {'attr': {'class': 'text-danger'}}) }} 
-            </div>
-            <div class="form-group">
+             </div>
+             <div class="form-group">
                 {{ form_label(l.disponibiliteLiv, 'disponibilite') }}
                 {{ form_widget(l.disponibiliteLiv, {'attr': {'class': 'form-control'}}) }}
                  {{ form_errors(l.disponibiliteLiv, {'attr': {'class': 'text-danger'}}) }} 
-            </div>
-            <div class="form-group">
+             </div>
+             <div class="form-group">
                 {{ form_label(l.categorieLiv, 'Catégorie du livre') }}
                 {{ form_widget(l.categorieLiv, {'attr': {'class': 'form-control'}}) }}
                  {{ form_errors(l.categorieLiv, {'attr': {'class': 'text-danger'}}) }} 
-            </div>
+             </div>
                <div class="form-group">
                 {{ form_label(l.prixLiv, 'Prix du livre') }}
                 {{ form_widget(l.prixLiv, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le prix du book'}}) }}
                  {{ form_errors(l.prixLiv, {'attr': {'class': 'text-danger'}}) }} 
-            </div>
+             </div>
 
- <div class="form-group">
+                 <div class="form-group">
                         <label class="col-lg-4 col-form-label" for="val-username">Image du livre<span class="text-danger">*</span>
                         </label>
                         <div class="col-lg-8">
- {{ form_label(l.imagePath) }}
+                  {{ form_label(l.imagePath) }}
                             {% if l.imagePath.vars.value %}
                                 <img src="{{ asset('/public/assets/' ~ l.imagePath.vars.value) }}" alt="Image du produit" class="img-thumbnail">
                             {% endif %}
@@ -57,20 +59,22 @@
                         <div class="col-lg-8">
                             {{ form_label(l.pdfPath) }}
                             {% if l.pdfPath.vars.value %}
-                                <!-- Afficher le nom du fichier PDF -->
-                                <p>{{ l.pdfPath.vars.value }}</p>
+                                                            <img src="{{ asset('/public/assets/' ~ l.pdfPath.vars.value) }}" alt="pdf du produit" class="img-thumbnail">
+
                             {% endif %}
                             {{ form_widget(l.pdfPath, {'attr': {'class': 'form-control'}}) }}
                             {{ form_errors(l.pdfPath, {'attr': {'class': 'text-danger'}}) }}                        
                         </div>
                     </div>
 
-            <div class="form-group">
+                 <div class="form-group">
                 <button type="submit" class="btn-submit btn-block">Envoyer</button>
             </div>
 
             {{ form_end(l) }}
         </form>
+    
+
     </div>
     <!-- Core JS -->
     <script src="{{ asset('assets1/vendor/libs/jquery/jquery.js') }}"></script>

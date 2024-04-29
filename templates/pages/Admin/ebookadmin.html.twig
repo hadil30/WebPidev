@@ -25,6 +25,33 @@
 {% endblock %}
 
 {% block content %}
+<style>
+.pagination {
+    --bs-pagination-padding-x: 0.5125rem;
+    --bs-pagination-padding-y: 0.625rem;
+    --bs-pagination-font-size: 0.9375rem;
+    --bs-pagination-color: #697a8d;
+    --bs-pagination-bg: #f0f2f4;
+    --bs-pagination-border-width: 0px;
+    --bs-pagination-border-color: #d9dee3;
+    --bs-pagination-border-radius: 0.25rem;
+    --bs-pagination-hover-color: #697a8d;
+    --bs-pagination-hover-bg: #e1e4e8;
+    --bs-pagination-hover-border-color: rgba(67, 89, 113, 0.3);
+    --bs-pagination-focus-color: #697a8d;
+    --bs-pagination-focus-bg: #e1e4e8;
+    --bs-pagination-focus-box-shadow: none;
+    --bs-pagination-active-color: #fff;
+    --bs-pagination-active-bg: rgba(105, 108, 255, 0.08);
+    --bs-pagination-active-border-color: rgba(105, 108, 255, 0.08);
+    --bs-pagination-disabled-color: #a1acb8;
+    --bs-pagination-disabled-bg: #f7f8f9;
+    --bs-pagination-disabled-border-color: var(--bs-border-color);
+    display: flex;
+    padding-left: 0;
+    list-style: none
+}
+</style>
     <div class="main">
      
         <div class="layout-wrapper layout-content-navbar">
@@ -53,7 +80,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
-                                        {% for book in l %}
+                                        {% for book in pagination %}
                                             <tr>
                                                 <td>{{ book.nomLiv }}</td>
                                                 <td>{{ book.categorieLiv }}</td>
@@ -87,6 +114,15 @@
                                 </table>
                                 
                             </div>
+                            <center>
+                                    {{ knp_pagination_render(pagination,'bases/pagination.html.twig') }} 
+                            </center>
+
+                                   <br>
+                                   
+                                </div>
+                           
+
                         </div>
                     </div>
                     </div>
