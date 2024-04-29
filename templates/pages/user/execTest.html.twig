@@ -1,0 +1,276 @@
+{% block css %}
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+<link rel="stylesheet" href="{{ asset('css/test.css') }}">
+<link rel="stylesheet" href="{{ asset('css/form.css') }}">
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+    }
+    
+    .main {
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        padding: 20px;
+    }
+    
+    .cardBoxmain {
+        width: 100%;
+        background-color: #f1f1f1;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .question-list {
+        list-style-type: none;
+        padding: 0;
+    }
+    
+    .question-item {
+        margin-bottom: 20px;
+    }
+    
+    .question-text {
+        font-size: 18px;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .response {
+        margin-bottom: 5px; 
+    }
+    
+    .btn-submit {
+        background-color: #4285F4;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .btn-submit:hover {
+        background-color: #3367D6;
+    }
+     
+
+    .circle.checked {
+        background-color:#e9b10a ;
+        border: 0px solid black;
+ 
+    }
+    .question-status-icons {
+        display: flex;
+        justify-content: start; /* Center circles horizontally */
+        align-items: center; /* Align vertically */
+        margin-bottom: 20px;
+        padding:20px;
+    }
+
+    .circle {
+        display: flex;
+        justify-content: center; /* Center text horizontally */
+        align-items: center; /* Center text vertically */
+        width: 30px; /* Increased size for visibility */
+        height: 30px;
+        border-radius: 50%;
+        border: 1px solid black;
+        background-color: #ddd; /* Default grey background */
+        margin: 5px;
+        font-size: 16px; /* Adjust font size as needed */
+        color: black; /* White text */
+        transition: background-color 0.3s;
+    }
+    .timer {
+        display: flex;
+        justify-content: end; /* Center circles horizontally */
+        align-items: center; /* Align vertically */
+        padding: 20px;
+        font-size: 24px; /* Larger font size for better visibility */
+        color: #333; /* Dark grey color for readability */
+        font-weight: bold; /* Bold font to emphasize the timer */
+    }
+    .label {
+        padding: 15px;
+        font-size: 24px; /* Larger font size for better visibility */
+        color: #333;
+    }
+    .score {
+        padding: 15px;
+        font-size: 24px; /* Larger font size for better visibility */
+        color: #333;
+    }
+
+    button:disabled, button:disabled:hover {
+        background-color: #ccc; /* Example color - dull to indicate disabled state */
+        color: #666;
+        cursor: not-allowed;
+        /* Disable any specific hover effects */
+        box-shadow: none;
+        transform: none;
+    }
+
+</style>
+{% endblock %}
+<div class="main1">
+    <div class="timer">
+        <span id="timer">00:00:00</span>
+    </div>
+    <div class="label">Questions:</div>
+    <div class="question-status-icons">
+        {% for question in test.questions %}
+            <div class="circle" data-question-id="{{ question.idQuestiont }}">{{ loop.index }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="score">
+        <span id="scoreValue">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">{{ message }} %</div>
+            {% endfor %}
+        </span>
+    </div>
+</div>
+
+<div class="main2">
+    <div class="maincontent">
+        <div class="cardBoxmain">
+            <div class="cardmain">
+                <div class="form-group">
+                    {{ test.nom }}
+                </div>
+
+                <form id="testForm" action="{{ path('test_exec', {'id': test.id}) }}" method="POST">
+                    <div class="form-group">
+                        <ul class="question-list">
+                            {% for question in test.questions %}
+                                <li class="question-item">
+                                    <p class="question-text">{{ question.text }}</p>
+                                    <div class="response-list">
+                                        {% for response in question.reponses %}
+                                            <div class="form-row response">
+                                                <label>
+                                                    <input type="checkbox" name="responses[{{ question.idQuestiont }}][]" value="{{ response.idReponse }}">
+                                                    {{ response.reponse }}
+                                                </label>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="form-group button-group">
+                        <button id="submitButton" type="submit" class="btn btn-primary">Submit</button>
+                        <button id="getCertificationButton" type="button" class="btn btn-success">Get Certification</button>
+                        {# <button id="getCertificationButton" type="button" class="btn btn-secondary" disabled>Get Certification</button>#}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var submitButton = document.getElementById("submitButton");
+        var form = document.getElementById('testForm');
+        var checkboxes = form.querySelectorAll('input[type="checkbox"]');
+        var scoreElement = document.getElementById('scoreValue');
+        var remainingTime = {{ remainingTime }} * 1000; 
+
+        function disableFormElements() {
+            submitButton.disabled = true;
+            checkboxes.forEach(function(checkbox) {
+                checkbox.disabled = true;
+            });
+        }
+
+        function updateTimer() {
+            if (remainingTime <= 0 || scoreElement.innerHTML.trim() !== '') {
+                clearInterval(timerInterval);
+                form.submit();
+                disableFormElements();
+            } else {
+                var hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+                document.getElementById('timer').textContent = hours + "h " + minutes + "m " + seconds + "s ";
+                remainingTime -= 1000;
+            }
+        }
+
+        var timerInterval = setInterval(updateTimer, 1000);
+
+        function checkScorePresence() {
+            if (scoreElement.innerHTML.trim() !== '') {
+                clearInterval(timerInterval);
+                disableFormElements();
+            }
+        }
+
+        setInterval(checkScorePresence, 500);
+
+        function handleResponseSelection() {
+            checkboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('change', function() {
+                    var questionItem = checkbox.closest('.question-item');
+                    var questionIndex = Array.from(questionItem.parentNode.children).indexOf(questionItem) + 1;
+                    var questionCircle = document.querySelector('.question-status-icons .circle:nth-child(' + questionIndex + ')');
+                    var anyChecked = Array.from(questionItem.querySelectorAll('input[type="checkbox"]')).some(c => c.checked);
+
+                    if (anyChecked) {
+                        questionCircle.classList.add('checked');
+                    } else {
+                        questionCircle.classList.remove('checked');
+                    }
+                });
+            });
+        }
+
+        handleResponseSelection();
+
+        window.onbeforeunload = function() {
+            window.opener.location.reload();
+        };
+
+        form.addEventListener('submit', function() {
+            window.opener.location.reload();
+        });
+
+        var getCertificationButton = document.getElementById('getCertificationButton');
+        getCertificationButton.addEventListener('click', function() {
+            var score = parseInt(scoreElement.textContent.trim().match(/\d+/)[0]);
+            
+            if (score >= 70) {
+                fetch('{{ path('generate_certification', {'id': test.id}) }}', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    }
+                }).then(function(response) {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Network response was not ok.');
+                }).then(function(data) {
+                    console.log('Certification generated:', data);
+                    alert('Certification generated successfully!');
+                }).catch(function(error) {
+                    console.error('Error:', error);
+                    alert('Error generating certification');
+                });
+            } else {
+                alert('Score is below the threshold for certification.');
+            }
+        });
+    });
+</script>

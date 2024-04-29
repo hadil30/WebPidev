@@ -34,14 +34,14 @@ class TestType extends AbstractType
             ]);
         $builder->add('questions', CollectionType::class, [
             'entry_type' => QuestiontType::class,
-            'entry_options' => ['label' => false], // Ensure entry options are correct
+            'entry_options' => ['label' => false],
             'allow_add' => true,
             'allow_delete' => true,
             'by_reference' => false,
             'prototype' => true,
-            'attr' => ['class' => 'form-control', 'placeholder' => 'Enter a description'],
+            'attr' => ['class' => 'form-control', 'placeholder' => 'Enter a question'],
             'attr' => ['class' => 'question-container'],
-            'error_bubbling' => false, // Prevent errors from bubbling up to the parent form
+            'error_bubbling' => false,
             'by_reference' => false,
         ]);
     }
@@ -50,6 +50,7 @@ class TestType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Test::class,
+            'cascade_validation' => true,
         ]);
     }
 }
