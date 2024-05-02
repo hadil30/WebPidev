@@ -61,6 +61,21 @@
                     <div class="container-xxl flex-grow-1 container-p-y">
                     <div class="card-header flex-column flex-md-row"><div class="head-label text-center"><h5 class="card-title mb-0">Books DataTable</h5></div><div class="dt-action-buttons text-end pt-3 pt-md-0"><div class="dt-buttons btn-group flex-wrap"><a href="{{ path('admin_ebookadd') }}"><button  class="btn btn-secondary create-new btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button"><span><i class="bx bx-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">Add New Book</span></span></button></a> </div></div></div>
 <br>
+<br>                            <form id="search-form">
+                                <div class="input-group">
+                                    <input type="text" id="search_title" class="form-control" placeholder="Search by Title">
+                                    <select id="search_category" class="form-select">
+                                        <option value="">-- Select Category --</option>
+                                        <option value="MYSTERE">MYSTERE</option>
+                                        <option value="FICTION">FICTION</option>
+                                        
+                                    </select>
+                                    <button type="button" id="search-button" class="btn btn-primary">Search</button>
+                                </div>
+                            </form>
+                            <!-- Fin du formulaire de recherche -->
+
+<br>
 <br>
 
                         <div class="card">
@@ -68,7 +83,7 @@
                             
                             <h5 class="card-header">Table Basic</h5>
                             <div class="table-responsive text-nowrap">
-                                <table class="table">
+                                <table class="table" id="cours-table">
                                     <thead>
                                         <tr>
                                             <th>Book Title</th>
@@ -130,5 +145,49 @@
             </div>
         </div>
     </div> 
-   
+      <script src='https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js'></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchForm = document.getElementById('search-form');
+        const searchButton = document.getElementById('search-button');
+
+        // Ajouter un écouteur d'événements sur le bouton de recherche
+        searchButton.addEventListener('click', function() {
+            searchCBooks();
+        });
+
+        // Ajouter un écouteur d'événements pour la frappe dans les champs de recherche
+        const searchTitle = document.getElementById('search_title');
+        const searchLevel = document.getElementById('search_category');
+
+        searchTitle.addEventListener('input', function() {
+            searchCBooks();
+        });
+
+        searchLevel.addEventListener('change', function() {
+            searchCBooks();
+        });
+
+        // Fonction pour effectuer la recherche et mettre à jour la liste des cours
+        function searchCBooks() {
+            const nomLiv = searchTitle.value;
+            const categorieLiv = searchLevel.value;
+
+            // Envoyer une requête AJAX au serveur
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', '{{ path('search_book') }}?search_title=' + nomLiv + '&search_category=' + categorieLiv, true);
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Mettre à jour la liste des cours avec la réponse
+                    const response = JSON.parse(xhr.responseText);
+                    document.getElementById('cours-table').innerHTML = response.html;
+                }
+            };
+
+            xhr.send();
+        }
+    });
+</script>
 {% endblock %}

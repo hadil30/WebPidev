@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\TestUtilisateur;
+use App\Entity\user;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -11,7 +11,7 @@ class TestUtilisateurRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, TestUtilisateurRepository::class);
+        parent::__construct($registry, user::class);
     }
 
     //    /**

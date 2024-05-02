@@ -14,11 +14,29 @@ admin:
 
 admin_users:
   path: /admin/users
-  controller: App\Controller\AdminController::users
+  controller: 'App\Controller\AdminController::users'
 admin_cours:
   path: /admin/cours
-  controller: App\Controller\AdminController::cours
+  controller: 'App\Controller\AdminController::cours'
+  methods: ["GET"]
 
+admin_coursadd:
+  path: /admin/cours/add
+  controller: 'App\Controller\AdminController::newcours'
+  methods: [POST, GET]
+
+admin_coursupdate:
+  path: /admin/cours/update
+  controller: 'App\Controller\AdminController::updatecours'
+  methods: [POST, GET]
+cours_detail:
+  path: /admin/cours/update/{id}
+  controller: App\Controller\AdminController::coursDetail
+  methods: [POST, GET]
+cours_delete:
+  path: /admin/cours/delete/{id}
+  controller: App\Controller\AdminController::deleteCours
+  methods: [POST, GET, DELETE]
 admin_ebook:
   path: /admin/ebook
   controller: App\Controller\AdminController::ebook
@@ -32,6 +50,29 @@ admin_ebookadd:
 user_ebook:
   path: /user/ebooks
   controller: 'App\Controller\userController::ebookdisplay'
+  methods: ["GET"]
+
+search_book:
+  path: "/admin/ebooks/search"
+  controller: App\Controller\AdminController::searchCBooks
+  methods: ["GET", "POST"]
+
+app_stripe_charge:
+  path: /user/stripe/create-charge/{idPanier}
+  controller: 'App\Controller\userController::createCharge'
+  methods: [POST, GET]
+
+collection_pdf:
+  path: /user/collection/pdf
+  controller: 'App\Controller\userController::generatecollectionsPdf'
+
+download_pdf:
+  path: /download-pdf/{idPanier}
+  controller: 'App\Controller\userController::downloadPdfAction'
+
+payment:
+  path: /user/collection/payment/{idPanier}
+  controller: 'App\Controller\userController::payment'
   methods: ["GET"]
 
 user_collection:
@@ -54,9 +95,22 @@ collection_delete:
 admin_event:
   path: /admin/event
   controller: App\Controller\AdminController::event
+admin_testadd:
+  path: /admin/test/add
+  controller: App\Controller\AdminController::newtest
+  methods: [POST, GET]
 admin_test:
   path: /admin/test
   controller: App\Controller\AdminController::test
+
+admin_testupdate:
+  path: /admin/test/update/{id}
+  controller: App\Controller\AdminController::testUpdate
+  methods: [POST, GET]
+test_delete:
+  path: /admin/test/delete/{id}
+  controller: App\Controller\AdminController::deleteTest
+  methods: [POST, GET, DELETE]
 admin_quiz:
   path: /admin/quiz
   controller: App\Controller\AdminController::quiz
@@ -65,7 +119,20 @@ user_profile:
   controller: App\Controller\userController::index
 user_cours:
   path: /user/cours
-  controller: App\Controller\coursController::index
+  controller: App\Controller\userController::cours
+  methods: ["GET"]
+detaile_cours:
+  path: /cours/{id}
+  controller: 'App\Controller\userController::detaileCours'
+  methods: ["GET"]
+  requirements:
+    id: '\d+'
+ajouter_commentaire:
+  path: /cours/{id}/commentaire/ajouter
+  controller: 'App\Controller\userController::ajouterCommentaire'
+  methods: ["POST"]
+  requirements:
+    id: '\d+'
 user_ebooks:
   path: /user/ebooks
   controller: App\Controller\ebooksController::index
@@ -82,3 +149,8 @@ add_to_cart:
   path: /add-to-cart/{id}
   controller: 'App\Controller\userController::addToCart'
   methods: ["POST"]
+
+chatbot:
+  path: /botman/chat
+  controller: 'App\Controller\BotManController::handle'
+  methods: [POST, GET]

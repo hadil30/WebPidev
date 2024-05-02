@@ -14,6 +14,8 @@ use App\Form\BookType;
 use App\Form;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 class AdminController extends AbstractController
 {
@@ -60,8 +62,6 @@ class AdminController extends AbstractController
     #[Route('/admin/ebook', name: 'admin_ebook', methods: ['GET'])]
     public function ebook(Request $request, BookRepository $bookRepository, PaginatorInterface $paginator): Response
     {
-        $books = $bookRepository->findAll();
-
         // Query to fetch all books
         $query = $bookRepository->createQueryBuilder('b')
             ->getQuery();
@@ -79,7 +79,7 @@ class AdminController extends AbstractController
         // Render the template with pagination data
         return $this->render('pages/Admin/ebookadmin.html.twig', [
             'pagination' => $pagination,
-            'l' => $books,
+
         ]);
     }
 
@@ -151,14 +151,6 @@ class AdminController extends AbstractController
                     $newFilename
                 );
 
-
-
-
-
-
-
-
-
                 $pdfFile = $form->get('pdfPath')->getData();
 
                 if ($pdfFile) {
@@ -166,18 +158,14 @@ class AdminController extends AbstractController
                     $newFilename2 = uniqid() . '.' . $pdfFile->guessExtension();
 
                     // Déplacez le fichier dans le répertoire où sont stockées les images des livres
-                    $imageFile->move(
+                    $pdfFile->move(
                         $this->getParameter('books_images_directory'),
                         $newFilename2
                     );
 
-
-
-
                     // Mettre à jour l'attribut imagePath du livre avec le nouveau nom de fichier
                     $book->setImagePath($newFilename);
-                    $book->setImagePath($newFilename2);
-
+                    $book->setPdfPath($newFilename2);
                 }
 
                 // Enregistrer les modifications dans la base de données
@@ -187,14 +175,16 @@ class AdminController extends AbstractController
 
                 return $this->redirectToRoute('admin_ebook');
             }
-
-            return $this->render('pages/Admin/detailbooks.html.twig', [
-                'form' => $form->createView(),
-                'book' => $book,
-            ]);
         }
 
+        return $this->render('pages/Admin/detailbooks.html.twig', [
+            'form' => $form->createView(),
+            'book' => $book,
+        ]);
     }
+
+
+
     #[Route('/admin/book/delete/{id}', name: 'books_delete')]
 
     public function deleteBooks(Request $request, EntityManagerInterface $entityManager, $id): Response
@@ -213,5 +203,23 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('admin_ebook'); // Redirect to the route where you list the cours
     }
 
+
+
+
+    #[Route('/admin/ebooks/search', name: 'search_book', methods: ['GET'])]
+    public function searchCBooks(BookRepository $bookRepository, Request $request): Response
+    {
+        $nomLiv = $request->query->get('search_title');
+        $categorieLiv = $request->query->get('search_category');
+
+        // Appel de la méthode de recherche du repository en fonction des paramètres
+        $book = $bookRepository->findByTitleAndCategory($nomLiv, $categorieLiv);
+
+        // Rendre le fragment de la table des cours au format JSON
+        $html = $this->renderView('pages/Admin/book_table_fragment.html.twig', [
+            'l' => $book,
+        ]);
+        return new JsonResponse(['html' => $html]);
+    }
 
 }

@@ -35,15 +35,19 @@
                {% for panier in p %}
                <div class="col-sm-6 col-md-4 col-lg-3">
                   <div class="box">
-                     <div class="option_container">
-                        <div class="options">
-                           <a class="option1" >
-                            Buy now  </a>
-                           <a class="option2" href="{{ path('collection_delete', {'id': panier.idPanier}) }}">
-                              Remove From Collection
-                           </a>
+<form method="post" action="{{ path('app_stripe_charge', {'idPanier': panier.idPanier}) }}">
+                        <input type="hidden" name="panierId" value="{{ panier.idPanier }}">
+                        <div class="option_container">
+                           <div class="options">
+                              <a class="option1"  href="{{ path('payment', {'idPanier': panier.idPanier}) }}">
+                                 Buy now
+                              </a>
+                              <a class="option2" href="{{ path('collection_delete', {'id': panier.idPanier}) }}">
+                                 Remove From Collection
+                              </a>
+                           </div>
                         </div>
-                     </div>
+                     </form>
                      <div class="img-box">
                          <img src="{{ asset( panier.imagePath) }}" class="card-img-top" alt="">
                      </div>
@@ -59,7 +63,11 @@
                </div>
                {% endfor %}
             </div>
-        
+            <div class="btn-box">
+               <a href="{{ path('collection_pdf') }}">
+                  Generate Pdf
+               </a>
+            </div>
          </div>
       </section>
 

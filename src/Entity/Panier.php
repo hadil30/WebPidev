@@ -29,11 +29,24 @@ class Panier
     #[ORM\JoinColumn(name: "id_liv", referencedColumnName: "id_liv")]
     public ?Books $idLiv = null;
 
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: "user_id", referencedColumnName: "user_id")]
+    public ?User $iduser = null;
+
     // Getters and setters
 
     public function getIdPanier(): ?int
     {
         return $this->idPanier;
+    }
+    public function getIduser(): ?User
+    {
+        return $this->iduser;
+    }
+
+    public function setIduser(?User $iduser): void
+    {
+        $this->iduser = $iduser;
     }
 
     public function getTotalPrice(): string

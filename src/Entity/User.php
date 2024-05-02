@@ -37,5 +37,8 @@ class User
     #[ORM\Column(name: "actif", type: "integer", nullable: true)]
     private ?int $actif;
 
-    // Getters and setters
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
 }
