@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -52,28 +53,46 @@ class userController extends AbstractController
     }
     
     #[Route('/cours/{id}/commentaire/ajouter', name: 'ajouter_commentaire', methods: ['POST'])]
-    public function ajouterCommentaire(int $id, Request $request, DiscussionRepository $discussionRepository): Response
+    public function ajouterCommentaire(int $id, Request $request, DiscussionRepository $discussionRepository,FlashyNotifier $flashy): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
         $cours = $entityManager->getRepository(Cours::class)->find($id);
-
+    
         if (!$cours) {
             throw $this->createNotFoundException('Le cours demandé n\'existe pas.');
         }
-
-       
+    
         $nouveauCommentaire = $request->request->get('commentaire');
-
-        $discussion = new Discussion();
-        
-        $discussion->setMessage($nouveauCommentaire);
-        $discussion->setIdCours($cours);
-
-        $entityManager->persist($discussion);
-        $entityManager->flush();
-
+        // Vérifier si le commentaire est vide
+        if (empty(trim($nouveauCommentaire))) {
+        // Si le commentaire est vide, afficher une alerte et empêcher l'ajout du commentaire
+        $flashy->error('Comment can not be empty.');
         return $this->redirectToRoute('detaile_cours', ['id' => $id]);
     }
+    
+        // Liste de mots interdits
+        $badWords = ['bhim', 'shit', 'fuck'];
+    
+        // Vérifier si le commentaire contient des mots inappropriés
+        foreach ($badWords as $word) {
+            if (stripos($nouveauCommentaire, $word) !== false) {
+                // Si un mot inapproprié est trouvé, afficher une alerte et empêcher l'ajout du commentaire
+                $flashy->error('Bad Word Detected!');
+                return $this->redirectToRoute('detaile_cours', ['id' => $id]);            }
+        }
+    
+        // Si aucun mot inapproprié n'est trouvé, ajouter le commentaire normalement
+        $discussion = new Discussion();
+        $discussion->setMessage($nouveauCommentaire);
+        $discussion->setIdCours($cours);
+    
+        $entityManager->persist($discussion);
+        $entityManager->flush();
+    
+        return $this->redirectToRoute('detaile_cours', ['id' => $id]);
+    }
+    
+    
 
     /*#[Route('/commentaire/{id}/modifier', name: 'modify_comment')]
     public function modifierCommentaire(int $id, DiscussionRepository $discussionRepository): Response

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CoursRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: "cours")]
@@ -37,11 +38,22 @@ class Cours
      * )
      */
     #[ORM\Column(name: "ImagePath", type: "string", length: 255)]
+   
     private ?string $ImagePath = null;
 
     #[ORM\Column(type: "string", length: 255)]
-    #[Assert\Url(message: "Le lien de la vidéo doit être une URL valide")]
+    #[Assert\NotBlank(message: "Le lien ne peut pas être vide")]
     private ?string $link = null;
+
+      
+     #[ORM\OneToMany(targetEntity:Discussion::class, mappedBy:"idCours")]
+     
+    private $discussions;
+
+    public function __construct()
+    {
+        $this->discussions = new ArrayCollection();
+    }
 
     // Getters and setters
     public function getId(): ?int

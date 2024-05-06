@@ -25,7 +25,7 @@
             border: 2px solid transparent; /* Bordure transparente */
             border-radius: 5px;
             background-color: transparent; /* Couleur de fond transparente */
-            color: #0F056B; /* Couleur de texte bleue */
+            color: #161688; /* Couleur de texte bleue */
             font-size: 1.1rem; /* Taille de police légèrement plus grande */
             text-decoration: none;
             transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
@@ -33,9 +33,9 @@
         }
 
         .btn-update:hover {
-            background-color: #0F056B; /* Couleur de fond bleue au survol */
+            background-color: #161688; /* Couleur de fond bleue au survol */
             color: #ffffff; /* Couleur de texte blanche au survol */
-            border-color: #0F056B; /* Bordure bleue au survol */
+            border-color: #161688; /* Bordure bleue au survol */
         }
 
         /* CSS pour les champs de formulaire */
@@ -45,7 +45,7 @@
 
         .form-group label {
             font-weight: bold; /* Mettre en gras */
-            color: #0F056B; /* Couleur de texte bleue */
+            color: #161688; /* Couleur de texte bleue */
             font-size: 1.1rem; /* Taille de police légèrement plus grande */
             margin-bottom: 10px; /* Espacement entre l'étiquette et le champ */
         }
@@ -105,7 +105,7 @@
                          {% if l.ImagePath is not null %}
                             <div class="form-group">
                                 <label>Current Image</label>
-                                <img src="{{ asset('assets/' ~ l.ImagePath) }}" alt="Current Image" class="current-cover" style="max-width: 150px; max-height: 200px;">
+                                <img src="{{ asset('assets/' ~ l.ImagePath) }}" alt="Current Image" class="current-cover" style="max-width: 100px; max-height: 100px;">
                             </div>
                         {% endif %}
 

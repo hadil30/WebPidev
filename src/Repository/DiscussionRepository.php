@@ -38,4 +38,13 @@ class DiscussionRepository  extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findAllWithCours()
+{
+    return $this->createQueryBuilder('d')
+        ->leftJoin('d.idCours', 'c')
+        ->addSelect('c')
+        ->getQuery()
+        ->getResult();
+}
 }

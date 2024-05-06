@@ -1,104 +1,110 @@
 {% extends 'pages/Admin/admindashboard.html.twig' %}
 
-{% block css %}
+{% block css %}   
     {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets1/vendor/fonts/boxicons.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets1/vendor/css/core.css') }}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{{ asset('assets1/vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{ asset('assets1/css/demo.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets1/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
     <style>
-        body {
-            background-color: #f8f9fa !important; /* Couleur de fond */
+    .button-group {
+            display: flex;
+            justify-content: flex-end; /* Bouton aligné à droite */
+            align-items: center;
+            margin-top: 20px; /* Espacement au-dessus du bouton */
         }
-        .container {
-            margin-top: 50px !important; /* Espacement du haut */
+    /* CSS pour le bouton de soumission */
+        .btn-add {
+            padding: 12px 24px; /* Augmentation de la taille du bouton */
+            border: 2px solid transparent; /* Bordure transparente */
+            border-radius: 5px;
+            background-color: transparent; /* Couleur de fond transparente */
+            color: #161688; /* Couleur de texte bleue */
+            font-size: 1.1rem; /* Taille de police légèrement plus grande */
+            text-decoration: none;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+            cursor: pointer;
         }
-        .form-group {
-            margin-bottom: 20px !important; /* Espacement entre les groupes de champs */
+
+        .btn-add:hover {
+            background-color: #161688; /* Couleur de fond bleue au survol */
+            color: #ffffff; /* Couleur de texte blanche au survol */
+            border-color: #161688; /* Bordure bleue au survol */
         }
-        h1 {
-            text-align: center!important; /* Centrer le titre */
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif!important; /* Police de caractères */
-            font-size: 2.5rem!important; /* Taille du texte */
-            color: #0F056B!important; /* Couleur du texte */
-            margin-bottom: 30px!important; /* Espacement en dessous du titre */
-            text-shadow: 2px 2px 4px rgba(15, 5, 107, 0.2)!important; /* Ombre portée pour un effet de profondeur */
-        }
-        /* CSS pour le bouton "Envoyer" */
-        .btn-submit {
-            padding: 10px 20px!important;
-            border: none!important;
-            border-radius: 5px!important;
-            background-color: #ffffff!important; /* Couleur blanche */
-            color: #0F056B!important; /* Couleur de texte bleue */
-            font-weight: bold !important; /* Texte en gras */
-            font-size: 1rem !important; /* Taille de la police */
-            text-transform: uppercase!important; /* Convertir en majuscules */
-            transition: background-color 0.3s ease!important;
-            display: inline-block!important;
-            cursor: pointer!important;
-        }
-        .btn-submit:hover {
-            background-color: #0F056B!important; /* Couleur bleue plus foncée au survol */
-            color: #ffffff!important; /* Couleur de texte blanche au survol */
-        }
-        /* CSS pour les titres des champs */
-        .form-group label {
-            font-weight: bold!important; /* Texte en gras */
-        }
+
     </style>
 {% endblock %}
 
 {% block content %}
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Ajouter un cours</title>    
-</head>
 <div class="main">
+            <div >
 <body>
-    <div class=" container maincontent">
-        <h1 class="mt-5 mb-4">Création d'un nouveau cours</h1>
+    <div class="container">
+        <h1 class="mt-5 mb-4">Add A New Course</h1>
         <form method="post" enctype="multipart/form-data">
-            {{ form_start(l, {'attr': {'novalidate': 'novalidate'}}) }}
+             {{ form_start(l, {'attr': {'novalidate': 'novalidate'}}) }}
+
             <div class="form-group">
                 {{ form_label(l.titre, 'Course Title') }}
-                {{ form_widget(l.titre, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le titre du cours', 'maxlength': '255'}}) }}
-  {{ form_errors(l.titre, {'attr': {'class': 'text-danger'}}) }}            </div>
-
-            <div class="form-group">
-                {{ form_label(l.description, 'Course Description') }}
-                {{ form_widget(l.description, {'attr': {'class': 'form-control', 'placeholder': 'Entrez la description du cours', 'maxlength': '255'}}) }}
-  {{ form_errors(l.description, {'attr': {'class': 'text-danger'}}) }}            </div>
-
-            <div class="form-group">
-                {{ form_label(l.niveau, 'Course Level') }}
-                {{ form_widget(l.niveau, {'attr': {'class': 'form-control'}}) }}
-  {{ form_errors(l.niveau, {'attr': {'class': 'text-danger'}}) }}            </div>
-
-             <div class="form-group">
-                <label class="col-lg-4 col-form-label" for="val-username">Course Image<span class="text-danger">*</span></label>
-                <div class="col-lg-8">
-                    {{ form_label(l.ImagePath) }}
-                    {% if l.ImagePath.vars.value %}
-                        <img src="{{ asset('/public/assets/' ~ l.ImagePath.vars.value) }}" alt="Image du produit" class="img-thumbnail">
-                    {% endif %}
-                    {{ form_widget(l.ImagePath, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(l.ImagePath, {'attr': {'class': 'text-danger'}}) }}
-                </div>
+                {{ form_widget(l.titre, {'attr': {'class': 'form-control', 'placeholder': 'Enter Your Course'}}) }}
+                 {{ form_errors(l.titre, {'attr': {'class': 'text-danger'}}) }} 
             </div>
 
             <div class="form-group">
+                {{ form_label(l.description, 'Course Description') }}
+                {{ form_widget(l.description, {'attr': {'class': 'form-control', 'placeholder': 'Enter Your Course Description:'}}) }}
+                 {{ form_errors(l.description, {'attr': {'class': 'text-danger'}}) }} 
+            </div>
+
+             <div class="form-group">
+                {{ form_label(l.niveau, 'Course Level') }}
+                {{ form_widget(l.niveau, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(l.niveau, {'attr': {'class': 'text-danger'}}) }} 
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-4 col-form-label" for="val-username"> <span class="text-danger"> </span>
+                </label>
+                <div class="col-lg-8">
+                            {{ form_label(l.ImagePath) }}
+                            {% if l.ImagePath.vars.value %}
+                                <img src="{{ asset('/public/assets/' ~ l.ImagePath.vars.value) }}" alt="Course Image" class="img-thumbnail">
+                            {% endif %}
+                            {{ form_widget(l.ImagePath, {'attr': {'class': 'form-control'}}) }} 
+
+                             {{ form_errors(l.ImagePath, {'attr': {'class': 'text-danger'}}) }}                        
+                </div>
+            </div>
+
+                <div class="form-group">
                 {{ form_label(l.link, 'Course Link') }}
                 {{ form_widget(l.link, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le lien de la vidéo'}}) }}
                  {{ form_errors(l.link, {'attr': {'class': 'text-danger'}}) }}
                 
             </div>
 
-            <div class="form-group">
-                <button type="submit" class="btn-submit btn-block">Envoyer</button>
+            <div class="form-group button-group">
+                    <button type="submit" class="btn-add">Add A Course</button>
             </div>
+
             {{ form_end(l) }}
         </form>
     </div>
+    <!-- Core JS -->
+    <script src="{{ asset('assets1/vendor/libs/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('assets1/vendor/libs/popper/popper.js') }}"></script>
+    <script src="{{ asset('assets1/vendor/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('assets1/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+    <script src="{{ asset('assets1/vendor/js/menu.js') }}"></script>
+
+    <!-- Main JS -->
+    <script src="{{ asset('assets1/js/main.js') }}"></script>
+
+    <!-- Page JS -->
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 </div>
-</html>
+</div>
 {% endblock %}

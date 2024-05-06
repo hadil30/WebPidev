@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CoursRepository;
+use App\Repository\DiscussionRepository;
 use App\Entity\Cours;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,6 +14,7 @@ use App\Form\CoursType;
 use App\Form;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 class AdminController extends AbstractController
 {
 
@@ -45,13 +47,14 @@ class AdminController extends AbstractController
 
 
     #[Route('/admin/cours', name: 'admin_cours',methods: ['GET'])]
-    public function cours(CoursRepository $coursRepository): Response
+    public function cours(CoursRepository $coursRepository, DiscussionRepository $discussionRepository): Response
     {
         $cours = $coursRepository->findAll();
+        $discussions = $discussionRepository->findAllWithCours();
        
         return $this->render('pages/Admin/coursadmin.html.twig', [
             'l' => $cours,
-            
+            'd' => $discussions,
         ]); 
     }
     
@@ -136,15 +139,12 @@ public function newcours(Request $request, EntityManagerInterface $entityManager
        'l' => $form->createView(),
        'errors' => $errors // Passage des erreurs au template Twig
    ]);
+
+   
 }
 
 
-
-
-
-
-
-    #[Route('/admin/cours/update', name: 'admin_coursupdate')]
+    /*#[Route('/admin/cours/update', name: 'admin_coursupdate')]
 
     public function updatecours(CoursRepository $coursRepository): Response
     {
@@ -154,7 +154,7 @@ public function newcours(Request $request, EntityManagerInterface $entityManager
         return $this->render('pages/Admin/updateCoursAdmin.html.twig', [
             'l' => $cours,
         ]);
-    }
+    }*/
 
     
 
@@ -248,6 +248,55 @@ public function newcours(Request $request, EntityManagerInterface $entityManager
 
         return $this->redirectToRoute('admin_cours'); // Redirect to the route where you list the cours
     }
+
+    /*#[Route('/admin/cours/search', name: 'search_cours')]
+public function searchCours(Request $request, CoursRepository $coursRepository): JsonResponse
+{
+    // Récupérer le terme de recherche depuis la requête
+    $searchTerm = $request->request->get('search');
+
+    // Effectuer la recherche dans la base de données
+    $results = $coursRepository->search($searchTerm);
+
+    // Générer le HTML pour les résultats de la recherche
+    $html = $this->renderView('pages/Admin/search_results.html.twig', [
+        'results' => $results,
+    ]);
+
+    // Retourner les résultats au format JSON
+    return new JsonResponse($html);
+}*/
+#[Route('/admin/cours/search', name: 'search_cours', methods: ['GET'])]
+public function searchCours(CoursRepository $coursRepository, DiscussionRepository $discussionRepository, Request $request): Response
+{
+    $title = $request->query->get('search_title');
+    $level = $request->query->get('search_level');
+
+    // Appel de la méthode de recherche du repository en fonction des paramètres
+    $cours = $coursRepository->findByTitleAndLevel($title, $level);
+    $discussions = $discussionRepository->findAll();
+   
+    // Rendre le fragment de la table des cours au format JSON
+    $html = $this->renderView('pages/Admin/cours_table_fragment.html.twig', [
+        'l' => $cours,
+        'd' => $discussions,
+    ]);  
+    return new JsonResponse(['html' => $html]);
+}
+/*#[Route('/admin/cours', name: 'admin_coursSort', methods: ['GET'])]
+public function coursSort(CoursRepository $coursRepository, Request $request): Response
+{
+    $sortLevel = $request->query->get('sortLevel', 'ASC');
+    $sortTitle = $request->query->get('sortTitle', 'ASC');
+
+    // Récupérer les cours en fonction des paramètres de tri
+    $cours = $coursRepository->findBy([], ['niveau' => $sortLevel, 'titre' => $sortTitle]);
+
+    return $this->render('pages/Admin/coursadmin.html.twig', [
+        'l' => $cours,
+    ]);
+}*/
+
 
 
 

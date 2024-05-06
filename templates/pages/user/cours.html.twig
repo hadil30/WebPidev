@@ -124,7 +124,7 @@
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="course-item bg-light">
                         <div class="position-relative overflow-hidden">
-                            <img src= "{{ asset('assets/' ~ cours.ImagePath) }}" width="400px" height="600px" alt="">
+                            <img src= "{{ asset('assets/' ~ cours.ImagePath) }}" width="400px" height="300px" alt="">
                             <div class="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
                                 <a href="{{ path('detaile_cours', {'id': cours.id}) }}" class="flex-shrink-0 btn btn-sm btn-primary px-3" style="border-radius:30px;">Course details</a>
                             </div>
@@ -133,6 +133,9 @@
                         
                             <h5 class="mb-4">{{ cours.titre }}</h5>
                         </div>
+                                <center>
+                                    <p>{{ cours.niveau }}</p>
+                                </center>
                         <div class="d-flex border-top">
                            
                         </div>

@@ -14,6 +14,30 @@ class CoursRepository extends ServiceEntityRepository
         parent::__construct($registry, Cours::class);
     }
 
+
+    // Nouvelle méthode pour rechercher les cours par titre et niveau
+    public function findByTitleAndLevel($title, $level)
+    {
+        $queryBuilder = $this->createQueryBuilder('c');
+        
+        // Si le titre est spécifié, ajoute une clause WHERE pour rechercher par titre
+        if ($title) {
+            $queryBuilder->andWhere('c.titre LIKE :title')
+                         ->setParameter('title', '%'.$title.'%');
+        }
+
+        // Si le niveau est spécifié, ajoute une clause WHERE pour rechercher par niveau
+        if ($level) {
+            $queryBuilder->andWhere('c.niveau = :level')
+                         ->setParameter('level', $level);
+        }
+
+        // Exécutez la requête et retournez les résultats
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+        // Exécutez la requête et retournez les résultats
+        
     //    /**
     //     * @return CoursRepository[] Returns an array of CoursRepository objects
     //     */
@@ -38,4 +62,5 @@ class CoursRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+    
 }

@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Space Dynamic - SEO HTML5 Template{% endblock %}</title>
+    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel="stylesheet">
+
+    
+
 {% block css %}   
  <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
    <link href="{{asset('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap')}}" rel="stylesheet">
@@ -13,6 +18,7 @@
     <link rel="stylesheet" href="{{ asset('css/templatemo-space-dynamic.css') }}">
     <link rel="stylesheet" href="{{ asset('css/animated.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owl.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
 {% endblock %}
 
 </head>
@@ -31,8 +37,14 @@
 <script src="{{ asset('js/animation.js') }}"></script>
 <script src="{{ asset('js/imagesloaded.js') }}"></script>
 <script src="{{ asset('js/templatemo-custom.js') }}"></script>
+<script src="//code.jquery.com/jquery.js"></script>
+<script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+
+
 {% endblock %}
 {% endblock %}
+ {{ include ('@MercurySeriesFlashy/flashy.html.twig') }}
+
 </body>
 </html>
 

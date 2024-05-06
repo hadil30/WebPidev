@@ -43,6 +43,7 @@ class CoursType extends AbstractType
                 'mapped' => false,
                 'required' => false,
             ])
+
             ->add('link', UrlType::class, [
                 'label' => 'Lien de la vidéo',
                 'attr' => ['class' => 'form-control', 'placeholder' => 'Entrez le lien de la vidéo'],

@@ -30,69 +30,171 @@
         <div class="layout-wrapper layout-content-navbar">
             <div class="layout-container">
                 <div class="layout-page">
-                 <div class="content-wrapper">
-                    <div class="container-xxl flex-grow-1 container-p-y">
-                    <div class="card-header flex-column flex-md-row"><div class="head-label text-center"><h5 class="card-title mb-0">Course DataTable</h5></div><div class="dt-action-buttons text-end pt-3 pt-md-0"><div class="dt-buttons btn-group flex-wrap"><a href="{{ path('admin_coursadd') }}"><button  class="btn btn-secondary create-new btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button"><span><i class="bx bx-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">Add New Course</span></span></button></a> </div></div></div>
-<br>
-<br>
+                    <div class="content-wrapper">
+                        <div class="container-xxl flex-grow-1 container-p-y">
+                            <!-- Formulaire de recherche -->
+                            <form id="search-form">
+                                <div class="input-group">
+                                    <input type="text" id="search_title" class="form-control" placeholder="Search by Title">
+                                    <select id="search_level" class="form-select">
+                                        <option value="">-- Select Level --</option>
+                                        <option value="Beginner">Beginner</option>
+                                        <option value="Intermediate">Intermediate</option>
+                                        <option value="Advanced">Advanced</option>
+                                    </select>
+                                    <button type="button" id="search-button" class="btn btn-primary">Search</button>
+                                </div>
+                            </form>
+                            <!-- Fin du formulaire de recherche -->
 
-                        <div class="card">
-                        
-                            
-                            <h5 class="card-header">Table Basic</h5>
-                            <div class="table-responsive text-nowrap">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Title</th>
-                                            <th>Description</th>
-                                            <th>Level</th>
-                                            <th>Image</th>
-                                            <th>Link</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table-border-bottom-0">
-                                        {% for course in l %}
-                                            <tr>
-                                                   <td>{{ course.titre }}</td>
-                        <td>{{ course.description }}</td>
-                                                <td>{{ course.niveau }}</td>
-
-                                                 <td> <li
-                              data-bs-toggle="tooltip"
-                              data-popup="tooltip-custom"
-                              data-bs-placement="top"
-                              class="avatar avatar-xs pull-up"
-                              title="Lilian Fuller">
-                              <img src="{{ asset('assets/' ~ course.imagePath) }}" alt="Avatar" class="rounded-circle" />
-                            </li></td>
-                                               
-                                                                    <td>{% if course.link %}<a class="video-link" href="{{ course.link }}" target="_blank"><strong>Watch Video</strong></a>{% else %}<span class="no-video">No Video Available</span>{% endif %}</td>
-
-                                                <td>
-                                                 <div class="dropdown">
-                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                              <i class="bx bx-dots-vertical-rounded"></i>
-                            </button>
-                                                    <!-- Actions -->
-                                                   <div class="dropdown-menu">  <a class="dropdown-item" href="{{ path('cours_detail', {'id': course.id}) }}"><i class="bx bx-edit-alt me-1"></i>Edit</a> | <a class="dropdown-item" href="{{ path('cours_delete', {id: course.id}) }}">
-                                                   
-                                                  <i class="bx bx-trash me-1"></i>  Delete</a></div>
-                                                  </div>
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                                
+                            <!-- Table des cours -->
+                            <div class="card">
+                                <div class="card-header flex-column flex-md-row">
+                                    <div class="head-label text-center">
+                                        <h5 class="card-title mb-0">Course DataTable</h5>
+                                    </div>
+                                <div class="dt-action-buttons text-end pt-3 pt-md-0">
+                                    <div class="dt-buttons btn-group flex-wrap">
+                                        <a href="{{ path('admin_coursadd') }}">
+                                            <button class="btn btn-secondary create-new btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button">
+                                                <span><i class="bx bx-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">Add New Course</span></span>
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
+                                <div class="table-responsive text-nowrap">
+                                    <table class="table" id="cours-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Title</th>
+                                                <th>Description</th>
+                                                <th>Level</th>
+                                                <th>Image</th>
+                                                <th>Link</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-border-bottom-0">
+                                            {% for course in l %}
+                                                <tr>
+                                                    <td>{{ course.titre }}</td>
+                                                    <td>{{ course.description }}</td>
+                                                    <td>{{ course.niveau }}</td>
+                                                    <td>
+                                                        <li
+                                                            data-bs-toggle="tooltip"
+                                                            data-popup="tooltip-custom"
+                                                            data-bs-placement="top"
+                                                            class="avatar avatar-xs pull-up"
+                                                            title="Lilian Fuller"
+                                                        >
+                                                            <img src="{{ asset('assets/' ~ course.imagePath) }}" alt="Avatar" class="rounded-circle" />
+                                                        </li>
+                                                    </td>
+                                                    <td>
+                                                        {% if course.link %}
+                                                            <a class="video-link" href="{{ course.link }}" target="_blank"><strong>Watch Video</strong></a>
+                                                        {% else %}
+                                                            <span class="no-video">No Video Available</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        <div class="dropdown">
+                                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                                            </button>
+                                                            <!-- Actions -->
+                                                           <div class="dropdown-menu">
+                                                            <a class="dropdown-item" href="{{ path('cours_detail', {'id': course.id}) }}"><i class="bx bx-edit-alt me-1"></i>Edit</a> | <a class="dropdown-item" href="{{ path('cours_delete', {id: course.id}) }}"><i class="bx bx-trash me-1"></i>Delete</a>
+                                                        </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- Fin de la table des cours -->
+
+                            <!-- Table des discussions -->
+                            <div class="card mt-4">
+                                <h5 class="card-header">Discussion Table</h5>
+                                <div class="table-responsive text-nowrap">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                {# <th>Course ID</th> #}
+                                                <th>Title</th>
+                                                <th>Comment</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-border-bottom-0">
+                                            {% for discussion in d %}
+                                                <tr>
+                                                    {# <td>{{ discussion.idCours }}</td> <!-- Ajout de cette ligne pour afficher l'ID du cours --> #}
+                                                    <td>{{ discussion.idCours.titre }}</td> {# Ajout de cette ligne pour afficher le titre du cours #}
+                                                    <td>{{ discussion.message }}</td>
+                                                    <td>{{ discussion.datePost|date('Y-m-d H:i:s') }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- Fin de la table des discussions -->
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div> 
-   
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchForm = document.getElementById('search-form');
+        const searchButton = document.getElementById('search-button');
+
+        // Ajouter un écouteur d'événements sur le bouton de recherche
+        searchButton.addEventListener('click', function() {
+            searchCours();
+        });
+
+        // Ajouter un écouteur d'événements pour la frappe dans les champs de recherche
+        const searchTitle = document.getElementById('search_title');
+        const searchLevel = document.getElementById('search_level');
+
+        searchTitle.addEventListener('input', function() {
+            searchCours();
+        });
+
+        searchLevel.addEventListener('change', function() {
+            searchCours();
+        });
+
+        // Fonction pour effectuer la recherche et mettre à jour la liste des cours
+        function searchCours() {
+            const title = searchTitle.value;
+            const level = searchLevel.value;
+
+            // Envoyer une requête AJAX au serveur
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', '{{ path('search_cours') }}?search_title=' + title + '&search_level=' + level, true);
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Mettre à jour la liste des cours avec la réponse
+                    const response = JSON.parse(xhr.responseText);
+                    document.getElementById('cours-table').innerHTML = response.html;
+                }
+            };
+
+            xhr.send();
+        }
+    });
+</script>
+
 {% endblock %}

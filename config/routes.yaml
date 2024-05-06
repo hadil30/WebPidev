@@ -38,6 +38,14 @@ cours_delete:
     path: /admin/cours/delete/{id}
     controller: App\Controller\AdminController::deleteCours
     methods: [POST,GET,DELETE]
+search_cours:
+    path: /admin/cours/search
+    controller: App\Controller\AdminController::searchCours
+    methods: ['GET','POST']
+admin_coursSort:
+    path: /admin/cours
+    controller: App\Controller\AdminController::coursSort
+    methods: ['GET']
 admin_ebook:
     path: /admin/ebook
     controller: App\Controller\AdminController::ebook
