@@ -2,32 +2,28 @@
 
 namespace App\Controller;
 
-use BotMan\BotMan\BotMan;
-use BotMan\BotMan\BotManFactory;
-use BotMan\BotMan\Drivers\DriverManager;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-
+use App\Entity\Test;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Entity\Panier;
 use App\Entity\Books;
 use App\Entity\User;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\BookRepository;
 use App\Repository\CollectionRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
-
-
-use Symfony\Component\HttpFoundation\Request;
 use Stripe\Stripe;
 use Stripe\Charge;
-
+use App\Repository\CoursRepository;
+use App\Entity\Cours;
+use App\Entity\Discussion;
+use App\Repository\DiscussionRepository;
 
 class userController extends AbstractController
 {

@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Form;
 use App\Form\QuestiontType;
 use App\Form\SimpleQuestionFormType;
+use App\Repository\TestUtilisateurRepository;
 use TestType;
 
 
@@ -235,7 +236,7 @@ class AdminController extends AbstractController
             $test = new Test();
             $form = $this->createForm(TestType::class, $test);
             $form->handleRequest($request);
-            $errors = $form->getErrors(true);
+
 
 
             if ($form->isSubmitted()) {
@@ -246,13 +247,13 @@ class AdminController extends AbstractController
                     return $this->redirectToRoute('admin_test');
                 } else {
                     foreach ($form->getErrors(true) as $error) {
-                        // echo $error->getMessage();
+                        echo $error->getMessage();
                     }
                 }
             }
             return $this->render('pages/Admin/addTestadmin.html.twig', [
                 'form' => $form->createView(),
-                'errors' => $form->getErrors(true, true),
+                'errors' => (string) $form->getErrors(true, false)
             ]);
         }
     }
@@ -262,13 +263,38 @@ class AdminController extends AbstractController
 
     #[Route('/admin/test', name: 'admin_test')]
 
-    public function test(TestRepository $testRepository): Response
+    public function test(TestRepository $testRepository, TestUtilisateurRepository $testUtilisateurRepository): Response
     {
         $test = $testRepository->findAll();
+        $totalTests = $this->getDoctrine()->getManager('default')->getRepository(Test::class)->getTotalNumberOfTests();
+        $activeTests = $this->getDoctrine()->getManager('default')->getRepository(Test::class)->getNumberOfActiveTests();
+        $inactiveTests = $this->getDoctrine()->getManager('default')->getRepository(Test::class)->getNumberOfInactiveTests();
+        $averageQuestions = $this->getDoctrine()->getManager('default')->getRepository(Test::class)->calculateAverageQuestionsPerTest();
+        $averageDuration = $this->getDoctrine()->getManager('default')->getRepository(Test::class)->calculateAverageDuration();
 
+
+
+
+        $scores = $testUtilisateurRepository->getHighestScoresByTest();
+
+        $testNames = [];
+        $highestScores = [];
+
+        foreach ($scores as $score) {
+            $testNames[] = $score['testName'];
+            $highestScores[] = $score['maxScore'];
+        }
 
         return $this->render('pages/Admin/testadmin.html.twig', [
             'test' => $test,
+            'testNames' => json_encode($testNames),
+            'highestScores' => json_encode($highestScores),
+            'totalTests' => $totalTests,
+            'activeTests' => $activeTests,
+            'inactiveTests' => $inactiveTests,
+            'averageQuestions' => $averageQuestions,
+            'averageDuration' => $averageDuration,
+
         ]);
     }
 
@@ -346,42 +372,4 @@ class AdminController extends AbstractController
 
         ]);
     }
-
-    /*  #[Route('/admin/test', name: 'admin_test', methods: ['POST'])]
-    public function newTest(Request $request): Response
-    {
-        $test = new Test();
-        $form = $this->createForm(TestType::class, $test);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            dump($form->getData());
-
-            // Iterate through associated Questiont entities to persist them
-            foreach ($test->getQuestions() as $question) {
-                if (!$this->entityManager->contains($question)) {
-                    $this->entityManager->persist($question);
-
-                    foreach ($question->getReponses() as $reponse) {
-                        if (!$this->entityManager->contains($reponse)) {
-                            $this->entityManager->persist($reponse);
-                        }
-                    }
-                }
-            }
-
-            $this->entityManager->persist($test);
-            $this->entityManager->flush();
-
-            $this->addFlash('success', 'Test created successfully.');
-
-
-
-            // return $this->redirectToRoute('admin_test');
-        }
-
-        return $this->render('pages/Admin/testadmin.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }*/
 }

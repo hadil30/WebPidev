@@ -47,23 +47,7 @@
 
 
 {% block content %}
-{#{% for flashMessage in app.flashes('success') %}
-    <div class="alert alert-success">
-        {{ flashMessage }}
-    </div>
-{% endfor %}
 
-{% for flashMessage in app.flashes('warning') %}
-    <div class="alert alert-warning">
-        {{ flashMessage }}
-    </div>
-{% endfor %}
-
-{% for flashMessage in app.flashes('danger') %}
-    <div class="alert alert-danger">
-        {{ flashMessage }}
-    </div>
-{% endfor %}#}
 {% if errors is not empty %}
     <div class="error-messages">
         {% for error in errors %}
@@ -76,7 +60,6 @@
     <div class="maincontent">
             <div class="cardBoxmain">
                 <div class="cardmain">
-    <div class="container">
         <h1 class="mt-5 mb-4">Add Test</h1>
          {% if form_errors(form) %}
                    
@@ -117,8 +100,8 @@
                 <ul class="question-list" data-prototype="{{ form_widget(form.questions.vars.prototype)|e('html_attr') }}">
                     {% for questionForm in form.questions %}
                     <li>
-                        {{ form_widget(questionForm.text) }}
-                                            {{ form_errors(questionForm.text) }}
+                    {{ form_widget(questionForm.text) }}
+                    {{ form_errors(questionForm.text) }}
 
                         {% if questionForm.vars.data.reponses is defined %}
                             <div class="response-list" data-prototype="{{ form_widget(questionForm.reponses.vars.prototype)|e('html_attr') }}">
@@ -149,7 +132,6 @@
                 <button type="submit" class="btn btn-primary">Add</button>
             </div>
         {{ form_end(form) }}
-    </div>
 </div>
 </div>
 </div>

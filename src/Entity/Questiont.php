@@ -20,7 +20,6 @@ class Questiont
 
     #[ORM\Column(name: "text", type: "text", nullable: true)]
     #[Assert\NotBlank(message: "The text cannot be blank")]
-
     private ?string $text = null;
 
     public function getIdQuestiont(): ?int
@@ -59,8 +58,6 @@ class Questiont
         min: 2,
         minMessage: "The test must have at least two answers"
     )]
-    #[Assert\NotBlank(message: "The text cannot be blank")]
-
     private Collection $reponses;
 
     public function __construct()

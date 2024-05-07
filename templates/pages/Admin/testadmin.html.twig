@@ -20,6 +20,69 @@
             max-width: 100px; /* Adjust max-width as needed */
             height: auto; /* Maintain aspect ratio */
         }
+        .container2 {
+    display: flex;
+    justify-content: space-between;
+}
+.left-side, .right-side {
+    flex: 1;  /* Adaptez cette valeur pour changer la proportion */
+    padding: 20px;
+}
+.left-side {
+}
+.right-side {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Allows items to wrap onto the next line */
+    padding: 10px; /* Optional: Adds some padding inside the container */
+}
+.smallcard {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+     text-align: center; /* Center the text horizontally */
+    font-size: 0.8rem;
+    margin: 10px;
+    width: calc(30% - 20px);
+     height: calc(50% - 20px); /* Adjust width as needed */
+    max-width: 300px; /* Set maximum width for responsiveness */
+    box-sizing: border-box; /* Ensure padding doesn't affect the width */
+     
+}.Hcard {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+     text-align: start; /* Center the text horizontally */
+    font-size: 0.8rem;
+    box-sizing: border-box; /* Ensure padding doesn't affect the width */
+     height:60px;
+}
+.h1card{ display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width:485px;
+}
+.blue-text {
+    color: blue;
+    font-size: 1rem;
+}
+.progress-bar {
+        width: 380px; /* Adjust width as needed */
+        height: 10px; /* Adjust height as needed */
+        background-color: #f3f3f3; /* Background color of the progress bar */
+        border: 1px solid #ccc; /* Border color of the progress bar */
+        border-radius: 5px; /* Border radius for rounded corners */
+        overflow: hidden; /* Hide overflow content */
+           
+    }
+    .progress-bar-fill {
+        height: 100%; /* Full height of the progress bar */
+        width: {{ averageQuestions }}%; /* Adjust the width based on the percentage value */
+        background-color: #007bff; /* Color of the filled area */
+    }
+
     </style>
 {% endblock %}
 
@@ -82,7 +145,56 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                
                             </div>
+                            
+                             <div class="container2">
+                                <div class="left-side">
+                                     <div class="card">
+                                    <canvas id="scoresChart" width="400" height="200"></canvas>
+
+                                </div>
+                                </div>
+                                <div class="right-side">
+                                    <div class="smallcard">
+                                    Total tests number : <br/> <br/><span class="blue-text">{{totalTests}}</span> 
+                                    </div>
+                                    <div class="smallcard">
+                                     Active tests number : <br/> <br/><span class="blue-text">{{activeTests}}</span> 
+                                    </div>
+                                    <div class="smallcard">
+                                    innactive tests number :<br/> <br/> <span class="blue-text">{{inactiveTests}}</span> 
+                                         </div>
+                                    <div class="Hcard">
+                                    Average question number :
+
+                                    <div class="h1card">
+                                      <div class="progress-bar">
+                                        <div class="progress-bar-fill"></div>
+                                            
+                                    </div>
+                                {{averageQuestions}} Q  
+                                </div>
+
+
+                                    </div>
+                                       <div class="Hcard">
+                                    Average duration of test :
+
+                                    <div class="h1card">
+                                      <div class="progress-bar">
+                                        <div class="progress-bar-fill"></div>
+                                            
+                                    </div>
+                                {{averageDuration}} T  
+                                </div>
+
+
+                                    </div>
+                                     
+                                </div>
+                                 </div>
+
                         </div>
                     </div>
                 </div>
@@ -92,5 +204,60 @@
 {% endblock %}
 
 {% block js %} 
-    {{ parent() }}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        var ctx = document.getElementById('scoresChart').getContext('2d');
+        var testNames = {{ testNames|raw }};
+        var highestScores = {{ highestScores|raw }};
+
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: testNames,
+                datasets: [{
+                    label: 'Highest Scores',
+                    data: highestScores,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+ var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Value', 'Remaining'],
+            datasets: [{
+                label: '# of Votes',
+                data: [75, 25], // 75% is the value to display
+                backgroundColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 255, 255, 1)' // Use white or a light color for the remaining part
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 255, 255, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            cutoutPercentage: 10, // Adjust this value for thicker or thinner donut
+        }
+    });
+
+
+    </script>
+ {{ parent() }}
 {% endblock %}
+
+   

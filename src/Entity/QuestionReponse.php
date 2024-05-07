@@ -13,12 +13,10 @@ class QuestionReponse
     #[ORM\Column(name: "question_reponse", type: "integer")]
     private ?int $id = null;
 
-    // In QuestionReponse.php
     #[ORM\ManyToOne(targetEntity: Questiont::class, inversedBy: "questionReponse")]
     #[ORM\JoinColumn(nullable: false)]
     private ?Questiont $questiont;
 
-    // Ensure getters and setters are correctly defined for this $questiont property
     public function getQuestiont(): ?Questiont
     {
         return $this->questiont;

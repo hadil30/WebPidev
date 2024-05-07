@@ -17,16 +17,16 @@ class ReponseType extends AbstractType
     {
         $builder
             ->add('isCorrect', CheckboxType::class, [
-                'label' => false, // Prevents label from being auto-generated
+                'label' => false, 
                 'required' => false,
-                'attr' => ['class' => 'inline-checkbox'], // Add class to checkbox
+                'attr' => ['class' => 'inline-checkbox'],
 
 
             ])
             ->add('reponse', TextType::class, [
-                'label' => false, // Prevents label from being auto-generated
+                'label' => false, 
                 'required' => false,
-                'attr' => ['class' => 'inline-checkbox'], // Add class to checkbox
+                'attr' => ['class' => 'inline-checkbox'],
 
             ]);
     }
