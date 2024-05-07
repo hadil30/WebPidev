@@ -13,14 +13,43 @@
     <link rel="stylesheet" href="{{ asset('css/templatemo-space-dynamic.css') }}">
     <link rel="stylesheet" href="{{ asset('css/animated.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owl.css') }}">
+    <style>
+        /* Styles pour la barre de navigation */
+        .navigation {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        /* Styles pour le contenu */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .content {
+            border-radius: 10px;
+            padding: 100px;
+        }
+    </style>
 {% endblock %}
 
 </head>
 <body>
 
 {% block body %}
- {% include 'bases/navigationuser.html.twig' %}
- {% block content %}{% endblock %}
+
+{% block content %}
+    {% include 'bases/navigationuser.html.twig' %}
+    <div class="container">
+        <div class="content">
+        {% block page_content %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}
+
 
 
 

@@ -1,9 +1,178 @@
 {% extends 'pages/Interface_Communes/userinterface.html.twig' %}
 
-{% block content %}
-<div style="padding: 226px 0px 120px 0px;
-            position: relative;
-            overflow: hidden;">
-    <h1>test</h1>
+{% block page_content %}
+{% block css %}
+    <style>
+  .cardmaintest {
+    background: var(--white);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+    margin-bottom: 20px;
+    flex: 0 0 calc(25% - 20px); /* Flex basis adjusted for gap */
+    width: calc(25% - 20px); /* Adjust width based on the number of items you want in a row */
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Align items vertically */
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+}
+
+.cardmaintest ul {
+    text-align: center; /* Center list items horizontally */
+    padding: 0; /* Remove default padding */
+}
+
+.cardmaintest li {
+    margin: 10px 0; /* Adjust margin between list items */
+    list-style: none; /* Remove bullet points */
+}
+
+.cardmaintest img {
+    width: 55px; /* Adjust image width as needed */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Prevents inline alignment issues */
+    margin: 0 auto; /* Center the image */
+}
+.cardmaintest-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow cards to wrap to the next line */
+    justify-content: space-between; /* Distribute space between cards */
+}
+
+.category {
+    color: black; /* Change the color to your desired color */
+}
+.search-container {
+    margin-bottom: 20px; /* Space between search bar and cards */
+    text-align: center;
+}
+
+#searchInput {
+    padding: 10px;
+    width: 50%;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.category-filter {
+    text-align: center;
+    margin-top: 10px; /* Adjust spacing from search bar */
+}
+
+.category-filter button {
+    margin: 5px;
+    padding: 5px 10px;
+    border: none;
+    background-color: #ffc73e; /* Button background color */
+    color: #fff; /* Button text color */
+    border-radius: 15px;
+    cursor: pointer;
+    color:white;
+}
+
+.category-filter button:hover {
+    color: black; /* Hover state background color */
+}
+
+
+    </style>
+    {{ parent() }}
+{% endblock %}
+
+<div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search tests..." onkeyup="filterTests()">
 </div>
+<div class="category-filter">
+    <button onclick="filterByCategory('all')">All</button>
+    <button onclick="filterByCategory('Language')">Language</button>
+    <button onclick="filterByCategory('Academic')">Academic</button>
+    <button onclick="filterByCategory('University')">University</button>
+    <button onclick="filterByCategory('Skills')">Skills</button>
+     <button onclick="filterByCategory('Citizenship')">Citizenship</button>
+    <button onclick="filterByCategory('Knowledge')">Knowledge</button>
+    <button onclick="filterByCategory('IQ')">IQ</button>
+
+</div>
+<br></br>    <div class="cardmaintest-container">
+      {% for test in test %}
+    <div class="cardmaintest">
+        <div>
+            <ul>
+                <li><strong>{{ test.nom }}</strong></li>
+              
+                    {% if test.categorie == 'Language' %}
+                        <img src="{{ asset('images/icons8-language-85.png') }}" alt="Language">
+                    {% elseif test.categorie == 'Academic' %}
+                        <img src="{{ asset('images/icons8-graduation-scroll-85.png') }}" alt="Academic">
+                    {% elseif test.categorie == 'University' %}
+                        <img src="{{ asset('images/icons8-university-85.png') }}" alt="University">
+                    {% elseif test.categorie == 'Skills' %}
+                        <img src="{{ asset('images/icons8-skills-85.png') }}" alt="Skills">
+                    {% elseif test.categorie == 'Citizenship' %}
+                        <img src="{{ asset('images/icons8-passport-id-100.png') }}" alt="Citizenship">
+                    {% elseif test.categorie == 'Knowledge' %}
+                        <img src="{{ asset('images/icons8-knowledge-85.png') }}" alt="Knowledge">
+                    {% elseif test.categorie == 'IQ' %}
+                        <img src="{{ asset('images/icons8-brain-85.png') }}" alt="IQ">
+                    {% endif %}
+                    <span class="category">{{ test.categorie }}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endfor %}
+
+    </div>
+
+    {% block js %}
+        {{ parent() }}
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('.description').forEach(description => {
+                    let text = description.textContent;
+                    if (text.length > 15) {
+                        description.textContent = text.substr(0, 15) + '...';
+                    }
+                });
+            });
+
+            function loadTestDetails(event, url) {
+                event.preventDefault(); 
+                fetch(url)
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('testDetails').innerHTML = data;
+                    })
+                    .catch(error => console.error('Error fetching test details:', error));
+            }
+            function filterTests() {
+    let input = document.getElementById('searchInput');
+    let filter = input.value.toUpperCase();
+    let cards = document.querySelectorAll('.cardmaintest');
+    
+    cards.forEach(card => {
+        let testName = card.querySelector('li').textContent;
+        if (testName.toUpperCase().indexOf(filter) > -1) {
+            card.style.display = "";
+        } else {
+            card.style.display = "none";
+        }
+    });
+}
+function filterByCategory(category) {
+    let cards = document.querySelectorAll('.cardmaintest');
+    
+    cards.forEach(card => {
+        let cardCategory = card.querySelector('.category').textContent;
+        if (category === 'all' || cardCategory === category) {
+            card.style.display = "flex";
+        } else {
+            card.style.display = "none";
+        }
+    });
+}
+
+        </script>
+    {% endblock %}
 {% endblock %}

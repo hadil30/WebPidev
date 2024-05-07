@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
-#[ORM\Entity]
+use App\Repository\DiscussionRepository;
+use App\Entity\User;
+use App\Entity\Cours;
 #[ORM\Table(name: "discussion", indexes: [new ORM\Index(name: "user_id", columns: ["user_id"]), new ORM\Index(name: "id_Cours", columns: ["id_Cours"])])]
+#[ORM\Entity(repositoryClass: DiscussionRepository::class)]
 class Discussion
 {
     #[ORM\Id]
@@ -31,4 +33,74 @@ class Discussion
     private ?Cours $idCours = null;
 
     // Getters and setters
+    public function getIdDiscussion(): ?int
+    {
+        return $this->idDiscussion;
+    }
+
+    public function setIdDiscussion(?int $idDiscussion): self
+    {
+        $this->idDiscussion = $idDiscussion;
+        return $this;
+    }
+
+    // Getter and setter for titreDiscussion
+    public function getTitreDiscussion(): ?string
+    {
+        return $this->titreDiscussion;
+    }
+
+    public function setTitreDiscussion(?string $titreDiscussion): self
+    {
+        $this->titreDiscussion = $titreDiscussion;
+        return $this;
+    }
+
+    // Getter and setter for message
+    public function getMessage(): ?string
+    {
+        return $this->message;
+    }
+
+    public function setMessage(?string $message): self
+    {
+        $this->message = $message;
+        return $this;
+    }
+
+    // Getter and setter for datePost
+    public function getDatePost(): \DateTime
+    {
+        return $this->datePost;
+    }
+
+    public function setDatePost(\DateTime $datePost): self
+    {
+        $this->datePost = $datePost;
+        return $this;
+    }
+
+    // Getter and setter for user
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+    // Getter and setter for idCours
+    public function getIdCours(): ?Cours
+    {
+        return $this->idCours;
+    }
+
+    public function setIdCours(?Cours $idCours): self
+    {
+        $this->idCours = $idCours;
+        return $this;
+    }
 }

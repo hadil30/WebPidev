@@ -2957,6 +2957,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/cd06d6b1a1b3c75b0b83f97577869fd85a3cd4fb",
                 "reference": "cd06d6b1a1b3c75b0b83f97577869fd85a3cd4fb",
+
                 "shasum": ""
             },
             "require": {
@@ -2991,6 +2992,7 @@
                 "source": "https://github.com/phpstan/phpdoc-parser/tree/1.28.0"
             },
             "time": "2024-04-03T18:51:33+00:00"
+
         },
         {
             "name": "psr/cache",
@@ -9017,9 +9019,7 @@
                 "symfony/security-core": "^5.4|^6.0|^7.0",
                 "symfony/stopwatch": "^5.4|^6.0|^7.0",
                 "symfony/twig-bundle": "^5.4|^6.0|^7.0",
-                "symfony/web-profiler-bundle": "^5.4|^6.0|^7.0",
-                "symfony/webpack-encore-bundle": "^2.1.1"
-            },
+                "symfony/web-profiler-bundle": "^5.4|^6.0|^7.0"            },
             "type": "symfony-bundle",
             "extra": {
                 "thanks": {
@@ -10366,6 +10366,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a1a54a473501ef4cdeaae4e06891674114d79db8",
                 "reference": "a1a54a473501ef4cdeaae4e06891674114d79db8",
+
                 "shasum": ""
             },
             "require": {
@@ -10440,6 +10441,7 @@
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
                 "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.19"
+
             },
             "funding": [
                 {
@@ -10456,6 +10458,7 @@
                 }
             ],
             "time": "2024-04-05T04:35:58+00:00"
+
         },
         {
             "name": "sebastian/cli-parser",
