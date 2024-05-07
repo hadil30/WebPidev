@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Content</title>
+    <style>
+        /* Additional CSS styles */
+        .cours-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start; /* Alignement vertical */
+        }
+        .cours {
+            width: calc(50% - 20px); /* Pour que chaque cours prenne environ la moitié de la largeur de la page avec un espacement */
+            margin-bottom: 20px;
+        }
+        .course-card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            width: calc(50% - 20px); /* Pour afficher deux cours par ligne */
+            margin-bottom: 20px;
+        }
+        .course-card:hover {
+            transform: translateY(-5px);
+        }
+        .course-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .course-item img {
+            width: 200px;
+            height: 200px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .course-item h2 {
+            margin-bottom: 10px;
+        }
+        .course-item ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .course-item ul li {
+            margin-bottom: 5px;
+        }
+        /* Style pour "Courses" et "Our Courses" */
+        .section-title, .category {
+            margin: 0; /* Supprimer les marges */
+            text-align: center; /* Centrer les textes */
+        }
+        .section-title {
+            color: #161688; /* Couleur bleu */
+            font-size: 28px; /* Taille de la police */
+            font-weight: bold; /* Police en gras */
+        }
+        .category {
+            color: #ffc73e; /* Couleur jaune */
+        }
+    </style>
+</head>
+<body>
+    <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+        <h6 class="section-title bg-white text-center text-primary px-3">Books</h6>
+        <h1 class="mb-5 category">Your Collection</h1>
+    </div>
+    <div class="cours-container">
+        {% for cours in collection %}
+            <div class="cours">
+                <div class="course-card">
+                    <div class="course-item">
+                        {# <img src="{{ absolute_url(asset('assets/' ~ cours.imagePath)) }}"> #}
+                        <h2>{{ cours.nomLiv }}</h2>
+                        <h3>Price</h3>
+                        <ul>
+                                    <li>{{ cours.totalPrice }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

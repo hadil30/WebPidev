@@ -1,0 +1,81 @@
+{% block contentupdate %}
+<link rel="stylesheet" href="{{ asset('css/fontawesome.min.css') }}">
+    <style>
+        /* CSS pour les cartes */
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 20px;
+            gap: 20px; /* Espacement entre les cartes */
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: calc(50% - 20px); /* Ajustez la largeur en fonction du nombre d'éléments que vous souhaitez dans une ligne */
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .card li {
+            margin: 10px 0;
+            list-style: none;
+        }
+
+        .delete-icon {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 1px solid #0F056B; /* Ajout de la bordure */
+            border-radius: 5px;
+            background-color: #ffffff; /* Couleur de fond des boutons */
+            color: #0F056B; /* Couleur du texte des boutons */
+            font-size: 14px;
+            cursor: pointer;
+            transition: color 0.3s ease, border-color 0.3s ease; /* Transition de couleur pour garder le texte blanc et la bordure bleue */
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .delete-icon:hover {
+            color: #ffffff; /* Couleur du texte au survol */
+            background-color: #0F056B; /* Couleur de fond au survol */
+            border-color: #0F056B; /* Couleur de la bordure au survol */
+        }
+
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .icon {
+            margin-right: 5px;
+        }
+    </style>
+
+    <div class="card-container">
+        {% for cours in l %}
+            <div class="card">
+                <div>
+                    <a href="{{ path('cours_detail', {'id': cours.id}) }}" class="card-link">
+                        <ul>
+                            <li><strong>Titre:</strong> {{ cours.titre }}</li>
+                            <li><strong>Description:</strong> {{ cours.description }}</li>
+                            <li><strong>Niveau:</strong> {{ cours.niveau }}</li>
+                            <li><strong>ImagePath:</strong> {{ cours.ImagePath }}</li>
+                            <li><strong>Link:</strong> <a href="{{ cours.link }}">{{ cours.link }}</a></li>
+                        </ul>
+                    </a>
+                </div>
+                <a href="{{ path('cours_delete', {'id': cours.id}) }}" class="delete-icon" onclick="return confirm('Are you sure?');">
+                    <i class="fas fa-trash-alt icon"></i> Delete
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

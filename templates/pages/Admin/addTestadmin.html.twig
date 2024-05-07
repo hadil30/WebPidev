@@ -1,0 +1,169 @@
+{% extends 'pages/Admin/admindashboard.html.twig' %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/test.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('assets1/vendor/fonts/boxicons.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets1/vendor/css/core.css') }}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{{ asset('assets1/vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{ asset('assets1/css/demo.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets1/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
+    <style>
+        .response {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .hidden {
+            display: none;
+        }
+        .inline-checkbox-wrapper {
+    display: flex;
+    align-items: center; /* Align items vertically in the center */
+    gap: 10px; /* Spacing between checkbox and input */
+}
+.inline-checkbox-wrapper input[type="checkbox"] {
+    /* Styling for checkbox */
+}
+
+.inline-checkbox-wrapper input[type="text"] {
+    flex-grow: 1; /* Makes the text input grow to fill available space */
+    margin-left: 10px; /* Optional: adds left margin if needed */
+}
+.rep{font-size: 16px;
+    font-weight: 500;
+    color: #333;}
+
+    </style>
+{% endblock %}
+
+
+{% block content %}
+{#{% for flashMessage in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ flashMessage }}
+    </div>
+{% endfor %}
+
+{% for flashMessage in app.flashes('warning') %}
+    <div class="alert alert-warning">
+        {{ flashMessage }}
+    </div>
+{% endfor %}
+
+{% for flashMessage in app.flashes('danger') %}
+    <div class="alert alert-danger">
+        {{ flashMessage }}
+    </div>
+{% endfor %}#}
+{% if errors is not empty %}
+    <div class="error-messages">
+        {% for error in errors %}
+            <div>{{ error.message }}</div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div class="main">
+    <div class="maincontent">
+            <div class="cardBoxmain">
+                <div class="cardmain">
+    <div class="container">
+        <h1 class="mt-5 mb-4">Add Test</h1>
+         {% if form_errors(form) %}
+                   
+                            {{ form_errors(form) }}
+                       
+                    {% endif %}
+
+             {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+            <div class="form-group">
+                {{ form_label(form.nom, 'Nom') }}
+                {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                            {% if form_errors(form.nom) %}
+                                {{ form_errors(form.nom) }}
+                        {% endif %}
+
+
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.description, 'Description') }}
+                {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                {% if form_errors(form.description) %}
+                                {{ form_errors(form.description) }}
+                {% endif %}
+
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.categorie, 'Categorie') }}
+                {{ form_widget(form.categorie, {'attr': {'class': 'form-control'}}) }}
+                {% if form_errors(form.categorie) %}
+                                {{ form_errors(form.categorie) }}
+                        {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.questions, 'Questions') }}
+                <ul class="question-list" data-prototype="{{ form_widget(form.questions.vars.prototype)|e('html_attr') }}">
+                    {% for questionForm in form.questions %}
+                    <li>
+                        {{ form_widget(questionForm.text) }}
+                                            {{ form_errors(questionForm.text) }}
+
+                        {% if questionForm.vars.data.reponses is defined %}
+                            <div class="response-list" data-prototype="{{ form_widget(questionForm.reponses.vars.prototype)|e('html_attr') }}">
+                                <p class="rep">Responses</p>
+                                <div>
+                                    {% for responseForm in questionForm.reponses %}
+                                        <div class="form-row">
+                                            {{ form_widget(responseForm.isCorrect) }}
+                                            <div class="inline-checkbox-wrapper">
+
+                                            {{ form_widget(responseForm.reponse) }}
+                                              {% if form_errors(responseForm.reponse) %}
+                                              </div>
+                                             {{ form_errors(responseForm.reponse) }}                                 
+                                    {% endif %}
+
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="form-group button-group">
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script src="{{ asset('assets1/vendor/libs/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('assets1/vendor/libs/popper/popper.js') }}"></script>
+    <script src="{{ asset('assets1/vendor/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('assets1/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+    <script src="{{ asset('assets1/vendor/js/menu.js') }}"></script>
+    <script src="{{ asset('assets1/js/main.js') }}"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="{{ asset('js/formulaireDynamique.js') }}"></script>
+{% endblock %}

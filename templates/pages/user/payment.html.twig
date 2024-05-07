@@ -1,0 +1,132 @@
+{% block body %}
+<style>
+.alert-success {
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #fff; 
+    background-color: #008152;
+    border-color: #fff; 
+    transition: opacity 0.5s ease; 
+    cursor: pointer; 
+}
+
+.alert-success:hover {
+    opacity: 0; 
+}
+.form {
+    margin-top: 50px;
+    background-color: transparent; 
+    border: 1px solid #008152;
+    border-radius: 8px; 
+    padding: 20px; 
+}
+
+#pay-btn {
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 6px;
+    background-color: #008152; /* Green color */
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#pay-btn:hover {
+    background-color: #45a049; /* Darker green color on hover */
+}
+
+.form-group input[type="hidden"] {
+    color: white; 
+}
+</style>
+ <div class="site-wrap">
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>
+
+    <div class="hero overlay" style="background-image: url('assets/images/background.jpg');">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-5 mx-auto text-center">
+            <h1 class="text-white">Payez ici !</h1>
+            <p></p>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+                <div class="card-body">
+                    {# <h5 class="card-title text-center mb-4">Checkout</h5> #}
+<form class="form" id="checkout-form" method="post" action="{{ path('app_stripe_charge', {'idPanier': panier.idPanier}) }}">
+                        <input type="hidden" name="stripeToken" id="stripe-token-id">
+                        <input type="hidden" name="idPanier" value="{{ panier.idPanier }}">
+                        <div id="card-element" class="form-group"></div>
+                        <button id="pay-btn" class="btn btn-success btn-block mt-4" type="button" onclick="createToken()">
+                            Pay ${{ totalPrice }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    var stripe = Stripe("{{ stripe_key }}");
+    var elements = stripe.elements();
+    var cardElement = elements.create('card');
+    cardElement.mount('#card-element');
+
+    function createToken() {
+        document.getElementById("pay-btn").disabled = true;
+        stripe.createToken(cardElement).then(function(result) {
+            if (result.error) {
+                document.getElementById("pay-btn").disabled = false;
+                alert(result.error.message);
+            }
+            if (result.token) {
+                document.getElementById("stripe-token-id").value = result.token.id;
+                document.getElementById('checkout-form').submit();
+                downloadPdf();
+            }
+        });
+    }
+    function downloadPdf() {
+    // You may need to replace this URL with the actual endpoint to download the PDF
+    var pdfPath = "{{ path('download_pdf', {'idPanier': panier.idPanier}) }}";
+    // Create a hidden anchor element to trigger the download
+    var link = document.createElement('a');
+    link.href = pdfPath;
+    link.download = 'book.pdf'; // You can change the downloaded file name here
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+      {% if success_message is defined %}
+{% set _ = app.session.getFlashBag().add('successPaiement', success_message) %}
+        {% endif %}
+</script>
+<script>
+    setTimeout(function() {
+        var successAlert = document.getElementById('success-alert');
+        if (successAlert) {
+            successAlert.style.opacity = 0;
+            setTimeout(function() {
+                successAlert.remove(); 
+            }, 500); 
+        }
+    }, 3000);
+</script>
+
+{% endblock %}

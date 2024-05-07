@@ -1,0 +1,37 @@
+{% extends 'pages/Interface_Communes/userinterface.html.twig' %}
+{% block title %}Détails du cours{% endblock %}
+
+{% block body %}
+    <h1>Détails du cours</h1>
+    <div>
+        <img src="{{ asset('assets/' ~ cours.ImagePath) }}" alt="Image du cours">
+        <h2>{{ cours.titre }}</h2>
+        <p>{{ cours.description }}</p>
+        <a href="{{ cours.link }}">Lien vers le cours</a>
+    </div>
+
+    <hr>
+
+    <h2>Ajouter un commentaire</h2>
+    <form action="{{ path('ajouter_commentaire', {'id': cours.id}) }}" method="post">
+        <textarea name="commentaire" rows="4" cols="50"></textarea><br>
+        <button type="submit">Ajouter un commentaire</button>
+    </form>
+
+    <hr>
+
+    <h2>Commentaires</h2>
+    <ul>
+        {% for commentaire in commentaires %}
+            <li>
+                <div>{{ commentaire.message }}</div>
+                 {% if commentaire.user is not null and commentaire.user.userId is defined and commentaire.user.userId == idUserWithButtons %}
+                    <div>
+                        <a href="{{ path('modifier_commentaire', {'id': commentaire.id}) }}">Modifier</a>
+                        <a href="{{ path('supprimer_commentaire', {'id': commentaire.id}) }}">Supprimer</a>
+                    </div>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

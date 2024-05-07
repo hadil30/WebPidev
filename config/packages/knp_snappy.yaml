@@ -1,0 +1,12 @@
+knp_snappy:
+  pdf:
+    enabled: true
+    binary: '"C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe"'
+    options:
+      - "--allow"
+      - "C:/Users/rannn/Desktop/WebPidev - Copie (2)/public/assets"
+
+  image:
+    enabled: true
+    binary: '"C:/Program Files/wkhtmltopdf/bin/wkhtmltoimage.exe"'
+    options: []

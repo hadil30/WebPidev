@@ -1,0 +1,43 @@
+  <table class="table" id="cours-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Book Title</th>
+                                            <th>Category</th>
+                                            <th>Cover</th>
+                                            <th>Availability</th>
+                                            <th>PDF</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+   <tbody class="table-border-bottom-0">
+                                        {% for book in l %}
+                                            <tr>
+                                                <td>{{ book.nomLiv }}</td>
+                                                <td>{{ book.categorieLiv }}</td>
+                                                 <td> <li
+                              data-bs-toggle="tooltip"
+                              data-popup="tooltip-custom"
+                              data-bs-placement="top"
+                              class="avatar avatar-xs pull-up"
+                              title="Lilian Fuller">
+                              <img src="{{ asset('assets/' ~ book.imagePath) }}" alt="Avatar" class="rounded-circle" />
+                            </li></td>
+                                               
+                                                <td>{{ book.disponibiliteLiv }}</td>
+                                                <td>
+                                                    <a href="{{ asset('assets/' ~ book.pdfPath) }}" target="_blank">View PDF</a>
+                                                </td>
+                                                <td>
+                                                 <div class="dropdown">
+                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                              <i class="bx bx-dots-vertical-rounded"></i>
+                            </button>
+                                                    <!-- Actions -->
+                                                   <div class="dropdown-menu">  <a class="dropdown-item" href="{{ path('books_detail', {'id': book.idLiv}) }}"><i class="bx bx-edit-alt me-1"></i>Edit</a> | <a class="dropdown-item" href="{{ path('books_delete', {'id': book.idLiv}) }}">
+                                                   
+                                                  <i class="bx bx-trash me-1"></i>  Delete</a></div>
+                                                  </div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
